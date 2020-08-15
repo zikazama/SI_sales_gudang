@@ -1,0 +1,13 @@
+{
+    "name": "zarvis/sisagu",
+    "authors": [
+        {
+            "name": "Fauzi",
+            "email": "fauzi190198@gmail.com"
+        }
+    ],
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.13",
+        "mpdf/mpdf": "^8.0"
+    }
+}
