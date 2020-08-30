@@ -65,9 +65,9 @@
 									<td>
 										<a href="<?= base_url('penjualanku/detail/').$data['id_transaksi_sales'] ?>"><button
 												type="submit" class="btn btn-primary">Detail</button></a>
-										<hr>
+										<!-- <hr>
 										<a href="<?= base_url('penjualanku/print/').$data['id_transaksi_sales'] ?>"><button
-												type="submit" class="btn btn-info">Print</button></a>
+												type="submit" class="btn btn-info">Print</button></a> -->
 									</td>
 								</tr>
 								<?php $no++; }

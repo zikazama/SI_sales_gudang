@@ -138,6 +138,23 @@ class Laporan_penjualan extends CI_Controller
 		}
 	}
 
+	public function print($id_transaksi){
+		$this->load->model('transaksi_sales_m');
+		$this->load->model('item_transaksi_m');
+		$this->load->model('pembayaran_m');
+		$data_transaksi = $this->transaksi_sales_m->read_full_where(array('id_transaksi_sales' => $id_transaksi))->result_array();
+		$data_item = $this->item_transaksi_m->read_full_where(array('id_transaksi_sales' => $id_transaksi))->result_array();
+		$data_pembayaran = $this->pembayaran_m->read_where(array('id_transaksi_sales' => $id_transaksi))->result_array();
+		$data_pembayaran_masuk = $this->pembayaran_m->pembayaran_masuk(array('id_transaksi_sales' => $id_transaksi))->row_array();
+		$data = array(
+			'transaksi' => $data_transaksi,
+			'item' => $data_item,
+			'pembayaran' => $data_pembayaran,
+			'pembayaran_masuk' => $data_pembayaran_masuk
+		);
+		$this->load->view('template_faktur',$data);
+	}
+
 	private function export()
 	{
 		$this->load->model('item_transaksi_m');

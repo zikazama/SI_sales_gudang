@@ -36,7 +36,7 @@
 									<select id="namaBarang" class="form-control" tabindex="-1" style="width: 100%">
 										<option value="0" disabled selected>Pilih Barang</option>
 										<?php foreach ($parsing['barang'] as $data) { ?>
-											<option value="<?= $data['id_barang'] ?>"><?= $data['nama_barang'] ?> - <?= $data['merek'] ?></option>
+											<option value="<?= $data['id_barang'] ?>"><?= $data['nama_barang'] ?> - <?= $data['merek'] ?> | Stok : <?= $data['stok'] ?></option>
 										<?php } ?>
 
 									</select>
