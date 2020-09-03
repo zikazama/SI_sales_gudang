@@ -37,6 +37,7 @@
 									<th>Nama</th>
 									<th>Merek</th>
 									<th>Harga</th>
+									<th>Harga/Box</th>
 									<th>Stok</th>
 									<th>Diskon</th>
 									<th>Minimal Pembelian Diskon</th>
@@ -55,6 +56,7 @@
                                    <td><?= $data['nama_barang'] ?></td>
 								   <td><?= $data['merek'] ?></td>
 								   <td>Rp<?= number_format($data['harga'],0,',','.') ?></td>
+								   <td>Rp<?= number_format($data['harga_perbox'],0,',','.') ?></td>
 									<td><?= $data['stok'] ?></td>
 									<td>Rp<?= number_format($data['diskon'],0,',','.') ?></td>
 									<td><?= $data['minimal_kuantitas_diskon'] ?></td>

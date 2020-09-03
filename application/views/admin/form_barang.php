@@ -26,7 +26,14 @@
                                             <div class="form-group">
                                                 <label for="exampleInputPassword2">Harga</label>
                                                 <div class="input-group-prepend">
-                                                    <input name="harga" type="text" class="rupiah form-control" id="exampleInputPassword2" onkeyup="rupiah(this)" placeholder="Harga. Contoh: 10000" required>
+                                                    <input name="harga" type="text" class="rupiah form-control" id="exampleInputPassword2" onkeyup="rupiah(this)" placeholder="Harga/Pcs. Contoh: 10000" required>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword2">Harga / Box</label>
+                                                <div class="input-group-prepend">
+                                                    <input name="harga_perbox" type="text" class="rupiah form-control" id="exampleInputPassword2" onkeyup="rupiah(this)" placeholder="Harga/Box. Contoh: 10000" required>
                                                     
                                                 </div>
                                             </div>
@@ -79,7 +86,15 @@
                                                 <label for="exampleInputPassword2">Harga</label>
                                                 <div class="input-group-prepend">
                                                     <!-- <span class="input-group-text" id="inputGroupPrepend">Rp</span> -->
-                                                    <input name="harga" type="text" class="form-control" id="exampleInputPassword2" placeholder="Harga. Contoh: 10000" onkeyup="rupiah(this)" value="<?= $parsing['barang'][0]['harga'] ?>" required>
+                                                    <input name="harga" type="text" class="form-control" id="exampleInputPassword2" placeholder="Harga/Pcs. Contoh: 10000" onkeyup="rupiah(this)" value="<?= $parsing['barang'][0]['harga'] ?>" required>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword2">Harga / Box</label>
+                                                <div class="input-group-prepend">
+                                                    <!-- <span class="input-group-text" id="inputGroupPrepend">Rp</span> -->
+                                                    <input name="harga_perbox" type="text" class="form-control" id="exampleInputPassword2" placeholder="Harga/Box. Contoh: 10000" onkeyup="rupiah(this)" value="<?= $parsing['barang'][0]['harga_perbox'] ?>" required>
                                                     
                                                 </div>
                                             </div>
