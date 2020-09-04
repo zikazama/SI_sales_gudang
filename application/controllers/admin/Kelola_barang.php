@@ -76,6 +76,7 @@ class Kelola_barang extends CI_Controller {
 		$data_barang['harga'] = $this->priceToFloat($data_barang['harga']);
 		$data_barang['harga_perbox'] = $this->priceToFloat($data_barang['harga_perbox']);
 		$data_barang['diskon'] = $this->priceToFloat($data_barang['diskon']);
+		$data_barang['diskon_perbox'] = $this->priceToFloat($data_barang['diskon_perbox']);
 		$data_barang['foto'] = $this->upload_foto('nama','foto');
 		if($this->barang_m->create($data_barang)){
 			$this->session->set_flashdata(array(
@@ -107,6 +108,7 @@ class Kelola_barang extends CI_Controller {
 		$data_barang['harga'] = $this->priceToFloat($data_barang['harga']);
 		$data_barang['harga_perbox'] = $this->priceToFloat($data_barang['harga_perbox']);
 		$data_barang['diskon'] = $this->priceToFloat($data_barang['diskon']);
+		$data_barang['diskon_perbox'] = $this->priceToFloat($data_barang['diskon_perbox']);
 		$foto = $this->upload_foto('nama','foto');
 		if($foto != null){
 			$data_barang['foto'] = $foto;

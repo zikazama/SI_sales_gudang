@@ -24,7 +24,7 @@
                                                 <input name="merek" type="text" class="form-control" id="exampleInputPassword1" placeholder="Merek" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleInputPassword2">Harga</label>
+                                                <label for="exampleInputPassword2">Harga / Pcs</label>
                                                 <div class="input-group-prepend">
                                                     <input name="harga" type="text" class="rupiah form-control" id="exampleInputPassword2" onkeyup="rupiah(this)" placeholder="Harga/Pcs. Contoh: 10000" required>
                                                     
@@ -38,19 +38,34 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleInputPassword2">Stok</label>
-                                                <input name="stok" type="number" class="form-control" id="exampleInputPassword2" placeholder="Stok" required>
+                                                <label for="exampleInputPassword2">Stok / Pcs</label>
+                                                <input name="stok" type="number" class="form-control" id="exampleInputPassword2" placeholder="Stok / Pcs" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleInputPassword2">Diskon</label>
+                                                <label for="exampleInputPassword2">Stok / Box</label>
+                                                <input name="stok_perbox" type="number" class="form-control" id="exampleInputPassword2" placeholder="Stok / Box" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword2">Diskon / Pcs</label>
                                                 <div class="input-group-prepend">
                                                 <input name="diskon" type="text" class="form-control" id="exampleInputPassword2" onkeyup="rupiah(this)" placeholder="Diskon. Contoh: 1000" required>
                                                     
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleInputPassword2">Minimal Pembelian untuk Diskon</label>
+                                                <label for="exampleInputPassword2">Diskon / Box</label>
+                                                <div class="input-group-prepend">
+                                                <input name="diskon_perbox" type="text" class="form-control" id="exampleInputPassword2" onkeyup="rupiah(this)" placeholder="Diskon. Contoh: 1000" required>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword2">Minimal Pembelian untuk Diskon / Pcs</label>
                                                 <input name="minimal_kuantitas_diskon" type="number" class="form-control" id="exampleInputPassword2" placeholder="Minimal Pembelian" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword2">Minimal Pembelian untuk Diskon / Box</label>
+                                                <input name="minimal_kuantitas_diskon_perbox" type="number" class="form-control" id="exampleInputPassword2" placeholder="Minimal Pembelian" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputPassword1">Foto Barang</label>
@@ -83,7 +98,7 @@
                                                 <input name="merek" type="text" class="form-control" id="exampleInputPassword1" placeholder="Merek" value="<?= $parsing['barang'][0]['merek'] ?>" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleInputPassword2">Harga</label>
+                                                <label for="exampleInputPassword2">Harga / Pcs</label>
                                                 <div class="input-group-prepend">
                                                     <!-- <span class="input-group-text" id="inputGroupPrepend">Rp</span> -->
                                                     <input name="harga" type="text" class="form-control" id="exampleInputPassword2" placeholder="Harga/Pcs. Contoh: 10000" onkeyup="rupiah(this)" value="<?= $parsing['barang'][0]['harga'] ?>" required>
@@ -99,11 +114,15 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleInputPassword2">Stok</label>
-                                                <input name="stok" type="number" class="form-control" id="exampleInputPassword2" placeholder="Stok" value="<?= $parsing['barang'][0]['stok'] ?>" required>
+                                                <label for="exampleInputPassword2">Stok / Pcs</label>
+                                                <input name="stok" type="number" class="form-control" id="exampleInputPassword2" placeholder="Stok/Pcs" value="<?= $parsing['barang'][0]['stok'] ?>" required>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleInputPassword2">Diskon</label>
+                                                <label for="exampleInputPassword2">Stok / Box</label>
+                                                <input name="stok_perbox" type="number" class="form-control" id="exampleInputPassword2" placeholder="Stok/Box" value="<?= $parsing['barang'][0]['stok_perbox'] ?>" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword2">Diskon / Pcs</label>
                                                 <div class="input-group-prepend">
                                                 <!-- <span class="input-group-text" id="inputGroupPrepend">Rp</span> -->
                                                 <input name="diskon" type="text" class="form-control" id="exampleInputPassword2" placeholder="Diskon. Contoh: 10000" onkeyup="rupiah(this)" value="<?= $parsing['barang'][0]['diskon'] ?>" required>
@@ -111,8 +130,20 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleInputPassword2">Minimal Pembelian untuk Diskon</label>
+                                                <label for="exampleInputPassword2">Diskon / Box</label>
+                                                <div class="input-group-prepend">
+                                                <!-- <span class="input-group-text" id="inputGroupPrepend">Rp</span> -->
+                                                <input name="diskon_perbox" type="text" class="form-control" id="exampleInputPassword2" placeholder="Diskon. Contoh: 10000" onkeyup="rupiah(this)" value="<?= $parsing['barang'][0]['diskon_perbox'] ?>" required>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword2">Minimal Pembelian untuk Diskon / Pcs</label>
                                                 <input name="minimal_kuantitas_diskon" type="number" class="form-control" id="exampleInputPassword2" placeholder="Minimal Pembelian" value="<?= $parsing['barang'][0]['minimal_kuantitas_diskon'] ?>" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword2">Minimal Pembelian untuk Diskon / Box</label>
+                                                <input name="minimal_kuantitas_diskon_perbox" type="number" class="form-control" id="exampleInputPassword2" placeholder="Minimal Pembelian" value="<?= $parsing['barang'][0]['minimal_kuantitas_diskon_perbox'] ?>" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputPassword1">Foto Barang</label>

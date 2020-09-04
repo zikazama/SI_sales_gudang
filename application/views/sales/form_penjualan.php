@@ -36,13 +36,13 @@
 									<select id="namaBarang" class="form-control" tabindex="-1" style="width: 100%">
 										<option value="0" disabled selected>Pilih Barang</option>
 										<?php foreach ($parsing['barang'] as $data) { ?>
-											<option value="<?= $data['id_barang'] ?>"><?= $data['nama_barang'] ?> - <?= $data['merek'] ?> | Stok : <?= $data['stok'] ?></option>
+											<option value="<?= $data['id_barang'] ?>"><?= $data['nama_barang'] ?> - <?= $data['merek'] ?> | Stok/Pcs : <?= $data['stok'] ?> | Stok/Box : <?= $data['stok_perbox'] ?></option>
 										<?php } ?>
 
 									</select>
 								</div>
 								<div class="form-group">
-									<label for="exampleInputPassword2">Harga</label>
+									<label for="exampleInputPassword2">Harga / Pcs</label>
 									<div class="input-group-prepend">
 										<!-- <span class="input-group-text" id="inputGroupPrepend">Rp</span> -->
 										<input type="text" class="form-control" id="harga" placeholder="Harga" value="0" readonly>
@@ -50,8 +50,20 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="exampleInputPassword1">Kuantitas</label>
-									<input id="kuantitas" type="number" class="kuantitas form-control" placeholder="Kuantitas" readonly>
+									<label for="exampleInputPassword2">Harga / Box</label>
+									<div class="input-group-prepend">
+										<!-- <span class="input-group-text" id="inputGroupPrepend">Rp</span> -->
+										<input type="text" class="form-control" id="harga_perbox" placeholder="Harga/Box" value="0" readonly>
+
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputPassword1">Kuantitas / Pcs</label>
+									<input id="kuantitas" type="number" class="kuantitas form-control" placeholder="Kuantitas/Pcs" readonly>
+								</div>
+								<div class="form-group">
+									<label for="exampleInputPassword1">Kuantitas / Box</label>
+									<input id="kuantitas_perbox" type="number" class="kuantitas form-control" placeholder="Kuantitas/Box" readonly>
 								</div>
 
 								<div class="form-group">
@@ -63,10 +75,19 @@
 								</div>
 
 								<div class="form-group">
-									<label for="exampleInputPassword2">Diskon</label>
+									<label for="exampleInputPassword2">Diskon / Pcs</label>
 									<div class="input-group-prepend">
 										<!-- <span class="input-group-text" id="inputGroupPrepend">Rp</span> -->
 										<input type="text" class="form-control" id="diskon" placeholder="Diskon" value="0" readonly>
+
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="exampleInputPassword2">Diskon / Box</label>
+									<div class="input-group-prepend">
+										<!-- <span class="input-group-text" id="inputGroupPrepend">Rp</span> -->
+										<input type="text" class="form-control" id="diskon_perbox" placeholder="Diskon" value="0" readonly>
 
 									</div>
 								</div>
@@ -101,8 +122,12 @@
 
 												<div class="card-body">
 													<h5 class="card-title"><?= $no ?>. <?= $data['name'] ?></h5>
-													<h5 class="card-title">Harga: Rp<?= number_format($data['price'], 0, ',', '.') ?> x
-														<?= number_format($data['qty'], 0, ',', '.') ?></h5>
+													<!-- <h5 class="card-title">Harga: Rp<?= number_format($data['price'], 0, ',', '.') ?> x
+														<?= number_format($data['qty'], 0, ',', '.') ?></h5> -->
+														<h5 class="card-title">Harga/Pcs: Rp<?= number_format($this->cart->product_options($data['rowid'])->harga, 0, ',', '.') ?> x
+														<?= number_format($this->cart->product_options($data['rowid'])->kuantitas, 0, ',', '.') ?></h5>
+														<h5 class="card-title">Harga/Box: Rp<?= number_format($this->cart->product_options($data['rowid'])->harga_perbox, 0, ',', '.') ?> x
+														<?= number_format($this->cart->product_options($data['rowid'])->kuantitas_perbox, 0, ',', '.') ?></h5>
 													<h5 class="card-title">Diskon: Rp<?= number_format($this->cart->product_options($data['rowid'])->potongan_harga, 0, ',', '.') ?>
 													</h5>
 													<h5 class="card-title">Subtotal: Rp<?= number_format($data['subtotal'] - $this->cart->product_options($data['rowid'])->potongan_harga, 0, ',', '.') ?>

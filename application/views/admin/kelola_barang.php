@@ -9,7 +9,7 @@
 	<div class="main-wrapper">
 		
 		<div class="row">
-			<div class="col">
+			<div class="col-md-9">
 				<div class="card">
 					<div class="card-body">
 						<h5 class="card-title">Tabel Kelola Barang</h5>
@@ -36,11 +36,14 @@
 									<th>No</th>
 									<th>Nama</th>
 									<th>Merek</th>
-									<th>Harga</th>
+									<th>Harga/Pcs</th>
 									<th>Harga/Box</th>
-									<th>Stok</th>
-									<th>Diskon</th>
-									<th>Minimal Pembelian Diskon</th>
+									<th>Stok/Pcs</th>
+									<th>Stok/Box</th>
+									<th>Diskon/Pcs</th>
+									<th>Diskon/Box</th>
+									<th>Minimal Pembelian Diskon/Pcs</th>
+									<th>Minimal Pembelian Diskon/Box</th>
 									<th>Aksi</th>
 								</tr>
 							</thead>
@@ -58,8 +61,11 @@
 								   <td>Rp<?= number_format($data['harga'],0,',','.') ?></td>
 								   <td>Rp<?= number_format($data['harga_perbox'],0,',','.') ?></td>
 									<td><?= $data['stok'] ?></td>
+									<td><?= $data['stok_perbox'] ?></td>
 									<td>Rp<?= number_format($data['diskon'],0,',','.') ?></td>
+									<td>Rp<?= number_format($data['diskon_perbox'],0,',','.') ?></td>
 									<td><?= $data['minimal_kuantitas_diskon'] ?></td>
+									<td><?= $data['minimal_kuantitas_diskon_perbox'] ?></td>
 									<td>
 									<a href="<?= base_url('admin/kelola_barang/ubah/').$data['id_barang'] ?>"><button type="submit" class="btn btn-warning">Ubah</button></a>
 									<hr>

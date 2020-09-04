@@ -112,17 +112,19 @@
                 <th class="no barang">NO</th>
 
                 <th class="description barang">Barang</th>
-                <th class="quantity barang">Quantity</th>
+                <th class="quantity barang">Quantity (/Pcs)</th>
+                <th class="quantity barang">Quantity Besar (/Box)</th>
                 <th class="price barang">Harga</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($item as $data) {
-                $no = 1; ?>
+            <?php $no = 1; foreach ($item as $data) {
+                 ?>
                 <tr class="">
                     <td class="no "><?= $no ?></td>
                     <td class="description "><?= $data['nama_barang'] . ' - ' . $data['merek'] ?></td>
                     <td class="quantity "><?= $data['kuantitas'] ?></td>
+                    <td class="quantity "><?= $data['kuantitas_perbox'] ?></td>
                     <td class="price ">Rp<?= number_format($data['subtotal'], 0, ',', '.') ?></td>
                 </tr>
             <?php $no++;
@@ -130,11 +132,13 @@
             <tr class="">
                 <td class="no hide"></td>
                 <td class="quantity hide"></td>
+                <td class="quantity hide"></td>
                 <td class="description barang">SUBTOTAL</td>
                 <td class="price barang">Rp<?= number_format($transaksi[0]['total'], 0, ',', '.') ?></td>
             </tr>
             <tr class="">
                 <td class="no hide"></td>
+                <td class="quantity hide"></td>
                 <td class="quantity hide"></td>
                 <td class="description barang">DISKON</td>
                 <td class="price barang">Rp<?= number_format($transaksi[0]['diskon'], 0, ',', '.') ?></td>
@@ -142,17 +146,20 @@
             <tr class="">
                 <td class="no hide"></td>
                 <td class="quantity hide"></td>
+                <td class="quantity hide"></td>
                 <td class="description barang">TOTAL</td>
                 <td class="price barang">Rp<?= number_format($transaksi[0]['total'] - $transaksi[0]['diskon'], 0, ',', '.') ?></td>
             </tr>
             <tr class="">
                 <td class="no hide"></td>
                 <td class="quantity hide"></td>
+                <td class="quantity hide"></td>
                 <td class="description barang">Terbayar</td>
                 <td class="price barang">Rp<?= number_format($pembayaran_masuk['pembayaran_masuk'], 0, ',', '.') ?></td>
             </tr>
             <tr class="">
                 <td class="no hide"></td>
+                <td class="quantity hide"></td>
                 <td class="quantity hide"></td>
                 <td class="description barang">Sisa</td>
                 <td class="price barang">Rp<?= number_format(($transaksi[0]['total'] - $transaksi[0]['diskon']) - $pembayaran_masuk['pembayaran_masuk'], 0, ',', '.') ?></td>

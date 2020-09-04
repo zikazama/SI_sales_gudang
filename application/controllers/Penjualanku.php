@@ -108,13 +108,15 @@ class Penjualanku extends CI_Controller
 			$jumlah_diskon = 0;
 			foreach ($this->cart->contents() as $item) {
 				$barang = $this->barang_m->read_where(array('id_barang' => $item['id']))->row();
-				if ($barang->stok < $item['qty']) {
+				if ($barang->stok < $this->cart->product_options($item['rowid'])->kuantitas) {
 					$stok_habis = true;
+				} else if ($barang->stok_perbox < $this->cart->product_options($item['rowid'])->kuantitas_perbox) {
+					$stok_habis_perbox = true;
 				}
 				$jumlah_diskon += $this->cart->product_options($item['rowid'])->potongan_harga;
 			}
 
-			if (!$stok_habis) {
+			if (!$stok_habis && !$stok_habis_perbox) {
 				$data_input = array(
 					'id_sales' => $id_sales,
 					'id_toko' => $data_transaksi['id_toko'],
@@ -131,12 +133,14 @@ class Penjualanku extends CI_Controller
 					$this->item_transaksi_m->create(array(
 						'id_transaksi_sales' => $id_transaksi_sales,
 						'id_barang' => $item['id'],
-						'kuantitas' => $item['qty'],
+						'kuantitas' => $this->cart->product_options($item['rowid'])->kuantitas,
+						'kuantitas_perbox' => $this->cart->product_options($item['rowid'])->kuantitas_perbox,
 						'subtotal' => $item['subtotal'],
 						'subdiskon' => $this->cart->product_options($item['rowid'])->potongan_harga
 					));
 					$this->barang_m->update(array(
-						'stok' => $barang->stok - $item['qty']
+						'stok' => $barang->stok - $this->cart->product_options($item['rowid'])->kuantitas,
+						'stok_perbox' => $barang->stok_perbox - $this->cart->product_options($item['rowid'])->kuantitas_perbox
 					), array(
 						'id_barang' => $item['id']
 					));
