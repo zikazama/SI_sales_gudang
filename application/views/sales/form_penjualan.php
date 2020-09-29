@@ -130,7 +130,7 @@
 														<?= number_format($this->cart->product_options($data['rowid'])->kuantitas_perbox, 0, ',', '.') ?></h5>
 													<h5 class="card-title">Diskon: Rp<?= number_format($this->cart->product_options($data['rowid'])->potongan_harga, 0, ',', '.') ?>
 													</h5>
-													<h5 class="card-title">Subtotal: Rp<?= number_format($data['subtotal'] - $this->cart->product_options($data['rowid'])->potongan_harga, 0, ',', '.') ?>
+													<h5 class="card-title">Subtotal: Rp<?= number_format($this->cart->product_options($data['rowid'])->sebelum_total - $this->cart->product_options($data['rowid'])->potongan_harga, 0, ',', '.') ?>
 													</h5>
 													<button type="button" data-id="<?= $data['rowid'] ?>" class="hapus btn btn-block btn-danger">Hapus</button>
 												</div>

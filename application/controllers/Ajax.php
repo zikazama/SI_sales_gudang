@@ -62,6 +62,7 @@ class Ajax extends CI_Controller {
         $data_barang->potongan_harga = $potongan_harga + $potongan_harga_perbox;
         $data_barang->kuantitas = $kuantitas;
         $data_barang->kuantitas_perbox = $kuantitas_perbox;
+        $data_barang->sebelum_total = ($kuantitas * $harga) + ($kuantitas_perbox * $harga_perbox);
         $kuantitas_fix = $kuantitas+$kuantitas_perbox; 
         $harga_fix = $harga+$harga_perbox;
         $data_input = array(

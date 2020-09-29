@@ -105,6 +105,7 @@ class Penjualanku extends CI_Controller
 			$id_sales = $this->session->userdata('id');
 
 			$stok_habis = false;
+			$stok_habis_perbox = false;
 			$jumlah_diskon = 0;
 			foreach ($this->cart->contents() as $item) {
 				$barang = $this->barang_m->read_where(array('id_barang' => $item['id']))->row();
@@ -135,7 +136,7 @@ class Penjualanku extends CI_Controller
 						'id_barang' => $item['id'],
 						'kuantitas' => $this->cart->product_options($item['rowid'])->kuantitas,
 						'kuantitas_perbox' => $this->cart->product_options($item['rowid'])->kuantitas_perbox,
-						'subtotal' => $item['subtotal'],
+						'subtotal' => $this->cart->product_options($item['rowid'])->sebelum_total,
 						'subdiskon' => $this->cart->product_options($item['rowid'])->potongan_harga
 					));
 					$this->barang_m->update(array(
