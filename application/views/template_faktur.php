@@ -92,16 +92,16 @@
     <h3>FAKTUR</h3>
     <table class="beda">
         <tr>
-            <td style="width: 230mm"></td>
+            <td style="width: 20mm"></td>
             <td>Tanggal : <?= $transaksi[0]['waktu'] ?></td>
         </tr>
         <tr>
-            <td style="width: 230mm"></td>
+            <td style="width: 20mm"></td>
             <td>Kepada Yth : Toko <?= $transaksi[0]['nama_toko'] ?></td>
 
         </tr>
         <tr>
-            <td style="width: 230mm"></td>
+            <td style="width: 20mm"></td>
             <td>Sales : <?= $transaksi[0]['nama_sales'] ?></td>
         </tr>
     </table>
@@ -114,7 +114,11 @@
                 <th class="description barang">Barang</th>
                 <th class="quantity barang">Quantity (/Pcs)</th>
                 <th class="quantity barang">Quantity Besar (/Box)</th>
-                <th class="price barang">Harga</th>
+                <th class="quantity barang">Harga (/Pcs)</th>
+                <th class="quantity barang">Harga (/Box)</th>
+                <th class="quantity barang">Discount</th>
+                <th class="quantity barang">Harga Total</th>
+                <th class="price barang">Subtotal</th>
             </tr>
         </thead>
         <tbody>
@@ -125,12 +129,20 @@
                     <td class="description "><?= $data['nama_barang'] . ' - ' . $data['merek'] ?></td>
                     <td class="quantity "><?= $data['kuantitas'] ?></td>
                     <td class="quantity "><?= $data['kuantitas_perbox'] ?></td>
+                    <td class="quantity ">Rp<?= number_format($data['harga'], 0, ',', '.') ?></td>
+                    <td class="quantity ">Rp<?= number_format($data['harga_perbox'], 0, ',', '.') ?></td>
+                    <td class="quantity ">Rp<?= number_format($data['subdiskon'], 0, ',', '.') ?></td>
+                    <td class="quantity ">Rp<?= number_format($data['subtotal']+$data['subdiskon'], 0, ',', '.') ?></td>
                     <td class="price ">Rp<?= number_format($data['subtotal'], 0, ',', '.') ?></td>
                 </tr>
             <?php $no++;
             } ?>
             <tr class="">
                 <td class="no hide"></td>
+                <td class="quantity hide"></td>
+                <td class="quantity hide"></td>
+                <td class="quantity hide"></td>
+                <td class="quantity hide"></td>
                 <td class="quantity hide"></td>
                 <td class="quantity hide"></td>
                 <td class="description barang">SUBTOTAL</td>
@@ -140,11 +152,19 @@
                 <td class="no hide"></td>
                 <td class="quantity hide"></td>
                 <td class="quantity hide"></td>
+                <td class="quantity hide"></td>
+                <td class="quantity hide"></td>
+                <td class="quantity hide"></td>
+                <td class="quantity hide"></td>
                 <td class="description barang">DISKON</td>
                 <td class="price barang">Rp<?= number_format($transaksi[0]['diskon'], 0, ',', '.') ?></td>
             </tr>
             <tr class="">
                 <td class="no hide"></td>
+                <td class="quantity hide"></td>
+                <td class="quantity hide"></td>
+                <td class="quantity hide"></td>
+                <td class="quantity hide"></td>
                 <td class="quantity hide"></td>
                 <td class="quantity hide"></td>
                 <td class="description barang">TOTAL</td>
@@ -154,11 +174,19 @@
                 <td class="no hide"></td>
                 <td class="quantity hide"></td>
                 <td class="quantity hide"></td>
+                <td class="quantity hide"></td>
+                <td class="quantity hide"></td>
+                <td class="quantity hide"></td>
+                <td class="quantity hide"></td>
                 <td class="description barang">Terbayar</td>
                 <td class="price barang">Rp<?= number_format($pembayaran_masuk['pembayaran_masuk'], 0, ',', '.') ?></td>
             </tr>
             <tr class="">
                 <td class="no hide"></td>
+                <td class="quantity hide"></td>
+                <td class="quantity hide"></td>
+                <td class="quantity hide"></td>
+                <td class="quantity hide"></td>
                 <td class="quantity hide"></td>
                 <td class="quantity hide"></td>
                 <td class="description barang">Sisa</td>
@@ -182,7 +210,7 @@
             Hormat Kami,
             <br><br><br><br><br>
             <hr>
-            SKM
+           ADK
         </div>
     </div>
     <script>

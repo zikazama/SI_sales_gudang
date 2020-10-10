@@ -67,7 +67,7 @@
 
 <body>
     <div class="ticket">
-        <img src="<?= base_url() ?>/assets/images/logo2.png" alt="Logo">
+        <!-- <img src="<?= base_url() ?>/assets/images/logo2.png" alt="Logo"> -->
         <p class="centered">Struk Pembelian CV. Andika Emas Abadi
             <br>Subang</p>
         <br>
@@ -83,7 +83,8 @@
         <table>
             <thead>
                 <tr>
-                    <th class="quantity">Q.</th>
+                    <th class="quantity">QP</th>
+                    <th class="quantity">QB</th>
                     <th class="description">Barang</th>
                     <th class="price">Harga</th>
                 </tr>
@@ -92,21 +93,29 @@
                 <?php foreach ($item as $data) { ?>
                     <tr>
                         <td class="quantity"><?= $data['kuantitas'] ?></td>
+                        <td class="quantity"><?= $data['kuantitas_perbox'] ?></td>
                         <td class="description"><?= $data['nama_barang'] . ' - ' . $data['merek'] ?></td>
                         <td class="price">Rp<?= number_format($data['subtotal'],0,',','.') ?></td>
                     </tr>
                 <?php } ?>
                 <tr>
                     <td class="quantity"></td>
+                    <td class="quantity"></td>
                     <td class="description">SUBTOTAL</td>
                     <td class="price">Rp<?= number_format($transaksi[0]['total'],0,',','.') ?></td>
                 </tr>
+                <?php foreach ($item as $data) { 
+                    if($data['subdiskon'] > 0){
+                    ?>
                 <tr>
                     <td class="quantity"></td>
-                    <td class="description">DISKON</td>
-                    <td class="price">Rp<?= number_format($transaksi[0]['diskon'],0,',','.') ?></td>
+                    <td class="quantity"></td>
+                    <td class="description">DISKON <?= $data['nama_barang'] ?></td>
+                    <td class="price">Rp<?= number_format($data['subdiskon'],0,',','.') ?></td>
                 </tr>
+                <?php }} ?>
                 <tr>
+                    <td class="quantity"></td>
                     <td class="quantity"></td>
                     <td class="description">TOTAL</td>
                     <td class="price">Rp<?= number_format($transaksi[0]['total'] - $transaksi[0]['diskon'],0,',','.') ?></td>

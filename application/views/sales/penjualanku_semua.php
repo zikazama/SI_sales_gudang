@@ -53,6 +53,7 @@
 								<?php if($parsing['penjualanku'] != 0) { 
                                         $no = 1;
                                                     foreach($parsing['penjualanku'] as $data) {
+														if($data['total'] > 0) {
                                                     ?>
 								<tr>
 									<td><?= $no ?></td>
@@ -70,7 +71,7 @@
 												type="submit" class="btn btn-info">Print</button></a> -->
 									</td>
 								</tr>
-								<?php $no++; }
+								<?php $no++; }}
                                             } ?>
 
 							</tbody>

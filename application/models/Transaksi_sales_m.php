@@ -84,7 +84,7 @@ class Transaksi_sales_m extends Base_m
 		$this->db->select('*, transaksi_sales.created_at as waktu');
 		$this->db->from($this->table);
 		$this->db->join('sales', 'sales.id_sales = transaksi_sales.id_sales');
-		$this->db->join('toko', 'toko.id_toko = transaksi_sales.id_toko');
+		$this->db->join('toko', 'toko.id_toko = transaksi_sales.id_toko','RIGHT');
 		$this->db->where($where);
 		return $this->db->get();
 	}

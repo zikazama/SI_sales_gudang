@@ -73,7 +73,8 @@
 											<th>No</th>
 											<th>Nama</th>
 											<th>Harga</th>
-											<th>Kuantitas</th>
+											<th>Kuantitas/pcs</th>
+											<th>Kuantitas/box</th>
 											<th>Jumlah</th>
 											<th>Diskon</th>
 											<th>Subtotal</th>
@@ -91,6 +92,7 @@
 													<td><?= $data['nama_barang'] ?></td>
 													<td>Rp<?= number_format($data['harga'], 0, ',', '.') ?></td>
 													<td><?= $data['kuantitas'] ?></td>
+													<td><?= $data['kuantitas_perbox'] ?></td>
 													<td>Rp<?= number_format($data['subtotal'], 0, ',', '.') ?></td>
 													<td>Rp<?= number_format($data['subdiskon'], 0, ',', '.') ?></td>
 													<td>Rp<?= number_format($data['subtotal'] - $data['subdiskon'], 0, ',', '.') ?></td>

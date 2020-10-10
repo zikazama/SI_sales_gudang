@@ -43,6 +43,7 @@
                                 <?php if ($parsing['laporan_penjualan'] != 0) {
                                     $no = 1;
                                     foreach ($parsing['laporan_penjualan'] as $data) {
+                                        if($data['total'] > 0) {
                                 ?>
                                         <tr>
                                             <td><?= $no ?></td>
@@ -58,7 +59,7 @@
                                             </td>
                                         </tr>
                                 <?php $no++;
-                                    }
+                                    }}
                                 } ?>
 
                             </tbody>
