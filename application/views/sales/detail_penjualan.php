@@ -36,7 +36,7 @@
 							</tr>
 							<tr>
 								<td>Subtotal</td>
-								<td>: Rp<?= number_format($parsing['transaksi'][0]['total'], 0, ',', '.') ?></td>
+								<td>: Rp<?= number_format($parsing['transaksi'][0]['total'] + $parsing['transaksi'][0]['diskon'], 0, ',', '.') ?></td>
 							</tr>
 							<tr>
 								<td>Diskon</td>
@@ -44,7 +44,7 @@
 							</tr>
 							<tr>
 								<td>Total</td>
-								<td>: Rp<?= number_format($parsing['transaksi'][0]['total'] - $parsing['transaksi'][0]['diskon'], 0, ',', '.') ?></td>
+								<td>: Rp<?= number_format($parsing['transaksi'][0]['total'] , 0, ',', '.') ?></td>
 							</tr>
 							<tr>
 								<td>Waktu</td>
@@ -110,7 +110,7 @@
 							</div>
 							<div class="tab-pane fade" id="pills-pembayaran" role="tabpanel" aria-labelledby="pills-profile-tab">
 								<?php if (($parsing['transaksi'][0]['total'] - $parsing['transaksi'][0]['diskon']) > $parsing['pembayaran_masuk']['pembayaran_masuk']) { ?>
-									<h5 class="text-danger text-center">Sisa Pembayaran adalah Rp<span id="harus_dibayar" data-nilai="<?= ($parsing['transaksi'][0]['total'] - $parsing['transaksi'][0]['diskon']) - $parsing['pembayaran_masuk']['pembayaran_masuk'] ?>"><?= number_format(($parsing['transaksi'][0]['total'] - $parsing['transaksi'][0]['diskon']) - $parsing['pembayaran_masuk']['pembayaran_masuk'], 0, ',', '.') ?></span></h5>
+									<h5 class="text-danger text-center">Sisa Pembayaran adalah Rp<span id="harus_dibayar" data-nilai="<?= ($parsing['transaksi'][0]['total'] ) - $parsing['pembayaran_masuk']['pembayaran_masuk'] ?>"><?= number_format(($parsing['transaksi'][0]['total'] ) - $parsing['pembayaran_masuk']['pembayaran_masuk'], 0, ',', '.') ?></span></h5>
 									<form action="<?= base_url('penjualanku/buat_pembayaran/') . $parsing['transaksi'][0]['id_transaksi_sales'] ?>" method="POST">
 										<div class="form-group">
 											<label for="exampleInputPassword2">Jumlah yang dibayar</label>

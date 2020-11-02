@@ -42,11 +42,11 @@
             //console.log(parseInt(isi[0].minimal_kuantitas_diskon));
             if(parseInt(kuantitas) >= parseInt(isi[0].minimal_kuantitas_diskon)){
                 if(parseInt(isi[0].minimal_kuantitas_diskon) != 0) {
-                var strata = parseInt(kuantitas) / parseInt(isi[0].minimal_kuantitas_diskon);
+                var strata = parseInt(kuantitas);
                 } else {
                 var strata = 0;
                 }
-                strata = Math.floor(strata); 
+                //strata = Math.floor(strata); 
                 let diskonInput = isi[0].diskon * strata; 
                 $('#diskon').val(formatRupiah(diskonInput.toString(),''));
                 diskon = isi[0].diskon;
@@ -56,11 +56,11 @@
             }
             if(parseInt(kuantitas_perbox) >= parseInt(isi[0].minimal_kuantitas_diskon_perbox)){
                 if(parseInt(isi[0].minimal_kuantitas_diskon_perbox) != 0) {
-                var strata_perbox = parseInt(kuantitas_perbox) / parseInt(isi[0].minimal_kuantitas_diskon_perbox);
+                var strata_perbox = parseInt(kuantitas_perbox);
                 } else {
                 var strata_perbox = 0;
                 } 
-                strata_perbox = Math.floor(strata_perbox);
+                //strata_perbox = Math.floor(strata_perbox);
                 console.log(strata_perbox);
                 let diskonInput_perbox = isi[0].diskon_perbox * strata_perbox; 
                 $('#diskon_perbox').val(formatRupiah(diskonInput_perbox.toString(),''));
@@ -70,7 +70,7 @@
                 diskon_perbox = 0;
             }
             $('#subtotal').val(formatRupiah(((harga*kuantitas)+(harga_perbox*kuantitas_perbox)).toString(),''));
-            $('#total').val(formatRupiah((((harga*kuantitas)-diskon)+((harga_perbox*kuantitas_perbox)-diskon_perbox)).toString(),''));
+            $('#total').val(formatRupiah((((harga*kuantitas)-diskon*kuantitas)+((harga_perbox*kuantitas_perbox)-diskon_perbox*kuantitas_perbox)).toString(),''));
         });
     });
     $('#kuantitas_perbox').keyup(function(){
@@ -86,11 +86,11 @@
             //console.log(parseInt(isi[0].minimal_kuantitas_diskon));
             if(parseInt(kuantitas) >= parseInt(isi[0].minimal_kuantitas_diskon)){
                 if(parseInt(isi[0].minimal_kuantitas_diskon) != 0) {
-                var strata = parseInt(kuantitas) / parseInt(isi[0].minimal_kuantitas_diskon);
+                var strata = parseInt(kuantitas);
                 } else {
                 var strata = 0;
                 }
-                strata = Math.floor(strata); 
+                //strata = Math.floor(strata); 
                 let diskonInput = isi[0].diskon * strata; 
                 $('#diskon').val(formatRupiah(diskonInput.toString(),''));
                 diskon = isi[0].diskon;
@@ -100,11 +100,11 @@
             }
             if(parseInt(kuantitas_perbox) >= parseInt(isi[0].minimal_kuantitas_diskon_perbox)){
                 if(parseInt(isi[0].minimal_kuantitas_diskon_perbox) != 0) {
-                var strata_perbox = parseInt(kuantitas_perbox) / parseInt(isi[0].minimal_kuantitas_diskon_perbox);
+                var strata_perbox = parseInt(kuantitas_perbox);
                 } else {
                 var strata_perbox = 0;
                 } 
-                strata_perbox = Math.floor(strata_perbox);
+                //strata_perbox = Math.floor(strata_perbox);
                 console.log(strata_perbox);
                 let diskonInput_perbox = isi[0].diskon_perbox * strata_perbox; 
                 $('#diskon_perbox').val(formatRupiah(diskonInput_perbox.toString(),''));
@@ -114,7 +114,7 @@
                 diskon_perbox = 0;
             }
             $('#subtotal').val(formatRupiah(((harga*kuantitas)+(harga_perbox*kuantitas_perbox)).toString(),''));
-            $('#total').val(formatRupiah((((harga*kuantitas)-diskon)+((harga_perbox*kuantitas_perbox)-diskon_perbox)).toString(),''));
+            $('#total').val(formatRupiah((((harga*kuantitas)-diskon*kuantitas)+((harga_perbox*kuantitas_perbox)-diskon_perbox*kuantitas_perbox)).toString(),''));
         });
     });
 	$('#tambahBarang').click(function (e) {

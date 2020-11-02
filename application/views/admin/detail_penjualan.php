@@ -40,7 +40,7 @@
 							</tr>
 							<tr>
 								<td>Subtotal</td>
-								<td>: Rp<?= number_format($parsing['transaksi'][0]['total'], 0, ',', '.') ?></td>
+								<td>: Rp<?= number_format($parsing['transaksi'][0]['total'] + $parsing['transaksi'][0]['diskon'], 0, ',', '.') ?></td>
 							</tr>
 							<tr>
 								<td>Diskon</td>
@@ -48,7 +48,7 @@
 							</tr>
 							<tr>
 								<td>Total</td>
-								<td>: Rp<?= number_format($parsing['transaksi'][0]['total'] - $parsing['transaksi'][0]['diskon'], 0, ',', '.') ?></td>
+								<td>: Rp<?= number_format($parsing['transaksi'][0]['total'] , 0, ',', '.') ?></td>
 							</tr>
 							<tr>
 								<td>Waktu</td>

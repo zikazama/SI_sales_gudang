@@ -48,9 +48,9 @@
                                         <tr>
                                             <td><?= $no ?></td>
                                             <td><?= $data['nama_sales'] ?></td>
-                                            <td>Rp<?= number_format($data['total'], 0, ',', '.') ?></td>
+                                            <td>Rp<?= number_format($data['total'] + $data['diskon'], 0, ',', '.') ?></td>
                                             <td>Rp<?= number_format($data['diskon'], 0, ',', '.') ?></td>
-                                            <td>Rp<?= number_format($data['total'] - $data['diskon'], 0, ',', '.') ?></td>
+                                            <td>Rp<?= number_format($data['total'] , 0, ',', '.') ?></td>
                                             <td><?= $data['waktu'] ?></td>
                                             <td>
                                                 <a href="<?= base_url('admin/laporan_penjualan/detail/') . $data['id_transaksi_sales'] ?>"><button type="submit" class="btn btn-primary">Detail</button></a>

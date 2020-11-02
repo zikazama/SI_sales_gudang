@@ -157,7 +157,7 @@
 									<label for="exampleInputPassword2">Jumlah yang harus dibayar</label>
 									<div class="input-group-prepend">
 										<!-- <span class="input-group-text" id="inputGroupPrepend">Rp</span> -->
-										<input type="text" class="form-control" id="harus_dibayar" placeholder="Harga" value="Rp <?= number_format($this->cart->total(),0,',','.') ?>" readonly>
+										<input type="text" class="form-control" id="harus_dibayar" placeholder="Harga" value="Rp <?= number_format($parsing['sebelum_total'] - $parsing['potongan_harga'],0,',','.') ?>" readonly>
 
 									</div>
 								</div>

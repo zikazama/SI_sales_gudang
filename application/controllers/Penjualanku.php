@@ -77,11 +77,21 @@ class Penjualanku extends CI_Controller
 		$this->load->model('toko_m');
 		$barang = $this->barang_m->read()->result_array();
 		$toko = $this->toko_m->read()->result_array();
+		$potongan_harga = 0;
+		$sebelum_total = 0;
+		if ($this->cart->contents() != null) {
+			foreach ($this->cart->contents() as $item) {
+				$sebelum_total += $this->cart->product_options($item['rowid'])->sebelum_total;
+				$potongan_harga += $this->cart->product_options($item['rowid'])->potongan_harga;
+			}
+		}
 		$data = array(
 			'konten' => 'sales/form_penjualan',
 			'parsing' => array(
 				'barang' => $barang,
-				'toko' => $toko
+				'toko' => $toko,
+				'potongan_harga' => $potongan_harga,
+				'sebelum_total' => $sebelum_total
 			),
 			'js' => 'sales/js_penjualan'
 		);
@@ -107,6 +117,7 @@ class Penjualanku extends CI_Controller
 			$stok_habis = false;
 			$stok_habis_perbox = false;
 			$jumlah_diskon = 0;
+			$sebelum_total = 0;
 			foreach ($this->cart->contents() as $item) {
 				$barang = $this->barang_m->read_where(array('id_barang' => $item['id']))->row();
 				if ($barang->stok < $this->cart->product_options($item['rowid'])->kuantitas) {
@@ -115,16 +126,17 @@ class Penjualanku extends CI_Controller
 					$stok_habis_perbox = true;
 				}
 				$jumlah_diskon += $this->cart->product_options($item['rowid'])->potongan_harga;
+				$sebelum_total += $this->cart->product_options($item['rowid'])->sebelum_total;
 			}
 
 			if (!$stok_habis && !$stok_habis_perbox) {
 				$data_input = array(
 					'id_sales' => $id_sales,
 					'id_toko' => $data_transaksi['id_toko'],
-					'total' => $this->cart->total(),
+					'total' => $sebelum_total - $jumlah_diskon,
 					'diskon' => $jumlah_diskon
 				);
-				if ($this->priceToFloat($data_transaksi['pembayaran']) == $this->cart->total()) {
+				if ($this->priceToFloat($data_transaksi['pembayaran']) == $data_input['total']) {
 					$data_input['is_lunas'] = 1;
 				}
 				$this->transaksi_sales_m->create($data_input);
@@ -146,10 +158,11 @@ class Penjualanku extends CI_Controller
 						'id_barang' => $item['id']
 					));
 				}
-				$this->pembayaran_m->create(array(
+				$data_pembayaran = array(
 					'id_transaksi_sales' => $id_transaksi_sales,
 					'jumlah_pembayaran' => $this->priceToFloat($data_transaksi['pembayaran'])
-				));
+				);
+				$this->pembayaran_m->create($data_pembayaran);
 				$this->cart->destroy();
 				$this->session->set_flashdata(array(
 					'status' => 1,
@@ -200,11 +213,11 @@ class Penjualanku extends CI_Controller
 		if ($this->pembayaran_m->create($data)) {
 			$hitung_pembayaran = $this->pembayaran_m->pembayaran_masuk(array('id_transaksi_sales' => $id_transaksi))->row_array();
 			$total = $this->transaksi_sales_m->read_full_where(array('id_transaksi_sales' => $id_transaksi))->row_array();
-			// var_dump($hitung_pembayaran);
-			// var_dump($total);
-			// die();
-			if($hitung_pembayaran['pembayaran_masuk'] == $total['total']){
-				$this->transaksi_sales_m->update(array('is_lunas' => '1'),array('id_transaksi_sales'=>$id_transaksi));
+			//  var_dump($hitung_pembayaran['pembayaran_masuk']);
+			//  var_dump($total['total']);
+			//  die();
+			if ($hitung_pembayaran['pembayaran_masuk'] == $total['total']) {
+				$this->transaksi_sales_m->update(array('is_lunas' => '1'), array('id_transaksi_sales' => $id_transaksi));
 			}
 			$this->session->set_flashdata(array(
 				'status' => 1,

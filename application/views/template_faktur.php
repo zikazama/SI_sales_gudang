@@ -19,6 +19,16 @@
 
         }
 
+        th {
+            font-size: 10px;
+        }
+
+        td {
+            font-size: 12px;
+        }
+
+
+
         td.barang,
         th.barang,
         tr.barang {
@@ -73,35 +83,46 @@
         }
 
         div.signature {
-            width: 50mm;
+            margin-left: 70px;
+            width: 60mm;
             text-align: center;
         }
+
         div.row {
             display: table;
-    width: 100%; /*Optional*/
-    table-layout: fixed; /*Optional*/
-    border-spacing: 10px; /*Optional*/
+            width: 100%;
+            /*Optional*/
+            table-layout: fixed;
+            /*Optional*/
+            border-spacing: 10px;
+            /*Optional*/
         }
+
         div.column {
             display: table-cell;
+            float: left;
         }
     </style>
 </head>
 
 <body>
     <h3>FAKTUR</h3>
+    
     <table class="beda">
         <tr>
-            <td style="width: 20mm"></td>
+            <td>CV. Andika Emas Abadi</td>
+            <td style="width: 70mm"></td>
             <td>Tanggal : <?= $transaksi[0]['waktu'] ?></td>
         </tr>
         <tr>
-            <td style="width: 20mm"></td>
+            <td>Jl. Raya Eyang Soemohardjo.</td>
+            <td style="width: 70mm"></td>
             <td>Kepada Yth : Toko <?= $transaksi[0]['nama_toko'] ?></td>
 
         </tr>
         <tr>
-            <td style="width: 20mm"></td>
+            <td>Desa Kediri Kecamatan Binong Subang</td>
+            <td style="width: 70mm"></td>
             <td>Sales : <?= $transaksi[0]['nama_sales'] ?></td>
         </tr>
     </table>
@@ -122,18 +143,19 @@
             </tr>
         </thead>
         <tbody>
-            <?php $no = 1; foreach ($item as $data) {
-                 ?>
+            <?php $no = $index_awal;
+            for ($i=$index_awal-1; $i < $index_akhir; $i++) {
+            ?>
                 <tr class="">
                     <td class="no "><?= $no ?></td>
-                    <td class="description "><?= $data['nama_barang'] . ' - ' . $data['merek'] ?></td>
-                    <td class="quantity "><?= $data['kuantitas'] ?></td>
-                    <td class="quantity "><?= $data['kuantitas_perbox'] ?></td>
-                    <td class="quantity ">Rp<?= number_format($data['harga'], 0, ',', '.') ?></td>
-                    <td class="quantity ">Rp<?= number_format($data['harga_perbox'], 0, ',', '.') ?></td>
-                    <td class="quantity ">Rp<?= number_format($data['subdiskon'], 0, ',', '.') ?></td>
-                    <td class="quantity ">Rp<?= number_format($data['subtotal']+$data['subdiskon'], 0, ',', '.') ?></td>
-                    <td class="price ">Rp<?= number_format($data['subtotal'], 0, ',', '.') ?></td>
+                    <td class="description "><?= $item[$i]['nama_barang'] . ' - ' . $item[$i]['merek'] ?></td>
+                    <td class="quantity "><?= $item[$i]['kuantitas'] ?></td>
+                    <td class="quantity "><?= $item[$i]['kuantitas_perbox'] ?></td>
+                    <td class="quantity ">Rp<?= number_format($item[$i]['kuantitas'] ? $item[$i]['harga'] : 0 , 0, ',', '.') ?></td>
+                    <td class="quantity ">Rp<?= number_format($item[$i]['kuantitas_perbox'] ? $item[$i]['harga_perbox'] : 0, 0, ',', '.') ?></td>
+                    <td class="quantity ">Rp<?= number_format($item[$i]['subdiskon'], 0, ',', '.') ?></td>
+                    <td class="quantity ">Rp<?= number_format($item[$i]['subtotal'] + $item[$i]['subdiskon'], 0, ',', '.') ?></td>
+                    <td class="price ">Rp<?= number_format($item[$i]['subtotal'], 0, ',', '.') ?></td>
                 </tr>
             <?php $no++;
             } ?>
@@ -146,7 +168,7 @@
                 <td class="quantity hide"></td>
                 <td class="quantity hide"></td>
                 <td class="description barang">SUBTOTAL</td>
-                <td class="price barang">Rp<?= number_format($transaksi[0]['total'], 0, ',', '.') ?></td>
+                <td class="price barang">Rp<?= number_format($transaksi[0]['total'] + $transaksi[0]['diskon'], 0, ',', '.') ?></td>
             </tr>
             <tr class="">
                 <td class="no hide"></td>
@@ -168,7 +190,7 @@
                 <td class="quantity hide"></td>
                 <td class="quantity hide"></td>
                 <td class="description barang">TOTAL</td>
-                <td class="price barang">Rp<?= number_format($transaksi[0]['total'] - $transaksi[0]['diskon'], 0, ',', '.') ?></td>
+                <td class="price barang">Rp<?= number_format($transaksi[0]['total'], 0, ',', '.') ?></td>
             </tr>
             <tr class="">
                 <td class="no hide"></td>
@@ -190,29 +212,31 @@
                 <td class="quantity hide"></td>
                 <td class="quantity hide"></td>
                 <td class="description barang">Sisa</td>
-                <td class="price barang">Rp<?= number_format(($transaksi[0]['total'] - $transaksi[0]['diskon']) - $pembayaran_masuk['pembayaran_masuk'], 0, ',', '.') ?></td>
+                <td class="price barang">Rp<?= number_format(($transaksi[0]['total']) - $pembayaran_masuk['pembayaran_masuk'], 0, ',', '.') ?></td>
             </tr>
 
         </tbody>
     </table>
-
+            <br>
+    <?php if($status_ttd) { ?>
     <div class="row">
         <div class="column keterangan">
 
         </div>
         <div class="column signature">
             Diterima Oleh,
-            <br><br><br><br><br>
+            <br><br><br><br>
             <hr>
             Tanda Tangan & Nama Jelas
         </div>
         <div class="column signature">
             Hormat Kami,
-            <br><br><br><br><br>
+            <br><br><br><br>
             <hr>
-           ADK
+            ADK
         </div>
     </div>
+    <?php } ?>
     <script>
         window.print();
     </script>

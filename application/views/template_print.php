@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <style>
         * {
-            font-size: 12px;
+            font-size: 8px;
             font-family: 'Times New Roman';
         }
 
@@ -102,7 +102,7 @@
                     <td class="quantity"></td>
                     <td class="quantity"></td>
                     <td class="description">SUBTOTAL</td>
-                    <td class="price">Rp<?= number_format($transaksi[0]['total'],0,',','.') ?></td>
+                    <td class="price">Rp<?= number_format($transaksi[0]['total'] + $transaksi[0]['diskon'],0,',','.') ?></td>
                 </tr>
                 <?php foreach ($item as $data) { 
                     if($data['subdiskon'] > 0){
@@ -118,7 +118,7 @@
                     <td class="quantity"></td>
                     <td class="quantity"></td>
                     <td class="description">TOTAL</td>
-                    <td class="price">Rp<?= number_format($transaksi[0]['total'] - $transaksi[0]['diskon'],0,',','.') ?></td>
+                    <td class="price">Rp<?= number_format($transaksi[0]['total'] ,0,',','.') ?></td>
                 </tr>
             </tbody>
         </table>

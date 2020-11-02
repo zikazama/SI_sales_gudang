@@ -131,14 +131,17 @@ class Laporan_penjualan extends CI_Controller
 		$this->load->view('_partials/template', $data);
 	}
 
-	public function pilah_export(){
+	public function pilah_export()
+	{
 		$post = $this->input->post();
-		if($post['awal'] == null || $post['akhir'] || null){
-
+		if ($post['awal'] == null || $post['akhir'] || null) {
 		}
 	}
 
-	public function print($id_transaksi){
+	public function print($id_transaksi)
+	{
+		$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => [210, 148.5],  'orientation' => 'P']);
+
 		$this->load->model('transaksi_sales_m');
 		$this->load->model('item_transaksi_m');
 		$this->load->model('pembayaran_m');
@@ -150,9 +153,62 @@ class Laporan_penjualan extends CI_Controller
 			'transaksi' => $data_transaksi,
 			'item' => $data_item,
 			'pembayaran' => $data_pembayaran,
-			'pembayaran_masuk' => $data_pembayaran_masuk
+			'pembayaran_masuk' => $data_pembayaran_masuk,
+			'status_ttd' => false
 		);
-		$this->load->view('template_faktur',$data);
+		$jumlah_item = count($data_item);
+		$hasil_bagi = $jumlah_item / 5;
+		$hasil_bagi = floor($hasil_bagi);
+		$sisa_bagi = $jumlah_item % 5;
+		if ($jumlah_item < 5) {
+			$data['index_awal'] = 1;
+			$data['index_akhir'] = $sisa_bagi;
+			$data['status_ttd'] = true;
+			$tampilan = $this->load->view('template_faktur', $data, TRUE);
+			$mpdf->WriteHTML($tampilan);
+		} else if($jumlah_item == 5){
+			$data['index_awal'] = 1;
+			$data['index_akhir'] = 5;
+			$data['status_ttd'] = true;
+			$tampilan = $this->load->view('template_faktur', $data, TRUE);
+			$mpdf->WriteHTML($tampilan);
+		} else if ($jumlah_item > 5 && $sisa_bagi == 0) {
+			$data['index_awal'] = 1;
+			$data['index_akhir'] = 5;
+			while ($hasil_bagi > 0) {
+				if ($hasil_bagi == 1) {
+					$data['status_ttd'] = true;
+				} 
+				$tampilan = $this->load->view('template_faktur', $data, TRUE);
+				$mpdf->WriteHTML($tampilan);
+				if ($hasil_bagi > 1) {
+					$mpdf->AddPage();
+					$data['index_akhir'] += 5;
+				} 
+				$hasil_bagi--;
+				$data['index_awal'] += 5;
+			}
+		} else if ($jumlah_item > 5 && $sisa_bagi != 0) {
+			$hasil_bagi += 1;
+			$data['index_awal'] = 1;
+			$data['index_akhir'] = 5;
+			while ($hasil_bagi > 0) {
+				if ($hasil_bagi == 1) {
+					$data['status_ttd'] = true;
+					$data['index_akhir'] = $data['index_akhir'] - 5 + $sisa_bagi;
+				}
+				$tampilan = $this->load->view('template_faktur', $data, TRUE);
+				$mpdf->WriteHTML($tampilan);
+				if ($hasil_bagi > 1) {
+					$mpdf->AddPage();
+					$data['index_akhir'] += 5;
+				} 
+				$hasil_bagi--;
+				$data['index_awal'] += 5;
+			}	
+			//die();
+		}
+		$mpdf->Output();
 	}
 
 	private function export()
@@ -162,7 +218,7 @@ class Laporan_penjualan extends CI_Controller
 		$spreadsheet = new Spreadsheet;
 
 		$spreadsheet->setActiveSheetIndex(0)
-		->setCellValue('A2', 'No')
+			->setCellValue('A2', 'No')
 			->setCellValue('B2', 'Nama Sales')
 			->setCellValue('C2', 'Barang')
 			->setCellValue('D2', 'Merek')
@@ -177,16 +233,16 @@ class Laporan_penjualan extends CI_Controller
 		foreach ($data as $d) {
 			$total = (int) $d['subtotal'] - (int) $d['subdiskon'];
 			$spreadsheet->setActiveSheetIndex(0)
-			->setCellValue('A' . $kolom, $nomor)
+				->setCellValue('A' . $kolom, $nomor)
 				->setCellValue('B' . $kolom, $d['nama_sales'])
 				->setCellValue('C' . $kolom, $d['nama_barang'])
 				->setCellValue('D' . $kolom, $d['merek'])
 				->setCellValue('E' . $kolom, $d['kuantitas'])
-				->setCellValue('F' . $kolom, number_format($d['subtotal'],0,'.',','))
-				->setCellValue('G' . $kolom, number_format($d['subdiskon'],0,'.',','))
-				->setCellValue('H' . $kolom, number_format($total,0,'.',','))
-				->setCellValue('I' . $kolom, date('d-m-Y',strtotime($d['created_at'])));
-			
+				->setCellValue('F' . $kolom, number_format($d['subtotal'], 0, '.', ','))
+				->setCellValue('G' . $kolom, number_format($d['subdiskon'], 0, '.', ','))
+				->setCellValue('H' . $kolom, number_format($total, 0, '.', ','))
+				->setCellValue('I' . $kolom, date('d-m-Y', strtotime($d['created_at'])));
+
 			$kolom++;
 			$nomor++;
 		}
@@ -194,13 +250,13 @@ class Laporan_penjualan extends CI_Controller
 		$gtot = $this->item_transaksi_m->grand_total()->row_array();
 		$grand_total = $gtot['subtotal'] - $gtot['subdiskon'];
 		$spreadsheet->setActiveSheetIndex(0)
-			->setCellValue('G'.$kolom,'Grand Total')
-			->setCellValue('H'.$kolom,number_format($grand_total,0,'.',','));
+			->setCellValue('G' . $kolom, 'Grand Total')
+			->setCellValue('H' . $kolom, number_format($grand_total, 0, '.', ','));
 
 		$writer = new Xlsx($spreadsheet);
 		$tanggal = date('d-m-Y');
 		header('Content-Type: application/vnd.ms-excel');
-		header('Content-Disposition: attachment;filename="Rekap data '.$tanggal.' .xlsx"');
+		header('Content-Disposition: attachment;filename="Rekap data ' . $tanggal . ' .xlsx"');
 		header('Cache-Control: max-age=0');
 
 		$writer->save('php://output');
@@ -210,9 +266,9 @@ class Laporan_penjualan extends CI_Controller
 	{
 		$this->load->model('item_transaksi_m');
 		$post = $this->input->post();
-		$data = $this->item_transaksi_m->read_print_where(array('date(item_transaksi.created_at) >=' => $post['awal'],'date(item_transaksi.created_at) <=' => $post['akhir']))->result_array();
+		$data = $this->item_transaksi_m->read_print_where(array('date(item_transaksi.created_at) >=' => $post['awal'], 'date(item_transaksi.created_at) <=' => $post['akhir']))->result_array();
 		$spreadsheet = new Spreadsheet;
-		$spreadsheet->setActiveSheetIndex(0)->setCellValue('A1',"Rekap Data Penjualan Barang $post[awal] hingga $post[akhir]");
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('A1', "Rekap Data Penjualan Barang $post[awal] hingga $post[akhir]");
 		$spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('A2', 'No')
 			->setCellValue('B2', 'Nama Sales')
@@ -234,24 +290,24 @@ class Laporan_penjualan extends CI_Controller
 				->setCellValue('C' . $kolom, $d['nama_barang'])
 				->setCellValue('D' . $kolom, $d['merek'])
 				->setCellValue('E' . $kolom, $d['kuantitas'])
-				->setCellValue('F' . $kolom, number_format($d['subtotal'],0,'.',','))
-				->setCellValue('G' . $kolom, number_format($d['subdiskon'],0,'.',','))
-				->setCellValue('H' . $kolom, number_format($total,0,'.',','))
-				->setCellValue('I' . $kolom, date('d-m-Y',strtotime($d['created_at'])));
-			
+				->setCellValue('F' . $kolom, number_format($d['subtotal'], 0, '.', ','))
+				->setCellValue('G' . $kolom, number_format($d['subdiskon'], 0, '.', ','))
+				->setCellValue('H' . $kolom, number_format($total, 0, '.', ','))
+				->setCellValue('I' . $kolom, date('d-m-Y', strtotime($d['created_at'])));
+
 			$kolom++;
 			$nomor++;
 		}
 
-		$gtot = $this->item_transaksi_m->grand_total_where(array('date(item_transaksi.created_at) >=' => $post['awal'],'date(item_transaksi.created_at) <=' => $post['akhir']))->row_array();
+		$gtot = $this->item_transaksi_m->grand_total_where(array('date(item_transaksi.created_at) >=' => $post['awal'], 'date(item_transaksi.created_at) <=' => $post['akhir']))->row_array();
 		$grand_total = $gtot['subtotal'] - $gtot['subdiskon'];
 		$spreadsheet->setActiveSheetIndex(0)
-			->setCellValue('G'.$kolom,'Grand Total')
-			->setCellValue('H'.$kolom,number_format($grand_total,0,'.',','));
+			->setCellValue('G' . $kolom, 'Grand Total')
+			->setCellValue('H' . $kolom, number_format($grand_total, 0, '.', ','));
 
 		$writer = new Xlsx($spreadsheet);
 		header('Content-Type: application/vnd.ms-excel');
-		header('Content-Disposition: attachment;filename="Rekap Data Penjualan '.$post['awal'].' hingga '.$post['akhir'].' .xlsx"');
+		header('Content-Disposition: attachment;filename="Rekap Data Penjualan ' . $post['awal'] . ' hingga ' . $post['akhir'] . ' .xlsx"');
 		header('Cache-Control: max-age=0');
 
 		$writer->save('php://output');

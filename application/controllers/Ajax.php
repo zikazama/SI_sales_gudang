@@ -39,22 +39,22 @@ class Ajax extends CI_Controller {
         $data_barang = $this->barang_m->read_where(array('id_barang' => $id_barang))->row();
         if($kuantitas >= $data_barang->minimal_kuantitas_diskon){
             if($data_barang->minimal_kuantitas_diskon != 0) {
-            $strata = $kuantitas / $data_barang->minimal_kuantitas_diskon;
+            $strata = $kuantitas;
             } else {
                 $strata = 0;
             }
-            $strata = floor($strata);
+            //$strata = floor($strata);
             $potongan_harga = $data_barang->diskon * $strata;
         } else {
             $potongan_harga = 0;
         }
         if($kuantitas_perbox >= $data_barang->minimal_kuantitas_diskon_perbox){
             if($data_barang->minimal_kuantitas_diskon_perbox != 0) {
-            $strata_perbox = $kuantitas_perbox / $data_barang->minimal_kuantitas_diskon_perbox;
+            $strata_perbox = $kuantitas_perbox ;
             } else {
                 $strata_perbox = 0;
             }
-            $strata_perbox = floor($strata_perbox);
+            //$strata_perbox = floor($strata_perbox);
             $potongan_harga_perbox = $data_barang->diskon_perbox * $strata_perbox;
         } else {
             $potongan_harga_perbox = 0;
