@@ -64,8 +64,14 @@
 									<td><?= $data['created_at'] ?></td>
 								
 									<td>
+										<?php if($data['status'] == 'diterima') { ?>
 										<a href="<?= base_url('penjualanku/detail/').$data['id_transaksi_sales'] ?>"><button
 												type="submit" class="btn btn-primary">Detail</button></a>
+										<?php } else if ($data['status'] == 'pending') { ?>
+											<button class="btn btn-warning">Pending</button>
+										<?php } else if ($data['status'] == 'ditolak') { ?>
+											<button class="btn btn-danger">Ditolak</button>
+										<?php } ?>
 										<!-- <hr>
 										<a href="<?= base_url('penjualanku/print/').$data['id_transaksi_sales'] ?>"><button
 												type="submit" class="btn btn-info">Print</button></a> -->

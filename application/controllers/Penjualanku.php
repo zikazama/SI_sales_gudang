@@ -116,6 +116,8 @@ class Penjualanku extends CI_Controller
 
 			$stok_habis = false;
 			$stok_habis_perbox = false;
+			$pengajuan_pcs = false;
+			$pengajuan_box = false;
 			$jumlah_diskon = 0;
 			$sebelum_total = 0;
 			foreach ($this->cart->contents() as $item) {
@@ -127,6 +129,12 @@ class Penjualanku extends CI_Controller
 				}
 				$jumlah_diskon += $this->cart->product_options($item['rowid'])->potongan_harga;
 				$sebelum_total += $this->cart->product_options($item['rowid'])->sebelum_total;
+				if ($this->cart->product_options($item['rowid'])->pengajuan_pcs > 0) {
+					$pengajuan_pcs = true;
+				}
+				if ($this->cart->product_options($item['rowid'])->pengajuan_box > 0) {
+					$pengajuan_box = true;
+				}
 			}
 
 			if (!$stok_habis && !$stok_habis_perbox) {
@@ -139,18 +147,24 @@ class Penjualanku extends CI_Controller
 				if ($this->priceToFloat($data_transaksi['pembayaran']) == $data_input['total']) {
 					$data_input['is_lunas'] = 1;
 				}
+				if($pengajuan_pcs == true || $pengajuan_box == true){
+					$data_input['status'] = 'pending';
+				}
 				$this->transaksi_sales_m->create($data_input);
 				$id_transaksi_sales = $this->db->insert_id();
 				foreach ($this->cart->contents() as $item) {
 					$barang = $this->barang_m->read_where(array('id_barang' => $item['id']))->row();
-					$this->item_transaksi_m->create(array(
+					$item_input = array(
 						'id_transaksi_sales' => $id_transaksi_sales,
 						'id_barang' => $item['id'],
 						'kuantitas' => $this->cart->product_options($item['rowid'])->kuantitas,
 						'kuantitas_perbox' => $this->cart->product_options($item['rowid'])->kuantitas_perbox,
+						'harga_fix_pcs' => $this->cart->product_options($item['rowid'])->harga,
+						'harga_fix_box' => $this->cart->product_options($item['rowid'])->harga_perbox,
 						'subtotal' => $this->cart->product_options($item['rowid'])->sebelum_total,
 						'subdiskon' => $this->cart->product_options($item['rowid'])->potongan_harga
-					));
+					);
+					$this->item_transaksi_m->create($item_input);
 					$this->barang_m->update(array(
 						'stok' => $barang->stok - $this->cart->product_options($item['rowid'])->kuantitas,
 						'stok_perbox' => $barang->stok_perbox - $this->cart->product_options($item['rowid'])->kuantitas_perbox
@@ -264,5 +278,9 @@ class Penjualanku extends CI_Controller
 
 		// return float
 		return (float) $s;
+	}
+
+	public function test(){
+		var_dump($this->cart->contents());
 	}
 }

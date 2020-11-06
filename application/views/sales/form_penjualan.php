@@ -45,16 +45,16 @@
 									<label for="exampleInputPassword2">Harga / Pcs</label>
 									<div class="input-group-prepend">
 										<!-- <span class="input-group-text" id="inputGroupPrepend">Rp</span> -->
-										<input type="text" class="form-control" id="harga" placeholder="Harga" value="0" readonly>
-
+										<input onkeyup="rupiah(this)" type="text" class="form-control" id="harga" placeholder="Harga" value="0" readonly>
+										<button id="ajukan_harga_pcs" class="btn btn-primary">Ajukan Harga Pcs</button>
 									</div>
 								</div>
 								<div class="form-group">
 									<label for="exampleInputPassword2">Harga / Box</label>
 									<div class="input-group-prepend">
 										<!-- <span class="input-group-text" id="inputGroupPrepend">Rp</span> -->
-										<input type="text" class="form-control" id="harga_perbox" placeholder="Harga/Box" value="0" readonly>
-
+										<input onkeyup="rupiah(this)" type="text" class="form-control" id="harga_perbox" placeholder="Harga/Box" value="0" readonly>
+										<button id="ajukan_harga_box" class="btn btn-primary">Ajukan Harga Box</button>
 									</div>
 								</div>
 								<div class="form-group">
@@ -97,6 +97,8 @@
 									<div class="input-group-prepend">
 										<!-- <span class="input-group-text" id="inputGroupPrepend">Rp</span> -->
 										<input type="text" class="form-control" id="total" placeholder="Total" value="0" readonly>
+										<input type="hidden" class="form-control" name="pengajuan_pcs" id="pengajuan_pcs" value="0" readonly>
+										<input type="hidden" class="form-control" name="pengajuan_box" id="pengajuan_box" value="0" readonly>
 									</div>
 								</div>
 

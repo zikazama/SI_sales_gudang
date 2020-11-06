@@ -53,7 +53,13 @@
                                             <td>Rp<?= number_format($data['total'] , 0, ',', '.') ?></td>
                                             <td><?= $data['waktu'] ?></td>
                                             <td>
+                                                <?php if($data['status'] == 'diterima') { ?>
                                                 <a href="<?= base_url('admin/laporan_penjualan/detail/') . $data['id_transaksi_sales'] ?>"><button type="submit" class="btn btn-primary">Detail</button></a>
+                                                <?php } if($data['status'] == 'pending') { ?>
+                                                    <a href="<?= base_url('admin/laporan_penjualan/detail_pending/') . $data['id_transaksi_sales'] ?>"><button type="submit" class="btn btn-warning">Pending</button></a>
+                                                <?php } if($data['status'] == 'ditolak') { ?>
+                                                    <button class="btn btn-danger">Ditolak</button>
+                                                <?php } ?>
                                                 <hr>
                                                 <a href="<?= base_url('admin/laporan_penjualan/print/') . $data['id_transaksi_sales'] ?>"><button type="submit" class="btn btn-info">Print</button></a>
                                             </td>

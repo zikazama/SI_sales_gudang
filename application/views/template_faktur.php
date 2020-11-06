@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Faktur</title>
     <style>
-        .konten {
+        /* .konten {
             max-width: 297mm;
-        }
+        } */
 
         h3 {
             text-align: center;
@@ -86,6 +86,7 @@
             margin-left: 70px;
             width: 60mm;
             text-align: center;
+            font-size: 12px;
         }
 
         div.row {
@@ -151,8 +152,8 @@
                     <td class="description "><?= $item[$i]['nama_barang'] . ' - ' . $item[$i]['merek'] ?></td>
                     <td class="quantity "><?= $item[$i]['kuantitas'] ?></td>
                     <td class="quantity "><?= $item[$i]['kuantitas_perbox'] ?></td>
-                    <td class="quantity ">Rp<?= number_format($item[$i]['kuantitas'] ? $item[$i]['harga'] : 0 , 0, ',', '.') ?></td>
-                    <td class="quantity ">Rp<?= number_format($item[$i]['kuantitas_perbox'] ? $item[$i]['harga_perbox'] : 0, 0, ',', '.') ?></td>
+                    <td class="quantity ">Rp<?= number_format($item[$i]['kuantitas'] ? $item[$i]['harga_fix_pcs'] : 0 , 0, ',', '.') ?></td>
+                    <td class="quantity ">Rp<?= number_format($item[$i]['kuantitas_perbox'] ? $item[$i]['harga_fix_box'] : 0, 0, ',', '.') ?></td>
                     <td class="quantity ">Rp<?= number_format($item[$i]['subdiskon'], 0, ',', '.') ?></td>
                     <td class="quantity ">Rp<?= number_format($item[$i]['subtotal'] + $item[$i]['subdiskon'], 0, ',', '.') ?></td>
                     <td class="price ">Rp<?= number_format($item[$i]['subtotal'], 0, ',', '.') ?></td>
@@ -225,13 +226,13 @@
         </div>
         <div class="column signature">
             Diterima Oleh,
-            <br><br><br><br>
+            <br><br><br>
             <hr>
             Tanda Tangan & Nama Jelas
         </div>
         <div class="column signature">
             Hormat Kami,
-            <br><br><br><br>
+            <br><br><br>
             <hr>
             ADK
         </div>

@@ -131,6 +131,50 @@ class Laporan_penjualan extends CI_Controller
 		$this->load->view('_partials/template', $data);
 	}
 
+	public function detail_pending($id_transaksi)
+	{
+		$this->load->model('transaksi_sales_m');
+		$this->load->model('item_transaksi_m');
+		$this->load->model('pembayaran_m');
+		$data_transaksi = $this->transaksi_sales_m->read_full_where(array('id_transaksi_sales' => $id_transaksi))->result_array();
+		$data_item = $this->item_transaksi_m->read_full_where(array('id_transaksi_sales' => $id_transaksi))->result_array();
+		$data_pembayaran = $this->pembayaran_m->read_where(array('id_transaksi_sales' => $id_transaksi))->result_array();
+		$data_pembayaran_masuk = $this->pembayaran_m->pembayaran_masuk(array('id_transaksi_sales' => $id_transaksi))->row_array();
+		$data = array(
+			'konten' => 'admin/pending_penjualan',
+			'parsing' => array(
+				'transaksi' => $data_transaksi,
+				'item' => $data_item,
+				'pembayaran' => $data_pembayaran,
+				'pembayaran_masuk' => $data_pembayaran_masuk
+			),
+		);
+		$this->load->view('_partials/template', $data);
+	}
+
+	public function terima($id_transaksi){
+		$this->load->model('transaksi_sales_m');
+		$transaksi = $this->transaksi_sales_m->read_where(array('id_transaksi_sales' => $id_transaksi))->row_array();
+		$this->transaksi_sales_m->update(array('status' => 'diterima'),array('id_transaksi_sales' => $id_transaksi));
+		redirect(base_url('admin/laporan_penjualan/toko/'.$transaksi['id_toko']));
+	}
+
+	public function tolak($id_transaksi){
+		$this->load->model('transaksi_sales_m');
+		$this->load->model('item_transaksi_m');
+		$this->load->model('barang_m');
+		$transaksi = $this->transaksi_sales_m->read_where(array('id_transaksi_sales' => $id_transaksi))->row_array();
+		$tiap_transaksi = $this->item_transaksi_m->read_full_where(array('id_transaksi_sales' => $id_transaksi))->result_array();
+		foreach($tiap_transaksi as $data){
+			$barang = $this->barang_m->read_where(array('id_barang' => $data['id_barang']))->row_array();
+			$pcs_sekarang = $barang['stok'] + $data['kuantitas'];
+			$box_sekarang = $barang['stok_perbox'] + $data['kuantitas_perbox'];
+			$this->barang_m->update(array('stok' => $pcs_sekarang, 'stok_perbox' => $box_sekarang),array('id_barang' => $data['id_barang']));
+		}
+		$this->transaksi_sales_m->update(array('status' => 'ditolak'),array('id_transaksi_sales' => $id_transaksi));
+		redirect(base_url('admin/laporan_penjualan/toko/'.$transaksi['id_toko']));
+	}
+
 	public function pilah_export()
 	{
 		$post = $this->input->post();
@@ -140,7 +184,7 @@ class Laporan_penjualan extends CI_Controller
 
 	public function print($id_transaksi)
 	{
-		$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => [210, 148.5],  'orientation' => 'P']);
+		$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => [210, 148.5],  'orientation' => 'P', 'margin_top' => 0, 'margin_bottom' => 0]);
 
 		$this->load->model('transaksi_sales_m');
 		$this->load->model('item_transaksi_m');
@@ -157,24 +201,24 @@ class Laporan_penjualan extends CI_Controller
 			'status_ttd' => false
 		);
 		$jumlah_item = count($data_item);
-		$hasil_bagi = $jumlah_item / 5;
+		$hasil_bagi = $jumlah_item / 10;
 		$hasil_bagi = floor($hasil_bagi);
-		$sisa_bagi = $jumlah_item % 5;
-		if ($jumlah_item < 5) {
+		$sisa_bagi = $jumlah_item % 10;
+		if ($jumlah_item < 10) {
 			$data['index_awal'] = 1;
 			$data['index_akhir'] = $sisa_bagi;
 			$data['status_ttd'] = true;
 			$tampilan = $this->load->view('template_faktur', $data, TRUE);
 			$mpdf->WriteHTML($tampilan);
-		} else if($jumlah_item == 5){
+		} else if($jumlah_item == 10){
 			$data['index_awal'] = 1;
-			$data['index_akhir'] = 5;
+			$data['index_akhir'] = 10;
 			$data['status_ttd'] = true;
 			$tampilan = $this->load->view('template_faktur', $data, TRUE);
 			$mpdf->WriteHTML($tampilan);
-		} else if ($jumlah_item > 5 && $sisa_bagi == 0) {
+		} else if ($jumlah_item > 10 && $sisa_bagi == 0) {
 			$data['index_awal'] = 1;
-			$data['index_akhir'] = 5;
+			$data['index_akhir'] = 10;
 			while ($hasil_bagi > 0) {
 				if ($hasil_bagi == 1) {
 					$data['status_ttd'] = true;
@@ -183,28 +227,28 @@ class Laporan_penjualan extends CI_Controller
 				$mpdf->WriteHTML($tampilan);
 				if ($hasil_bagi > 1) {
 					$mpdf->AddPage();
-					$data['index_akhir'] += 5;
+					$data['index_akhir'] += 10;
 				} 
 				$hasil_bagi--;
-				$data['index_awal'] += 5;
+				$data['index_awal'] += 10;
 			}
-		} else if ($jumlah_item > 5 && $sisa_bagi != 0) {
+		} else if ($jumlah_item > 10 && $sisa_bagi != 0) {
 			$hasil_bagi += 1;
 			$data['index_awal'] = 1;
-			$data['index_akhir'] = 5;
+			$data['index_akhir'] = 10;
 			while ($hasil_bagi > 0) {
 				if ($hasil_bagi == 1) {
 					$data['status_ttd'] = true;
-					$data['index_akhir'] = $data['index_akhir'] - 5 + $sisa_bagi;
+					$data['index_akhir'] = $data['index_akhir'] - 10 + $sisa_bagi;
 				}
 				$tampilan = $this->load->view('template_faktur', $data, TRUE);
 				$mpdf->WriteHTML($tampilan);
 				if ($hasil_bagi > 1) {
 					$mpdf->AddPage();
-					$data['index_akhir'] += 5;
+					$data['index_akhir'] += 10;
 				} 
 				$hasil_bagi--;
-				$data['index_awal'] += 5;
+				$data['index_awal'] += 10;
 			}	
 			//die();
 		}

@@ -125,15 +125,18 @@
         let harga = priceAsFloat($('#harga').val());
         let harga_perbox = priceAsFloat($('#harga_perbox').val());
         let nama = $( "#namaBarang option:selected" ).text();
+        let pengajuan_pcs = $('#pengajuan_pcs').val();
+        let pengajuan_box = $('#pengajuan_box').val();
         $.post('<?= base_url('ajax/tambah_barang') ?>',{
             idBarang : idBarang,
             kuantitas : kuantitas,
             kuantitas_perbox : kuantitas_perbox,
             harga : harga,
             harga_perbox : harga_perbox,
-            nama : nama
+            nama : nama,
+            pengajuan_pcs,
+            pengajuan_box
         },function(data){
-            //console.log(data);
             location.reload();
         });
 	});
@@ -156,6 +159,18 @@
             alert('Pembayaran Melebihi Total yang harus dibayar');
             $(this).val(0);
         }
+    });
+
+    $('#ajukan_harga_pcs').click(function(e){
+        e.preventDefault();
+        $('#harga').attr('readonly',false);
+        $('#pengajuan_pcs').val(1);
+    });
+
+    $('#ajukan_harga_box').click(function(e){
+        e.preventDefault();
+        $('#harga_perbox').attr('readonly',false);
+        $('#pengajuan_box').val(1);
     });
 
 

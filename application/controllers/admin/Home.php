@@ -37,12 +37,12 @@ class Home extends CI_Controller {
 	{
 		$this->load->model('transaksi_sales_m');
 		$tanggal_ini = date('Y-m-d');
-		$penjualan_hari = $this->transaksi_sales_m->penjualan_hari_where(array('date(transaksi_sales.created_at)' => $tanggal_ini))->result_array();
-		$transaksi_hari = $this->transaksi_sales_m->transaksi_hari_where(array('date(transaksi_sales.created_at)' => $tanggal_ini))->result_array();
-		$barang_hari = $this->transaksi_sales_m->barang_hari_where(array('date(transaksi_sales.created_at)' => $tanggal_ini))->result_array();
-		$penjualan = $this->transaksi_sales_m->penjualan_hari()->result_array();
-		$transaksi = $this->transaksi_sales_m->transaksi_hari()->result_array();
-		$barang = $this->transaksi_sales_m->barang_hari()->result_array();
+		$penjualan_hari = $this->transaksi_sales_m->penjualan_hari_where(array('date(transaksi_sales.created_at)' => $tanggal_ini, 'status' => 'diterima'))->result_array();
+		$transaksi_hari = $this->transaksi_sales_m->transaksi_hari_where(array('date(transaksi_sales.created_at)' => $tanggal_ini, 'status' => 'diterima'))->result_array();
+		$barang_hari = $this->transaksi_sales_m->barang_hari_where(array('date(transaksi_sales.created_at)' => $tanggal_ini, 'status' => 'diterima'))->result_array();
+		$penjualan = $this->transaksi_sales_m->penjualan_hari_where(array('status' => 'diterima'))->result_array();
+		$transaksi = $this->transaksi_sales_m->transaksi_hari_where(array( 'status' => 'diterima'))->result_array();
+		$barang = $this->transaksi_sales_m->barang_hari_where(array('status' => 'diterima'))->result_array();
 		$data = array(
 			'konten' => 'admin/home',
 			'parsing' => array(

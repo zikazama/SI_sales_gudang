@@ -46,6 +46,10 @@
                                                 <input name="stok_perbox" type="number" class="form-control" id="exampleInputPassword2" placeholder="Stok / Box" required>
                                             </div>
                                             <div class="form-group">
+                                                <label for="exampleInputPassword2">Isi Pcs tiap Box</label>
+                                                <input name="isi_pcs_perbox" type="number" class="form-control" id="exampleInputPassword2" placeholder="Isi Pcs Tiap Box" required>
+                                            </div>
+                                            <div class="form-group">
                                                 <label for="exampleInputPassword2">Diskon / Pcs</label>
                                                 <div class="input-group-prepend">
                                                 <input name="diskon" type="text" class="form-control" id="exampleInputPassword2" onkeyup="rupiah(this)" placeholder="Diskon. Contoh: 1000" required>
@@ -120,6 +124,10 @@
                                             <div class="form-group">
                                                 <label for="exampleInputPassword2">Stok / Box</label>
                                                 <input name="stok_perbox" type="number" class="form-control" id="exampleInputPassword2" placeholder="Stok/Box" value="<?= $parsing['barang'][0]['stok_perbox'] ?>" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword2">Isi Pcs tiap Box</label>
+                                                <input name="isi_pcs_perbox" type="number" class="form-control" id="exampleInputPassword2" placeholder="Isi Pcs Tiap Box" value="<?= $parsing['barang'][0]['isi_pcs_perbox'] ?>" required>
                                             </div>
                                             <div class="form-group">
                                                 <label for="exampleInputPassword2">Diskon / Pcs</label>
