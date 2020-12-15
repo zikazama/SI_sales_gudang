@@ -61,7 +61,7 @@
 									<td>Rp<?= number_format($data['diskon'],0,',','.') ?></td>
 									<td>Rp<?= number_format($data['total'],0,',','.') ?></td>
 									<td class="text <?= ($data['is_lunas'] == 0 ? 'text-danger' : 'text-success' ) ?>"><?= ($data['is_lunas'] == 0 ? 'Belum Lunas' : 'Lunas' ) ?></td>
-									<td><?= $data['created_at'] ?></td>
+									<td><?= $data['waktu'] ?></td>
 								
 									<td>
 										<?php if($data['status'] == 'diterima') { ?>

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Kelola_sales extends CI_Controller {
+class Kelola_driver extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -23,7 +23,7 @@ class Kelola_sales extends CI_Controller {
 		if($this->session->userdata('role') != null){
 			if($this->session->userdata('role') != 'admin'){
 				redirect(base_url('home'));
-			}
+			} 
 		} else {
 			$this->session->set_flashdata(array(
 				'status' => 0,
@@ -35,24 +35,24 @@ class Kelola_sales extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->model('sales_m');
-		$sales = $this->sales_m->read()->result_array();
+		$this->load->model('driver_m');
+		$driver = $this->driver_m->read()->result_array();
 		$data = array(
-			'konten' => 'admin/kelola_sales',
-			'parsing' => array('sales' => $sales)
+			'konten' => 'admin/kelola_driver',
+			'parsing' => array('driver' => $driver)
 		);
 		$this->load->view('_partials/template',$data);
 	}
 
 	public function tambah(){
 		$data = array(
-			'konten' => 'admin/form_sales'
+			'konten' => 'admin/form_driver'
 		);
 		$this->load->view('_partials/template',$data);
 	}
 
 	private function upload_foto($nama,$form){
-        $config['upload_path']          = './upload/sales/';
+        $config['upload_path']          = './upload/driver/';
         $config['allowed_types']        = 'gif|jpg|png|jpeg';
         $config['file_name']            = $nama;
         $config['overwrite']			= true;
@@ -71,67 +71,67 @@ class Kelola_sales extends CI_Controller {
     }
 
 	public function aksi_tambah(){
-		$this->load->model('sales_m');
-		$data_sales = $this->input->post();
-		$data_sales['foto'] = $this->upload_foto('nama','foto');
-		if($this->sales_m->create($data_sales)){
+		$this->load->model('driver_m');
+		$data_driver = $this->input->post();
+		$data_driver['foto'] = $this->upload_foto('nama','foto');
+		if($this->driver_m->create($data_driver)){
 			$this->session->set_flashdata(array(
 				'status' => 1,
-				'message' => 'Sales Berhasil Ditambahkan'
+				'message' => 'Driver Berhasil Ditambahkan'
 			));
 		} else {
 			$this->session->set_flashdata(array(
 				'status' => 0,
-				'message' => 'Sales Gagal Ditambahkan'
+				'message' => 'Driver Gagal Ditambahkan'
 			));
 		}
-		redirect(base_url('admin/kelola_sales'));
+		redirect(base_url('admin/kelola_driver'));
 	}
 
-	public function ubah($id_sales){
-		$this->load->model('sales_m');
-		$sales = $this->sales_m->read_where(array('id_sales' => $id_sales))->result_array();
+	public function ubah($id_driver){
+		$this->load->model('driver_m');
+		$driver = $this->driver_m->read_where(array('id_driver' => $id_driver))->result_array();
 		$data = array(
-			'konten' => 'admin/form_sales',
-			'parsing' => array('sales' => $sales)
+			'konten' => 'admin/form_driver',
+			'parsing' => array('driver' => $driver)
 		);
 		$this->load->view('_partials/template',$data);
 	}
 
-	public function aksi_ubah($id_sales){
-		$this->load->model('sales_m');
-		$data_sales = $this->input->post();
+	public function aksi_ubah($id_driver){
+		$this->load->model('driver_m');
+		$data_driver = $this->input->post();
 		$foto = $this->upload_foto('nama','foto');
 		if($foto != null){
-			$data_sales['foto'] = $foto;
+			$data_driver['foto'] = $foto;
 		}
-		if($this->sales_m->update($data_sales,array('id_sales' => $id_sales))){
+		if($this->driver_m->update($data_driver,array('id_driver' => $id_driver))){
 			$this->session->set_flashdata(array(
 				'status' => 1,
-				'message' => 'Sales Berhasil Diubah'
+				'message' => 'Driver Berhasil Diubah'
 			));
 		} else {
 			$this->session->set_flashdata(array(
 				'status' => 0,
-				'message' => 'Sales Gagal Diubah'
+				'message' => 'Driver Gagal Diubah'
 			));
 		}
-		redirect(base_url('admin/kelola_sales'));
+		redirect(base_url('admin/kelola_driver'));
 	}
 
-	public function hapus($id_sales){
-		$this->load->model('sales_m');
-		if($this->sales_m->delete(array('id_sales' => $id_sales))){
+	public function hapus($id_driver){
+		$this->load->model('driver_m');
+		if($this->driver_m->delete(array('id_driver' => $id_driver))){
 			$this->session->set_flashdata(array(
 				'status' => 1,
-				'message' => 'Sales Berhasil Dihapus'
+				'message' => 'Driver Berhasil Dihapus'
 			));
 		} else {
 			$this->session->set_flashdata(array(
 				'status' => 0,
-				'message' => 'Sales Gagal Dihapus'
+				'message' => 'Driver Gagal Dihapus'
 			));
 		}
-		redirect(base_url('admin/kelola_sales'));
+		redirect(base_url('admin/kelola_driver'));
 	}
 }

@@ -25,6 +25,9 @@
                         <li class="<?= $this->uri->segment(1) == 'admin' && $this->uri->segment(2) == 'kelola_sales'  ? 'active-page' : '' ?>">
                             <a href="<?= base_url('admin/kelola_sales') ?>" class="active"><i class="material-icons-outlined">account_circle</i>Kelola Sales</a>
                         </li>
+                        <li class="<?= $this->uri->segment(1) == 'admin' && $this->uri->segment(2) == 'kelola_driver'  ? 'active-page' : '' ?>">
+                            <a href="<?= base_url('admin/kelola_driver') ?>" class="active"><i class="material-icons-outlined">account_circle</i>Kelola Driver</a>
+                        </li>
                         <li class="<?= $this->uri->segment(1) == 'admin' && $this->uri->segment(2) == 'laporan_penjualan'  ? 'active-page' : '' ?>">
                             <a href="<?= base_url('admin/laporan_penjualan') ?>" class="active"><i class="material-icons">bar_chart</i>Laporan Penjualan</a>
                         </li>

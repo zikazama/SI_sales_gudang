@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 06 Nov 2020 pada 13.38
--- Versi server: 10.4.8-MariaDB
--- Versi PHP: 7.3.11
+-- Generation Time: Dec 15, 2020 at 03:00 PM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 7.3.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -25,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `admin`
+-- Table structure for table `admin`
 --
 
 CREATE TABLE `admin` (
@@ -38,7 +37,7 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `admin`
+-- Dumping data for table `admin`
 --
 
 INSERT INTO `admin` (`id_admin`, `email`, `password`, `foto`, `nama_admin`, `created_at`) VALUES
@@ -47,7 +46,7 @@ INSERT INTO `admin` (`id_admin`, `email`, `password`, `foto`, `nama_admin`, `cre
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `barang`
+-- Table structure for table `barang`
 --
 
 CREATE TABLE `barang` (
@@ -68,11 +67,11 @@ CREATE TABLE `barang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `barang`
+-- Dumping data for table `barang`
 --
 
 INSERT INTO `barang` (`id_barang`, `nama_barang`, `merek`, `harga`, `harga_perbox`, `stok`, `stok_perbox`, `diskon`, `diskon_perbox`, `minimal_kuantitas_diskon`, `minimal_kuantitas_diskon_perbox`, `isi_pcs_perbox`, `foto`, `created_at`) VALUES
-(2, 'Tas', 'gucci', 300000, 600000, 102, 1, 10000, 5000, 5, 3, 0, 'fe390655d9710d87ecf83207e4d3c924.jpg', '2020-11-03 05:36:23'),
+(2, 'Tas', 'gucci', 300000, 600000, 100, 1, 10000, 5000, 5, 3, 0, 'fe390655d9710d87ecf83207e4d3c924.jpg', '2020-12-13 15:38:23'),
 (3, 'Bahan', 'LG', 40000, 150000, 187, 48, 20000, 10000, 50, 10, 0, '2f5b1b913b2f3a286062c24d838717fa.jpg', '2020-11-03 06:08:25'),
 (4, 'Ayam Goreng', 'geprek', 15000, 50000, 10, 15, 2000, 3000, 5, 5, 10, '3479a78a9bbc3f47aa57091affab097e.jpg', '2020-11-06 12:31:58'),
 (5, 'Cumi', 'Mantap', 20000, 70000, 2, 16, 1000, 2000, 5, 5, 0, 'de98593bf1a324c4406077308d43bb3a.jpg', '2020-11-02 06:14:18'),
@@ -86,7 +85,30 @@ INSERT INTO `barang` (`id_barang`, `nama_barang`, `merek`, `harga`, `harga_perbo
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `item_transaksi`
+-- Table structure for table `driver`
+--
+
+CREATE TABLE `driver` (
+  `id_driver` int(11) NOT NULL,
+  `nik` int(11) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `foto` varchar(50) NOT NULL,
+  `nama_driver` varchar(50) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `driver`
+--
+
+INSERT INTO `driver` (`id_driver`, `nik`, `email`, `password`, `foto`, `nama_driver`, `created_at`) VALUES
+(1, 19, 'zi@gmail.com', '010101', '4229831bdacdcc7dd2e9197dc20bd12e.jpg', 'Zi', '2020-12-15 13:39:13');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `item_transaksi`
 --
 
 CREATE TABLE `item_transaksi` (
@@ -103,7 +125,7 @@ CREATE TABLE `item_transaksi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `item_transaksi`
+-- Dumping data for table `item_transaksi`
 --
 
 INSERT INTO `item_transaksi` (`id_item_transaksi`, `id_transaksi_sales`, `id_barang`, `kuantitas`, `kuantitas_perbox`, `harga_fix_pcs`, `harga_fix_box`, `subtotal`, `subdiskon`, `created_at`) VALUES
@@ -149,12 +171,13 @@ INSERT INTO `item_transaksi` (`id_item_transaksi`, `id_transaksi_sales`, `id_bar
 (47, 29, 3, 2, 0, 0, 0, 60000, 0, '2020-11-02 08:05:01'),
 (48, 30, 3, 2, 0, 0, 0, 40000, 0, '2020-11-02 08:06:54'),
 (49, 31, 2, 2, 0, 0, 0, 400000, 0, '2020-11-02 08:14:33'),
-(51, 33, 3, 2, 0, 10000, 150000, 20000, 0, '2020-11-03 05:51:19');
+(51, 33, 3, 2, 0, 10000, 150000, 20000, 0, '2020-11-03 05:51:19'),
+(52, 34, 2, 2, 0, 300000, 600000, 600000, 0, '2020-12-13 15:38:23');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pembayaran`
+-- Table structure for table `pembayaran`
 --
 
 CREATE TABLE `pembayaran` (
@@ -165,7 +188,7 @@ CREATE TABLE `pembayaran` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `pembayaran`
+-- Dumping data for table `pembayaran`
 --
 
 INSERT INTO `pembayaran` (`id_pembayaran`, `id_transaksi_sales`, `jumlah_pembayaran`, `created_at`) VALUES
@@ -196,12 +219,13 @@ INSERT INTO `pembayaran` (`id_pembayaran`, `id_transaksi_sales`, `jumlah_pembaya
 (34, 30, 0, '2020-11-02 08:06:54'),
 (35, 31, 0, '2020-11-02 08:14:33'),
 (36, 32, 0, '2020-11-03 05:36:23'),
-(37, 33, 0, '2020-11-03 05:51:20');
+(37, 33, 0, '2020-11-03 05:51:20'),
+(38, 34, 300000, '2020-12-13 15:38:23');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `sales`
+-- Table structure for table `sales`
 --
 
 CREATE TABLE `sales` (
@@ -215,7 +239,7 @@ CREATE TABLE `sales` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `sales`
+-- Dumping data for table `sales`
 --
 
 INSERT INTO `sales` (`id_sales`, `nik`, `email`, `password`, `foto`, `nama_sales`, `created_at`) VALUES
@@ -225,7 +249,7 @@ INSERT INTO `sales` (`id_sales`, `nik`, `email`, `password`, `foto`, `nama_sales
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `toko`
+-- Table structure for table `toko`
 --
 
 CREATE TABLE `toko` (
@@ -237,7 +261,7 @@ CREATE TABLE `toko` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `toko`
+-- Dumping data for table `toko`
 --
 
 INSERT INTO `toko` (`id_toko`, `kode_toko`, `nama_toko`, `alamat`, `created_at`) VALUES
@@ -247,7 +271,7 @@ INSERT INTO `toko` (`id_toko`, `kode_toko`, `nama_toko`, `alamat`, `created_at`)
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `transaksi_admin`
+-- Table structure for table `transaksi_admin`
 --
 
 CREATE TABLE `transaksi_admin` (
@@ -262,7 +286,7 @@ CREATE TABLE `transaksi_admin` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `transaksi_sales`
+-- Table structure for table `transaksi_sales`
 --
 
 CREATE TABLE `transaksi_sales` (
@@ -277,7 +301,7 @@ CREATE TABLE `transaksi_sales` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `transaksi_sales`
+-- Dumping data for table `transaksi_sales`
 --
 
 INSERT INTO `transaksi_sales` (`id_transaksi_sales`, `id_sales`, `id_toko`, `total`, `diskon`, `is_lunas`, `status`, `created_at`) VALUES
@@ -304,111 +328,124 @@ INSERT INTO `transaksi_sales` (`id_transaksi_sales`, `id_sales`, `id_toko`, `tot
 (30, 1, 2, 40000, 0, 0, 'diterima', '2020-11-02 08:06:54'),
 (31, 1, 1, 400000, 0, 0, 'diterima', '2020-11-03 01:42:19'),
 (32, 1, 1, 200000, 0, 0, 'diterima', '2020-11-03 05:48:07'),
-(33, 1, 2, 20000, 0, 0, 'ditolak', '2020-11-03 06:08:26');
+(33, 1, 2, 20000, 0, 0, 'ditolak', '2020-11-03 06:08:26'),
+(34, 1, 1, 600000, 0, 0, 'diterima', '2020-12-13 15:38:23');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `admin`
+-- Indexes for table `admin`
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id_admin`);
 
 --
--- Indeks untuk tabel `barang`
+-- Indexes for table `barang`
 --
 ALTER TABLE `barang`
   ADD PRIMARY KEY (`id_barang`);
 
 --
--- Indeks untuk tabel `item_transaksi`
+-- Indexes for table `driver`
+--
+ALTER TABLE `driver`
+  ADD PRIMARY KEY (`id_driver`);
+
+--
+-- Indexes for table `item_transaksi`
 --
 ALTER TABLE `item_transaksi`
   ADD PRIMARY KEY (`id_item_transaksi`);
 
 --
--- Indeks untuk tabel `pembayaran`
+-- Indexes for table `pembayaran`
 --
 ALTER TABLE `pembayaran`
   ADD PRIMARY KEY (`id_pembayaran`);
 
 --
--- Indeks untuk tabel `sales`
+-- Indexes for table `sales`
 --
 ALTER TABLE `sales`
   ADD PRIMARY KEY (`id_sales`);
 
 --
--- Indeks untuk tabel `toko`
+-- Indexes for table `toko`
 --
 ALTER TABLE `toko`
   ADD PRIMARY KEY (`id_toko`);
 
 --
--- Indeks untuk tabel `transaksi_admin`
+-- Indexes for table `transaksi_admin`
 --
 ALTER TABLE `transaksi_admin`
   ADD PRIMARY KEY (`id_transaksi_admin`);
 
 --
--- Indeks untuk tabel `transaksi_sales`
+-- Indexes for table `transaksi_sales`
 --
 ALTER TABLE `transaksi_sales`
   ADD PRIMARY KEY (`id_transaksi_sales`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `admin`
+-- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
   MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT untuk tabel `barang`
+-- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
   MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT untuk tabel `item_transaksi`
+-- AUTO_INCREMENT for table `driver`
+--
+ALTER TABLE `driver`
+  MODIFY `id_driver` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `item_transaksi`
 --
 ALTER TABLE `item_transaksi`
-  MODIFY `id_item_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `id_item_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
--- AUTO_INCREMENT untuk tabel `pembayaran`
+-- AUTO_INCREMENT for table `pembayaran`
 --
 ALTER TABLE `pembayaran`
-  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
--- AUTO_INCREMENT untuk tabel `sales`
+-- AUTO_INCREMENT for table `sales`
 --
 ALTER TABLE `sales`
   MODIFY `id_sales` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT untuk tabel `toko`
+-- AUTO_INCREMENT for table `toko`
 --
 ALTER TABLE `toko`
   MODIFY `id_toko` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT untuk tabel `transaksi_admin`
+-- AUTO_INCREMENT for table `transaksi_admin`
 --
 ALTER TABLE `transaksi_admin`
   MODIFY `id_transaksi_admin` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `transaksi_sales`
+-- AUTO_INCREMENT for table `transaksi_sales`
 --
 ALTER TABLE `transaksi_sales`
-  MODIFY `id_transaksi_sales` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id_transaksi_sales` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
