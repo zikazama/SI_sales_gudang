@@ -8,10 +8,10 @@ class Ajax extends CI_Controller
      * Index Page for this controller.
      *
      * Maps to the following URL
-     * 		http://example.com/index.php/welcome
-     *	- or -
-     * 		http://example.com/index.php/welcome/index
-     *	- or -
+     *         http://example.com/index.php/welcome
+     *    - or -
+     *         http://example.com/index.php/welcome/index
+     *    - or -
      * Since this controller is set as the default controller in
      * config/routes.php, it's displayed at http://example.com/
      *
@@ -24,7 +24,7 @@ class Ajax extends CI_Controller
         $this->load->model('barang_m');
         $id_barang = $this->input->post('id_barang');
         $barang = $this->barang_m->read_where(array(
-            'id_barang' => $id_barang
+            'id_barang' => $id_barang,
         ))->result_array();
         echo json_encode($barang);
     }
@@ -79,7 +79,7 @@ class Ajax extends CI_Controller
             'qty' => $kuantitas_fix,
             'price' => $harga_fix,
             'name' => $nama[0],
-            'options' => $data_barang
+            'options' => $data_barang,
         );
         $kumpulan_id = array();
         foreach ($this->cart->contents() as $data) {
@@ -89,7 +89,7 @@ class Ajax extends CI_Controller
         if (in_array($id_barang, $kumpulan_id)) {
             $this->session->set_flashdata(array(
                 'status' => 0,
-                'message' => 'Barang tersebut sudah dimasukan ke keranjang. Silahkan hapus dahulu untuk mengganti kuantitas.'
+                'message' => 'Barang tersebut sudah dimasukan ke keranjang. Silahkan hapus dahulu untuk mengganti kuantitas.',
             ));
         } else {
             if ($data_barang->stok >= $kuantitas && $data_barang->stok_perbox >= $kuantitas_perbox) {
@@ -104,13 +104,13 @@ class Ajax extends CI_Controller
                 } else {
                     $this->session->set_flashdata(array(
                         'status' => 0,
-                        'message' => 'Stok barang dalam pcs tidak cukup'
+                        'message' => 'Stok barang dalam pcs tidak cukup',
                     ));
                 }
             } else if ($data_barang->stok_perbox < $kuantitas_perbox) {
                 $this->session->set_flashdata(array(
                     'status' => 0,
-                    'message' => 'Stok barang dalam box tidak cukup'
+                    'message' => 'Stok barang dalam box tidak cukup',
                 ));
             }
         }

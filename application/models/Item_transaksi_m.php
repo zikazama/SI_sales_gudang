@@ -21,6 +21,7 @@ class Item_transaksi_m extends Base_m {
     public $table = 'item_transaksi';
 
 	public function read_full_where($where){
+		$this->db->select('*, item_transaksi.created_at as waktu');
 		$this->db->from($this->table);
 		$this->db->join('barang','barang.id_barang = item_transaksi.id_barang');
 		$this->db->where($where);

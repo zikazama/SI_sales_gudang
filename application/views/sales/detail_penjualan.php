@@ -48,7 +48,7 @@
 							</tr>
 							<tr>
 								<td>Waktu</td>
-								<td>: <?= $parsing['transaksi'][0]['created_at'] ?></td>
+								<td>: <?= $parsing['transaksi'][0]['waktu'] ?></td>
 							</tr>
 						</table>
 						<br>
