@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 15, 2020 at 03:00 PM
+-- Generation Time: Dec 19, 2020 at 03:52 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.3.25
 
@@ -46,6 +46,26 @@ INSERT INTO `admin` (`id_admin`, `email`, `password`, `foto`, `nama_admin`, `cre
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `akses_toko`
+--
+
+CREATE TABLE `akses_toko` (
+  `id_akses_toko` int(11) NOT NULL,
+  `id_toko` int(11) NOT NULL,
+  `id_sales` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `akses_toko`
+--
+
+INSERT INTO `akses_toko` (`id_akses_toko`, `id_toko`, `id_sales`, `created_at`) VALUES
+(2, 1, 1, '2020-12-19 14:19:19');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `barang`
 --
 
@@ -71,10 +91,10 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`id_barang`, `nama_barang`, `merek`, `harga`, `harga_perbox`, `stok`, `stok_perbox`, `diskon`, `diskon_perbox`, `minimal_kuantitas_diskon`, `minimal_kuantitas_diskon_perbox`, `isi_pcs_perbox`, `foto`, `created_at`) VALUES
-(2, 'Tas', 'gucci', 300000, 600000, 100, 1, 10000, 5000, 5, 3, 0, 'fe390655d9710d87ecf83207e4d3c924.jpg', '2020-12-13 15:38:23'),
-(3, 'Bahan', 'LG', 40000, 150000, 187, 48, 20000, 10000, 50, 10, 0, '2f5b1b913b2f3a286062c24d838717fa.jpg', '2020-11-03 06:08:25'),
+(2, 'Tas', 'gucci', 300000, 600000, 92, 1, 10000, 5000, 5, 3, 0, 'fe390655d9710d87ecf83207e4d3c924.jpg', '2020-12-19 04:09:34'),
+(3, 'Bahan', 'LG', 40000, 150000, 174, 48, 20000, 10000, 50, 10, 0, '2f5b1b913b2f3a286062c24d838717fa.jpg', '2020-12-19 04:09:34'),
 (4, 'Ayam Goreng', 'geprek', 15000, 50000, 10, 15, 2000, 3000, 5, 5, 10, '3479a78a9bbc3f47aa57091affab097e.jpg', '2020-11-06 12:31:58'),
-(5, 'Cumi', 'Mantap', 20000, 70000, 2, 16, 1000, 2000, 5, 5, 0, 'de98593bf1a324c4406077308d43bb3a.jpg', '2020-11-02 06:14:18'),
+(5, 'Cumi', 'Mantap', 20000, 70000, 2, 14, 1000, 2000, 5, 5, 0, 'de98593bf1a324c4406077308d43bb3a.jpg', '2020-12-18 17:31:48'),
 (6, 'Lele', 'Pecel', 10000, 50000, 5, 20, 5000, 3000, 5, 5, 0, '01d24f080df6a12e0d16dada29b346e7.jpg', '2020-11-02 06:14:18'),
 (7, 'Vape', 'bagus', 100000, 500000, 4, 14, 50000, 100000, 5, 5, 0, '2d688a4a13230596fba407b793f1a91f.jpg', '2020-11-02 06:14:18'),
 (8, 'BBQ', 'top', 30000, 200000, 23, 20, 500, 0, 10, 10, 0, 'eadbdcc64304f899e0a75f0cef9156ee.jpg', '2020-11-02 06:14:19'),
@@ -172,7 +192,10 @@ INSERT INTO `item_transaksi` (`id_item_transaksi`, `id_transaksi_sales`, `id_bar
 (48, 30, 3, 2, 0, 0, 0, 40000, 0, '2020-11-02 08:06:54'),
 (49, 31, 2, 2, 0, 0, 0, 400000, 0, '2020-11-02 08:14:33'),
 (51, 33, 3, 2, 0, 10000, 150000, 20000, 0, '2020-11-03 05:51:19'),
-(52, 34, 2, 2, 0, 300000, 600000, 600000, 0, '2020-12-13 15:38:23');
+(52, 34, 2, 2, 0, 300000, 600000, 600000, 0, '2020-12-13 15:38:23'),
+(53, 35, 2, 3, 0, 300000, 600000, 900000, 0, '2020-12-15 14:31:41'),
+(61, 36, 3, 1, 0, 40000, 150000, 40000, 0, '2020-12-19 04:09:34'),
+(62, 36, 2, 3, 0, 300000, 600000, 900000, 0, '2020-12-19 04:09:34');
 
 -- --------------------------------------------------------
 
@@ -220,7 +243,34 @@ INSERT INTO `pembayaran` (`id_pembayaran`, `id_transaksi_sales`, `jumlah_pembaya
 (35, 31, 0, '2020-11-02 08:14:33'),
 (36, 32, 0, '2020-11-03 05:36:23'),
 (37, 33, 0, '2020-11-03 05:51:20'),
-(38, 34, 300000, '2020-12-13 15:38:23');
+(38, 34, 300000, '2020-12-13 15:38:23'),
+(39, 35, 200000, '2020-12-15 14:31:41'),
+(40, 36, 20000, '2020-12-15 14:33:09');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rkab`
+--
+
+CREATE TABLE `rkab` (
+  `id_rkab` int(11) NOT NULL,
+  `id_transaksi_sales` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rkab_item`
+--
+
+CREATE TABLE `rkab_item` (
+  `id_rkab_item` int(11) NOT NULL,
+  `id_rkab` int(11) NOT NULL,
+  `id_driver` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -257,6 +307,8 @@ CREATE TABLE `toko` (
   `kode_toko` varchar(6) NOT NULL,
   `nama_toko` varchar(20) NOT NULL,
   `alamat` varchar(50) NOT NULL,
+  `latitude` double NOT NULL,
+  `longitude` double NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -264,9 +316,9 @@ CREATE TABLE `toko` (
 -- Dumping data for table `toko`
 --
 
-INSERT INTO `toko` (`id_toko`, `kode_toko`, `nama_toko`, `alamat`, `created_at`) VALUES
-(1, '645333', 'Dadang', 'Subang', '2020-07-04 06:10:02'),
-(2, '32442', 'Gio', 'ogi', '2020-10-09 01:41:44');
+INSERT INTO `toko` (`id_toko`, `kode_toko`, `nama_toko`, `alamat`, `latitude`, `longitude`, `created_at`) VALUES
+(1, '645333', 'Dadang', 'Subang', -6.9337088, 107.60683519999999, '2020-12-19 14:51:38'),
+(2, '32442', 'Gio', 'ogi', 0, 0, '2020-10-09 01:41:44');
 
 -- --------------------------------------------------------
 
@@ -329,7 +381,9 @@ INSERT INTO `transaksi_sales` (`id_transaksi_sales`, `id_sales`, `id_toko`, `tot
 (31, 1, 1, 400000, 0, 0, 'diterima', '2020-11-03 01:42:19'),
 (32, 1, 1, 200000, 0, 0, 'diterima', '2020-11-03 05:48:07'),
 (33, 1, 2, 20000, 0, 0, 'ditolak', '2020-11-03 06:08:26'),
-(34, 1, 1, 600000, 0, 0, 'diterima', '2020-12-13 15:38:23');
+(34, 1, 1, 600000, 0, 0, 'diterima', '2020-12-13 15:38:23'),
+(35, 1, 1, 900000, 0, 0, 'diterima', '2020-12-15 14:31:40'),
+(36, 1, 1, 940000, 0, 0, 'pending', '2020-12-19 04:09:34');
 
 --
 -- Indexes for dumped tables
@@ -340,6 +394,12 @@ INSERT INTO `transaksi_sales` (`id_transaksi_sales`, `id_sales`, `id_toko`, `tot
 --
 ALTER TABLE `admin`
   ADD PRIMARY KEY (`id_admin`);
+
+--
+-- Indexes for table `akses_toko`
+--
+ALTER TABLE `akses_toko`
+  ADD PRIMARY KEY (`id_akses_toko`);
 
 --
 -- Indexes for table `barang`
@@ -364,6 +424,18 @@ ALTER TABLE `item_transaksi`
 --
 ALTER TABLE `pembayaran`
   ADD PRIMARY KEY (`id_pembayaran`);
+
+--
+-- Indexes for table `rkab`
+--
+ALTER TABLE `rkab`
+  ADD PRIMARY KEY (`id_rkab`);
+
+--
+-- Indexes for table `rkab_item`
+--
+ALTER TABLE `rkab_item`
+  ADD PRIMARY KEY (`id_rkab_item`);
 
 --
 -- Indexes for table `sales`
@@ -400,6 +472,12 @@ ALTER TABLE `admin`
   MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `akses_toko`
+--
+ALTER TABLE `akses_toko`
+  MODIFY `id_akses_toko` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
@@ -415,13 +493,25 @@ ALTER TABLE `driver`
 -- AUTO_INCREMENT for table `item_transaksi`
 --
 ALTER TABLE `item_transaksi`
-  MODIFY `id_item_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id_item_transaksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `pembayaran`
 --
 ALTER TABLE `pembayaran`
-  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id_pembayaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+
+--
+-- AUTO_INCREMENT for table `rkab`
+--
+ALTER TABLE `rkab`
+  MODIFY `id_rkab` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `rkab_item`
+--
+ALTER TABLE `rkab_item`
+  MODIFY `id_rkab_item` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `sales`
@@ -445,7 +535,7 @@ ALTER TABLE `transaksi_admin`
 -- AUTO_INCREMENT for table `transaksi_sales`
 --
 ALTER TABLE `transaksi_sales`
-  MODIFY `id_transaksi_sales` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id_transaksi_sales` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

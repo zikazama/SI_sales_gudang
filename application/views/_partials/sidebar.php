@@ -12,6 +12,9 @@
                         <li class="<?= $this->uri->segment(1) == 'penjualanku' ? 'active-page' : '' ?>">
                             <a href="<?= base_url('penjualanku') ?>" class="active"><i class="material-icons">bar_chart</i>Penjualanku</a>
                         </li>
+                        <li class="<?= $this->uri->segment(1) == 'lokasi' ? 'active-page' : '' ?>">
+                            <a href="<?= base_url('lokasi') ?>" class="active"><i class="material-icons">location_on</i>Atur Lokasi Toko</a>
+                        </li>
                        <?php } else if($this->session->userdata('role') == 'admin') { ?>
                         <li class="<?= $this->uri->segment(1) == 'admin' && $this->uri->segment(2) == 'home'  ? 'active-page' : '' ?>">
                             <a href="<?= base_url('admin/home') ?>" class="active"><i class="material-icons-outlined">dashboard</i>Admin Dashboard</a>
@@ -21,6 +24,9 @@
                         </li>
                         <li class="<?= $this->uri->segment(1) == 'admin' && $this->uri->segment(2) == 'kelola_toko'  ? 'active-page' : '' ?>">
                             <a href="<?= base_url('admin/kelola_toko') ?>" class="active"><i class="material-icons">shop</i>Kelola Toko</a>
+                        </li>
+                        <li class="<?= $this->uri->segment(1) == 'admin' && $this->uri->segment(2) == 'kelola_akses'  ? 'active-page' : '' ?>">
+                            <a href="<?= base_url('admin/kelola_akses') ?>" class="active"><i class="material-icons">next_week</i>Kelola Akses</a>
                         </li>
                         <li class="<?= $this->uri->segment(1) == 'admin' && $this->uri->segment(2) == 'kelola_sales'  ? 'active-page' : '' ?>">
                             <a href="<?= base_url('admin/kelola_sales') ?>" class="active"><i class="material-icons-outlined">account_circle</i>Kelola Sales</a>
