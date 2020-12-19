@@ -68,7 +68,7 @@
 										<a href="<?= base_url('penjualanku/detail/').$data['id_transaksi_sales'] ?>"><button
 												type="submit" class="btn btn-primary">Detail</button></a>
 										<?php } else if ($data['status'] == 'pending') { ?>
-											<button class="btn btn-warning">Pending</button>
+											<a href="<?= base_url('penjualanku/edit/').$data['id_transaksi_sales'] ?>"><button class="btn btn-warning">Pending (edit)</button></a>
 										<?php } else if ($data['status'] == 'ditolak') { ?>
 											<button class="btn btn-danger">Ditolak</button>
 										<?php } ?>

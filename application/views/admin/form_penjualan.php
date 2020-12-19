@@ -59,11 +59,11 @@ if ($this->session->flashdata('status') === 0) {
 								</div>
 								<div class="form-group">
 									<label for="exampleInputPassword1">Kuantitas / Pcs</label>
-									<input id="kuantitas" type="number" min="0" class="kuantitas form-control" placeholder="Kuantitas/Pcs" readonly>
+									<input id="kuantitas" type="number" class="kuantitas form-control" placeholder="Kuantitas/Pcs" readonly>
 								</div>
 								<div class="form-group">
 									<label for="exampleInputPassword1">Kuantitas / Box</label>
-									<input id="kuantitas_perbox" type="number" min="0" class="kuantitas form-control" placeholder="Kuantitas/Box" readonly>
+									<input id="kuantitas_perbox" type="number" class="kuantitas form-control" placeholder="Kuantitas/Box" readonly>
 								</div>
 
 								<div class="form-group">
@@ -182,7 +182,7 @@ if ($this->session->flashdata('status') === 0) {
 					</div>
 				</div>
 			</div>
-		<?php } else if ($this->uri->segment(2) == 'edit') {?>
+		<?php } else if ($this->uri->segment(3) == 'edit') {?>
 			<div class="row">
 				<div class="col-xl">
 					<div class="card">
@@ -203,7 +203,7 @@ if ($this->session->flashdata('status') === 0) {
 							<?php
 }
     ?>
-							<form method="POST" enctype="multipart/form-data" action="<?=base_url("penjualanku/aksi_edit/$parsing[id_transaksi_sales]")?>">
+							<form method="POST" enctype="multipart/form-data" action="<?=base_url("admin/laporan_penjualan/aksi_edit/$parsing[id_transaksi_sales]")?>">
 
 								<div class="form-group">
 									<label for="exampleInputPassword1">Nama Barang</label>
@@ -351,7 +351,7 @@ if ($this->session->flashdata('status') === 0) {
 							<br>
 							<hr>
 							<br>
-							<a href="<?=base_url("penjualanku/toko/$parsing[id_toko_dipilih]")?>"><button class="btn btn-block btn-danger">Batalkan</button></a>
+							<a href="<?=base_url("admin/laporan_penjualan/detail_pending/$parsing[id_transaksi_sales]")?>"><button class="btn btn-block btn-danger">Batalkan</button></a>
 						</div>
 					</div>
 				</div>
