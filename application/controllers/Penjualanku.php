@@ -73,13 +73,13 @@ class Penjualanku extends CI_Controller
 
     public function buat()
     {
-        if($this->session->userdata('activity_edit_sales') != NULL){
+        if ($this->session->userdata('activity_edit_sales') != NULL) {
             $this->cart->destroy();
             $this->session->unset_userdata('activity_edit_sales');
             redirect(base_url("penjualanku/buat"));
         }
-        if($this->session->userdata('activity_create_sales') == NULL){
-            $this->session->set_userdata('activity_create_sales',true);
+        if ($this->session->userdata('activity_create_sales') == NULL) {
+            $this->session->set_userdata('activity_create_sales', true);
         }
         $this->load->model('barang_m');
         $this->load->model('toko_m');
@@ -216,19 +216,19 @@ class Penjualanku extends CI_Controller
         $transaksi = $this->transaksi_sales_m->read_where(array(
             'id_transaksi_sales' => $id_transaksi_sales
         ))->row_array();
-        if($transaksi['status'] != 'pending'){
+        if ($transaksi['status'] != 'pending') {
             redirect(base_url('penjualanku'));
         }
         // $this->cart->destroy();
         // $this->session->unset_userdata('activity_edit_sales');
-        if($this->session->userdata('activity_edit_sales') == NULL){
-            if($this->session->userdata('activity_create_sales') == true){
+        if ($this->session->userdata('activity_edit_sales') == NULL) {
+            if ($this->session->userdata('activity_create_sales') == true) {
                 $this->cart->destroy();
                 $this->session->unset_userdata('activity_create_sales');
                 redirect(base_url("penjualanku/edit/$id_transaksi_sales"));
             }
-            $this->session->set_userdata('activity_edit_sales',$id_transaksi_sales);
-            foreach($item as $data_barang){
+            $this->session->set_userdata('activity_edit_sales', $id_transaksi_sales);
+            foreach ($item as $data_barang) {
                 $data_barang->potongan_harga = $data_barang->subdiskon;
                 $data_barang->sebelum_total = $data_barang->subtotal;
                 $data_input = array(
@@ -241,20 +241,20 @@ class Penjualanku extends CI_Controller
                 $this->cart->insert($data_input);
             }
         } else {
-            if($this->session->userdata('activity_edit_sales') != $id_transaksi_sales){
+            if ($this->session->userdata('activity_edit_sales') != $id_transaksi_sales) {
                 $this->cart->destroy();
                 $this->session->unset_userdata('activity_edit_sales');
                 redirect(base_url("penjualanku/edit/$id_transaksi_sales"));
             }
         }
-		
+
         $barang = $this->barang_m->read()->result_array();
         $toko = $this->toko_m->read()->result_array();
         $potongan_harga = 0;
-		$sebelum_total = 0;
+        $sebelum_total = 0;
 
-		//ambil data dari db dan taro di sesi
-		
+        //ambil data dari db dan taro di sesi
+
 
         if ($this->cart->contents() != null) {
             foreach ($this->cart->contents() as $item) {
@@ -265,7 +265,7 @@ class Penjualanku extends CI_Controller
         $pembayaran = $this->pembayaran_m->read_where(array(
             'id_transaksi_sales' => $id_transaksi_sales
         ))->row_array();
-      
+
         $data = array(
             'konten' => 'sales/form_penjualan',
             'parsing' => array(
@@ -281,10 +281,10 @@ class Penjualanku extends CI_Controller
             'js' => 'sales/js_penjualan',
         );
         $this->load->view('_partials/template', $data);
-	}
-	
-	public function aksi_edit($id_transaksi_sales)
-	{
+    }
+
+    public function aksi_edit($id_transaksi_sales)
+    {
         $this->load->model('transaksi_sales_m');
         $this->load->model('item_transaksi_m');
         $this->load->model('barang_m');
@@ -314,11 +314,15 @@ class Penjualanku extends CI_Controller
                 }
                 $jumlah_diskon += $this->cart->product_options($item['rowid'])->potongan_harga;
                 $sebelum_total += $this->cart->product_options($item['rowid'])->sebelum_total;
-                if ($this->cart->product_options($item['rowid'])->pengajuan_pcs > 0) {
-                    $pengajuan_pcs = true;
+                if (isset($this->cart->product_options($item['rowid'])->pengajuan_pcs)) {
+                    if ($this->cart->product_options($item['rowid'])->pengajuan_pcs > 0) {
+                        $pengajuan_pcs = true;
+                    }
                 }
-                if ($this->cart->product_options($item['rowid'])->pengajuan_box > 0) {
-                    $pengajuan_box = true;
+                if (isset($this->cart->product_options($item['rowid'])->pengajuan_box)) {
+                    if ($this->cart->product_options($item['rowid'])->pengajuan_box > 0) {
+                        $pengajuan_box = true;
+                    }
                 }
             }
 
@@ -335,11 +339,11 @@ class Penjualanku extends CI_Controller
                 if ($pengajuan_pcs == true || $pengajuan_box == true) {
                     $data_input['status'] = 'pending';
                 }
-                $this->transaksi_sales_m->update($data_input,array('id_transaksi_sales' => $id_transaksi_sales));
+                $this->transaksi_sales_m->update($data_input, array('id_transaksi_sales' => $id_transaksi_sales));
                 $item_hapus = $this->item_transaksi_m->read_where(array(
                     'id_transaksi_sales' => $id_transaksi_sales
                 ))->result_array();
-                foreach($item_hapus as $item){
+                foreach ($item_hapus as $item) {
                     $barang = $this->barang_m->read_where(array('id_barang' => $item['id_barang']))->row();
                     $this->barang_m->update(array(
                         'stok' => $barang->stok + $item['stok'],
@@ -349,7 +353,7 @@ class Penjualanku extends CI_Controller
                     ));
                 }
                 $this->item_transaksi_m->delete(array(
-                    'id_transaksi_sales' => $id_transaksi_sales 
+                    'id_transaksi_sales' => $id_transaksi_sales
                 ));
                 foreach ($this->cart->contents() as $item) {
                     $barang = $this->barang_m->read_where(array('id_barang' => $item['id']))->row();
@@ -374,7 +378,7 @@ class Penjualanku extends CI_Controller
                 $data_pembayaran = array(
                     'jumlah_pembayaran' => $this->priceToFloat($data_transaksi['pembayaran']),
                 );
-                $this->pembayaran_m->update($data_pembayaran,array(
+                $this->pembayaran_m->update($data_pembayaran, array(
                     'id_transaksi_sales' => $id_transaksi_sales
                 ));
                 $this->cart->destroy();
@@ -394,7 +398,7 @@ class Penjualanku extends CI_Controller
                 redirect(base_url("penjualanku/edit/$id_transaksi_sales"));
             }
         }
-	}
+    }
 
     public function detail($id_transaksi)
     {
@@ -449,12 +453,13 @@ class Penjualanku extends CI_Controller
         }
     }
 
-    function print($id_transaksi) {
+    function print($id_transaksi)
+    {
         $this->load->model('transaksi_sales_m');
         $this->load->model('item_transaksi_m');
         $this->load->model('pembayaran_m');
-        $data_transaksi = $this->transaksi_sales_m->read_full_where(array('id_transaksi_sales' => $id_transaksi))->result_array();
-        $data_item = $this->item_transaksi_m->read_full_where(array('id_transaksi_sales' => $id_transaksi))->result_array();
+        $data_transaksi = $this->transaksi_sales_m->read_full_where(array('transaksi_sales.id_transaksi_sales' => $id_transaksi))->result_array();
+        $data_item = $this->item_transaksi_m->read_full_where(array('transaksi_sales.id_transaksi_sales' => $id_transaksi))->result_array();
         $data_pembayaran = $this->pembayaran_m->read_where(array('id_transaksi_sales' => $id_transaksi))->result_array();
         $data_pembayaran_masuk = $this->pembayaran_m->pembayaran_masuk(array('id_transaksi_sales' => $id_transaksi))->row_array();
         $data = array(
