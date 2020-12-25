@@ -15,6 +15,13 @@
                         <li class="<?= $this->uri->segment(1) == 'lokasi' ? 'active-page' : '' ?>">
                             <a href="<?= base_url('lokasi') ?>" class="active"><i class="material-icons">location_on</i>Atur Lokasi Toko</a>
                         </li>
+                       <?php } else if ($this->session->userdata('role') == 'driver') { ?>
+                        <li class="<?= $this->uri->segment(1) == 'home' ? 'active-page' : '' ?>">
+                            <a href="<?= base_url('home') ?>" class="active"><i class="material-icons-outlined">dashboard</i>Dashboard</a>
+                        </li>
+                        <li class="<?= $this->uri->segment(1) == 'rkab' ? 'active-page' : '' ?>">
+                            <a href="<?= base_url('rkab') ?>" class="active"><i class="material-icons-outlined">bar_chart</i>RKAB</a>
+                        </li>
                        <?php } else if($this->session->userdata('role') == 'admin') { ?>
                         <li class="<?= $this->uri->segment(1) == 'admin' && $this->uri->segment(2) == 'home'  ? 'active-page' : '' ?>">
                             <a href="<?= base_url('admin/home') ?>" class="active"><i class="material-icons-outlined">dashboard</i>Admin Dashboard</a>
@@ -36,6 +43,9 @@
                         </li>
                         <li class="<?= $this->uri->segment(1) == 'admin' && $this->uri->segment(2) == 'laporan_penjualan'  ? 'active-page' : '' ?>">
                             <a href="<?= base_url('admin/laporan_penjualan') ?>" class="active"><i class="material-icons">bar_chart</i>Laporan Penjualan</a>
+                        </li>
+                        <li class="<?= $this->uri->segment(1) == 'admin' && $this->uri->segment(2) == 'rkab'  ? 'active-page' : '' ?>">
+                            <a href="<?= base_url('admin/rkab') ?>" class="active"><i class="material-icons">bar_chart</i>RKAB</a>
                         </li>
                        <?php } ?>
                     </ul>

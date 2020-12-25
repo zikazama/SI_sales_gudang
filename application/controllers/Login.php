@@ -28,6 +28,12 @@ class Login extends CI_Controller {
 		}
 	}
 
+	public function __construct(){
+		parent::__construct();
+		$this->load->model('sales_m');
+		$this->load->model('driver_m');
+	}
+
 	public function index()
 	{
 		$this->cekLogin();
@@ -35,13 +41,13 @@ class Login extends CI_Controller {
 	}
 
 	public function aksi_login(){
-		$this->load->model('sales_m');
 		$data_login = $this->input->post();
 		$where = array(
 			'email' => $data_login['email'],
 			'password' => $data_login['password']
 		);
 		$sales = $this->sales_m->read_where($where);
+		$driver = $this->driver_m->read_where($where);
 		if($sales->num_rows() > 0){
 			$sales = $sales->result_array();
 			$this->session->set_userdata(array(
@@ -50,6 +56,16 @@ class Login extends CI_Controller {
 				'nama' => $sales[0]['nama_sales'],
 				'foto' => $sales[0]['foto'],
 				'role' => 'sales'
+			));
+			redirect(base_url('home'));
+		} else if($driver->num_rows() > 0) {
+			$driver = $driver->result_array();
+			$this->session->set_userdata(array(
+				'email' => $driver[0]['email'],
+				'id' => $driver[0]['id_driver'],
+				'nama' => $driver[0]['nama_driver'],
+				'foto' => $driver[0]['foto'],
+				'role' => 'driver'
 			));
 			redirect(base_url('home'));
 		} else {

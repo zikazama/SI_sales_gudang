@@ -115,8 +115,8 @@ class Laporan_penjualan extends CI_Controller
 		$this->load->model('transaksi_sales_m');
 		$this->load->model('item_transaksi_m');
 		$this->load->model('pembayaran_m');
-		$data_transaksi = $this->transaksi_sales_m->read_full_where(array('id_transaksi_sales' => $id_transaksi))->result_array();
-		$data_item = $this->item_transaksi_m->read_full_where(array('id_transaksi_sales' => $id_transaksi))->result_array();
+		$data_transaksi = $this->transaksi_sales_m->read_full_where(array('transaksi_sales.id_transaksi_sales' => $id_transaksi))->result_array();
+		$data_item = $this->item_transaksi_m->read_full_where(array('transaksi_sales.id_transaksi_sales' => $id_transaksi))->result_array();
 		$data_pembayaran = $this->pembayaran_m->read_where(array('id_transaksi_sales' => $id_transaksi))->result_array();
 		$data_pembayaran_masuk = $this->pembayaran_m->pembayaran_masuk(array('id_transaksi_sales' => $id_transaksi))->row_array();
 		$data = array(

@@ -108,6 +108,8 @@
 								<br>
 								<a href="<?= base_url('admin/laporan_penjualan/print/') . $parsing['transaksi'][0]['id_transaksi_sales'] ?>"><button type="button" class="btn btn-info btn-lg btn-block">Print</button></a>
 								<br>
+								<a href="<?= base_url('admin/rkab/id/') . $parsing['transaksi'][0]['id_transaksi_sales'] ?>"><button type="button" class="btn btn-warning btn-lg btn-block">RKAB</button></a>
+								<br>
 								<a href="<?= base_url('admin/laporan_penjualan/toko/') . $parsing['transaksi'][0]['id_toko'] ?>"><button type="button" class="btn btn-danger btn-lg btn-block">Kembali</button></a>
 							</div>
 							<div class="tab-pane fade" id="pills-pembayaran" role="tabpanel" aria-labelledby="pills-profile-tab">
@@ -147,6 +149,8 @@
 								</table>
 								<br>
 								<a href="<?= base_url('admin/laporan_penjualan/print/') . $parsing['transaksi'][0]['id_transaksi_sales'] ?>"><button type="button" class="btn btn-info btn-lg btn-block">Print</button></a>
+								<br>
+								<a href="<?= base_url('admin/rkab/id/') . $parsing['transaksi'][0]['id_transaksi_sales'] ?>"><button type="button" class="btn btn-warning btn-lg btn-block">RKAB</button></a>
 								<br>
 								<a href="<?= base_url('admin/laporan_penjualan/toko/') . $parsing['transaksi'][0]['id_toko'] ?>"><button type="button" class="btn btn-danger btn-lg btn-block">Kembali</button></a>
 							</div>

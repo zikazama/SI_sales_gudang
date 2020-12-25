@@ -60,4 +60,21 @@ class Item_transaksi_m extends Base_m {
 		$this->db->where($where);
 		return $this->db->get();
 	}
+
+	public function read_not_in($in,$where){
+		$this->db->select('*, item_transaksi.created_at as waktu');
+		$this->db->from($this->table);
+		$this->db->join('barang','barang.id_barang = item_transaksi.id_barang');
+		$this->db->join('transaksi_sales','transaksi_sales.id_transaksi_sales = item_transaksi.id_transaksi_sales');
+		$this->db->where_not_in('id_item_transaksi', $in);
+		$this->db->where($where);
+		return $this->db->get();
+	}
+
+	public function cek_sisa_item($in,$where){
+		$this->db->from($this->table);
+		$this->db->where_not_in('id_item_transaksi', $in);
+		$this->db->where($where);
+		return $this->db->get();
+	}
 }
