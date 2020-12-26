@@ -218,6 +218,9 @@ class Rkab extends CI_Controller
 
     public function item($id_group_rkab)
     {
+        $group_rkab = $this->group_rkab_m->read_where(array(
+            'id_group_rkab' => $id_group_rkab
+        ))->row_array();
         $item_rkab = $this->rkab_m->read_full_status_where(array(
             'id_group_rkab' => $id_group_rkab
         ))->result_array();
@@ -225,7 +228,8 @@ class Rkab extends CI_Controller
             'konten' => 'admin/rkab_semua',
             'parsing' => array(
                 'rkab' => $item_rkab,
-                'id_group_rkab' => $id_group_rkab
+                'id_group_rkab' => $id_group_rkab,
+                'status_group' => $group_rkab['status_group']
             )
         );
         $this->load->view('_partials/template', $data);
@@ -273,12 +277,68 @@ class Rkab extends CI_Controller
         redirect(base_url("admin/rkab/item/$id_group_rkab"));
     }
 
-    public function print($id_rkab)
+    public function print($id_group_rkab)
     {
-        $rkab = $this->rkab_m->read_full_where(array(
-            'id_rkab' => $id_rkab
-        ))->row_array();
-        var_dump($rkab);
+        $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => [210, 148.5],  'orientation' => 'P', 'margin_top' => 0, 'margin_bottom' => 0]);
+        $group_rkab = $this->group_rkab_m->read_print_where(array(
+            'id_group_rkab' => $id_group_rkab
+        ))->result_array();
+        $data = array(
+            'group_rkab' => $group_rkab
+        );
+        $jumlah_item = count($group_rkab);
+		$hasil_bagi = $jumlah_item / 10;
+		$hasil_bagi = floor($hasil_bagi);
+		$sisa_bagi = $jumlah_item % 10;
+		if ($jumlah_item < 10) {
+			$data['index_awal'] = 1;
+			$data['index_akhir'] = $sisa_bagi;
+			$data['status_ttd'] = true;
+			$tampilan = $this->load->view('template_rkab', $data, TRUE);
+			$mpdf->WriteHTML($tampilan);
+		} else if($jumlah_item == 10){
+			$data['index_awal'] = 1;
+			$data['index_akhir'] = 10;
+			$data['status_ttd'] = true;
+			$tampilan = $this->load->view('template_rkab', $data, TRUE);
+			$mpdf->WriteHTML($tampilan);
+		} else if ($jumlah_item > 10 && $sisa_bagi == 0) {
+			$data['index_awal'] = 1;
+			$data['index_akhir'] = 10;
+			while ($hasil_bagi > 0) {
+				if ($hasil_bagi == 1) {
+					$data['status_ttd'] = true;
+				} 
+				$tampilan = $this->load->view('template_rkab', $data, TRUE);
+				$mpdf->WriteHTML($tampilan);
+				if ($hasil_bagi > 1) {
+					$mpdf->AddPage();
+					$data['index_akhir'] += 10;
+				} 
+				$hasil_bagi--;
+				$data['index_awal'] += 10;
+			}
+		} else if ($jumlah_item > 10 && $sisa_bagi != 0) {
+			$hasil_bagi += 1;
+			$data['index_awal'] = 1;
+			$data['index_akhir'] = 10;
+			while ($hasil_bagi > 0) {
+				if ($hasil_bagi == 1) {
+					$data['status_ttd'] = true;
+					$data['index_akhir'] = $data['index_akhir'] - 10 + $sisa_bagi;
+				}
+				$tampilan = $this->load->view('template_rkab', $data, TRUE);
+				$mpdf->WriteHTML($tampilan);
+				if ($hasil_bagi > 1) {
+					$mpdf->AddPage();
+					$data['index_akhir'] += 10;
+				} 
+				$hasil_bagi--;
+				$data['index_awal'] += 10;
+			}	
+			//die();
+		}
+		$mpdf->Output();
     }
 
 }

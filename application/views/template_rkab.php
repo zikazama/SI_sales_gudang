@@ -113,18 +113,18 @@
         <tr>
             <td>CV. Andika Emas Abadi</td>
             <td style="width: 70mm"></td>
-            <td>Tanggal : <?= $transaksi[0]['waktu'] ?></td>
+            
         </tr>
         <tr>
             <td>Jl. Raya Eyang Soemohardjo.</td>
             <td style="width: 70mm"></td>
-            <td>Kepada Yth : Toko <?= $transaksi[0]['nama_toko'] ?></td>
+            
 
         </tr>
         <tr>
             <td>Desa Kediri Kecamatan Binong Subang</td>
             <td style="width: 70mm"></td>
-            <td>Sales : <?= $transaksi[0]['nama_sales'] ?></td>
+           
         </tr>
     </table>
 
@@ -145,9 +145,9 @@
             ?>
                 <tr class="">
                     <td class="no "><?= $no ?></td>
-                    <td class="description "><?= $item[$i]['nama_barang'] . ' - ' . $item[$i]['merek'] ?></td>
-                    <td class="quantity "><?= $item[$i]['kuantitas'] ?></td>
-                    <td class="quantity "><?= $item[$i]['kuantitas_perbox'] ?></td>
+                    <td class="description "><?= $group_rkab[$i]['nama_barang'] . ' - ' . $group_rkab[$i]['merek'] ?></td>
+                    <td class="quantity "><?= $group_rkab[$i]['kuantitas'] ?></td>
+                    <td class="quantity "><?= $group_rkab[$i]['kuantitas_perbox'] ?></td>
                    
                 </tr>
             <?php $no++;

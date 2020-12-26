@@ -18,6 +18,16 @@ class Group_rkab_m extends Base_m {
 	 * map to /index.php/welcome/<method_name>
 	 * @see https://codeigniter.com/user_guide/general/urls.html
      */
-    public $table = 'group_rkab';
+	public $table = 'group_rkab';
+	
+	public function read_print_where(){
+		$this->db->from($this->table);
+		$this->db->join('rkab','rkab.id_group_rkab = group_rkab.id_group_rkab');
+		$this->db->join('rkab_item','rkab_item.id_rkab = rkab.id_rkab');
+		$this->db->join('item_transaksi','item_transaksi.id_item_transaksi = rkab_item.id_item_transaksi');
+		$this->db->join('barang','barang.id_barang = item_transaksi.id_barang');
+		$this->db->group_by('item_transaksi.id_barang');
+		return $this->db->get();
+	}
 
 }

@@ -29,6 +29,7 @@
 									}
                                 ?>
 						<br>
+						<a href="<?= base_url("admin/rkab/print/$parsing[id_group_rkab]") ?>"><button type="button" class="btn btn-info btn-lg btn-block">Print</button></a>
 						<table id="zero-conf" class="display" style="width:100%">
 							<thead>
 								<tr>
@@ -80,8 +81,13 @@
 							</tbody>
 
 						</table>
+						<?php if($parsing['status_group'] == 0) { ?>
 						<br>
-                        <a href="<?= base_url("admin/selesai_group/$parsing[id_group_rkab]") ?>"><button type="button" class="btn btn-primary btn-lg btn-block">Selesai</button></a>
+						<a href="<?= base_url("admin/selesai_group/$parsing[id_group_rkab]") ?>"><button type="button" class="btn btn-primary btn-lg btn-block">Selesai</button></a>
+						<?php } else { ?>
+							<br>
+							<a href="#"><button type="button" class="btn btn-primary btn-lg btn-block">Telah Selesai</button></a>
+							<?php } ?>
 						<br>
                         <a href="<?= base_url("admin/rkab") ?>"><button type="button" class="btn btn-danger btn-lg btn-block">Kembali</button></a>
 					</div>
