@@ -83,7 +83,7 @@
 						</table>
 						<?php if($parsing['status_group'] == 0) { ?>
 						<br>
-						<a href="<?= base_url("admin/selesai_group/$parsing[id_group_rkab]") ?>"><button type="button" class="btn btn-primary btn-lg btn-block">Selesai</button></a>
+						<a href="<?= base_url("admin/rkab/selesai_group/$parsing[id_group_rkab]") ?>"><button type="button" class="btn btn-primary btn-lg btn-block">Selesai</button></a>
 						<?php } else { ?>
 							<br>
 							<a href="#"><button type="button" class="btn btn-primary btn-lg btn-block">Telah Selesai</button></a>

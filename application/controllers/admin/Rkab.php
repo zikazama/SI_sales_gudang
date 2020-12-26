@@ -262,6 +262,8 @@ class Rkab extends CI_Controller
 
     public function selesai_group($id_group_rkab){
         if ($this->group_rkab_m->update(array(
+            'status_group' => 1
+        ),array(
             'id_group_rkab' => $id_group_rkab
         ))) {
             $this->session->set_flashdata(array(
