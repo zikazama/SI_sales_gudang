@@ -48,6 +48,17 @@ class Kelola_akses extends CI_Controller {
 
     public function aksi_tambah(){
 		$data_akses = $this->input->post();
+		$cek = $this->akses_toko_m->read_where(array(
+			'id_toko' => $data_akses['id_toko'],
+			'id_sales' => $data_akses['id_sales']
+		));
+		if($cek->num_rows()){
+			$this->session->set_flashdata(array(
+				'status' => 0,
+				'message' => 'Akses Sudah Pernah Ditambahkan'
+			));
+			redirect(base_url('admin/kelola_akses'));
+		}
 		if($this->akses_toko_m->create($data_akses)){
 			$this->session->set_flashdata(array(
 				'status' => 1,

@@ -20,4 +20,17 @@ class Toko_m extends Base_m {
      */
     public $table = 'toko';
 
+	public function read_akses(){
+		$this->db->from($this->table);
+		$this->db->join('akses_toko','akses_toko.id_toko = toko.id_toko');
+		return $this->db->get();
+	}
+
+	public function read_akses_where($where){
+		$this->db->from($this->table);
+		$this->db->join('akses_toko','akses_toko.id_toko = toko.id_toko');
+		$this->db->where($where);
+		return $this->db->get();
+	}
+
 }

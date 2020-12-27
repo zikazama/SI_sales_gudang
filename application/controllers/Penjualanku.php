@@ -81,10 +81,13 @@ class Penjualanku extends CI_Controller
         if ($this->session->userdata('activity_create_sales') == NULL) {
             $this->session->set_userdata('activity_create_sales', true);
         }
+        $id_user = $this->session->userdata('id');
         $this->load->model('barang_m');
         $this->load->model('toko_m');
         $barang = $this->barang_m->read()->result_array();
-        $toko = $this->toko_m->read()->result_array();
+        $toko = $this->toko_m->read_akses_where(array(
+            'id_sales' => $id_user
+        ))->result_array();
         $potongan_harga = 0;
         $sebelum_total = 0;
         if ($this->cart->contents() != null) {
