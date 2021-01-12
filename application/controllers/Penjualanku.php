@@ -37,8 +37,11 @@ class Penjualanku extends CI_Controller
 
     public function index()
     {
+        $id_user = $this->session->userdata('id');
         $this->load->model('toko_m');
-        $laporan_penjualan = $this->toko_m->read()->result_array();
+        $laporan_penjualan = $this->toko_m->read_akses_where(array(
+            'id_sales' => $id_user
+        ))->result_array();
         $data = array(
             'js' => 'admin/js_laporan_penjualan',
             'konten' => 'sales/penjualanku',

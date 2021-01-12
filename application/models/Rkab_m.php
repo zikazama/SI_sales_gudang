@@ -55,6 +55,20 @@ class Rkab_m extends Base_m {
 		return $this->db->get();
 	}
 
+	public function read_full_status_where_group($where)
+	{
+		$this->db->from($this->table);
+		$this->db->join('transaksi_sales','transaksi_sales.id_transaksi_sales = rkab.id_transaksi_sales');
+		$this->db->join('toko','toko.id_toko = transaksi_sales.id_toko');
+		$this->db->join('rkab_item','rkab_item.id_rkab = rkab.id_rkab');
+		$this->db->join('driver','rkab_item.id_driver = driver.id_driver');
+		$this->db->where_in(array('1','2'));
+		$this->db->where($where);
+		$this->db->group_by('transaksi_sales.id_transaksi_sales');
+		$this->db->order_by('rkab.id_rkab','DESC');
+		return $this->db->get();
+	}
+
 	public function read_full_where($where)
 	{
 		$this->db->from($this->table);

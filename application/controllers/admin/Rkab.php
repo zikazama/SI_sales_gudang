@@ -221,7 +221,7 @@ class Rkab extends CI_Controller
         $group_rkab = $this->group_rkab_m->read_where(array(
             'id_group_rkab' => $id_group_rkab
         ))->row_array();
-        $item_rkab = $this->rkab_m->read_full_status_where(array(
+        $item_rkab = $this->rkab_m->read_full_status_where_group(array(
             'id_group_rkab' => $id_group_rkab
         ))->result_array();
         $data = array(

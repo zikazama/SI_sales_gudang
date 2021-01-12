@@ -20,7 +20,7 @@
                                     <select id="id_toko" name="id_toko" class="form-control" tabindex="-1" style="width: 100%">
                                         <option value="0" disabled selected>Pilih Toko</option>
                                         <?php foreach ($parsing['toko'] as $data) { ?>
-                                            <option value="<?= $data['id_toko'] ?>"><?= $data['nama_toko'] ?></option>
+                                            <option value="<?= $data['id_toko'] ?>"><?= $data['nama_toko'] ?> - <?= $data['alamat'] ?></option>
                                         <?php } ?>
 
                                     </select>
@@ -58,7 +58,7 @@
                                     <select id="id_toko" name="id_toko" class="form-control" tabindex="-1" style="width: 100%">
                                         <option value="0" disabled>Pilih Toko</option>
                                         <?php foreach ($parsing['toko'] as $data) { ?>
-                                            <option value="<?= $data['id_toko'] ?>" <?= $parsing['akses']['id_toko'] == $data['id_toko'] ? 'selected' : '' ?>><?= $data['nama_toko'] ?></option>
+                                            <option value="<?= $data['id_toko'] ?>" <?= $parsing['akses']['id_toko'] == $data['id_toko'] ? 'selected' : '' ?>><?= $data['nama_toko'] ?> - <?= $data['alamat'] ?></option>
                                         <?php } ?>
 
                                     </select>
