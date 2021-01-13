@@ -357,6 +357,133 @@ class Laporan_penjualan extends CI_Controller
 		$writer->save('php://output');
 	}
 
+	public function export_v2_where(){
+		$this->load->model('item_transaksi_m');
+		$post = $this->input->post();
+		$data = $this->item_transaksi_m->read_print_where(array('date(item_transaksi.created_at) >=' => $post['awal'], 'date(item_transaksi.created_at) <=' => $post['akhir']))->result_array();
+		$spreadsheet = new Spreadsheet;
+		$spreadsheet->setActiveSheetIndex(0)->mergeCells('A3:O4');
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('A3', "Rekap Data Penjualan Barang $post[awal] hingga $post[akhir]");
+		$styleJudul = [
+			'font' => [
+				'bold' => true,
+				'size' => 18
+			],
+			'alignment' => [
+				'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+				'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+
+			],
+		];
+		$styleTH = [
+			'font' => [
+				'bold' => true,
+			],
+			'alignment' => [
+				'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+				'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+			],
+			'borders' => [
+				'allBorders' => [
+					'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+				],
+			],
+			'fill' => [
+				'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+				'startColor' => [
+					'argb' => 'FF00B0F0',
+				],
+			],
+		];
+		$styleTR = [
+			'alignment' => [
+				'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+				'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+			],
+			'borders' => [
+				'allBorders' => [
+					'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+				],
+			],
+		];
+
+		$spreadsheet->getActiveSheet()->getStyle('A3')->applyFromArray($styleJudul);
+		$spreadsheet->setActiveSheetIndex(0)->mergeCells('A7:A8');
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('A7', "TANGGAL");
+		$spreadsheet->setActiveSheetIndex(0)->mergeCells('B7:B8');
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('B7', "NAMA TOKO");
+		$spreadsheet->setActiveSheetIndex(0)->mergeCells('C7:D7');
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('C7', "PEMBELIAN STOK");
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('C8', "IKET/PACK");
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('D8', "BALL/BOX");
+		$spreadsheet->setActiveSheetIndex(0)->mergeCells('E7:E8');
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('E7', "ITEM");
+		$spreadsheet->setActiveSheetIndex(0)->mergeCells('F7:F8');
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('F7', "MODAL PCS");
+		$spreadsheet->setActiveSheetIndex(0)->mergeCells('G7:G8');
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('G7', "HARGA MODAL PCS");
+		$spreadsheet->setActiveSheetIndex(0)->mergeCells('H7:H8');
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('H7', "MODAL BOX");
+		$spreadsheet->setActiveSheetIndex(0)->mergeCells('I7:I8');
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('I7', "HARGA MODAL BOX");
+		$spreadsheet->setActiveSheetIndex(0)->mergeCells('J7:J8');
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('J7', "TOTAL MODAL");
+		$spreadsheet->setActiveSheetIndex(0)->mergeCells('K7:K8');
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('K7', "HARGA JUAL");
+		$spreadsheet->setActiveSheetIndex(0)->mergeCells('L7:L8');
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('L7', "POTONGAN");
+		$spreadsheet->setActiveSheetIndex(0)->mergeCells('M7:M8');
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('M7', "TOTAL HARGA JUAL");
+		$spreadsheet->setActiveSheetIndex(0)->mergeCells('N7:N8');
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('N7', "LABA");
+		$spreadsheet->setActiveSheetIndex(0)->mergeCells('O7:O8');
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('O7', "KETERANGAN");
+		$spreadsheet->getActiveSheet()->getStyle('A7:O8')->applyFromArray($styleTH);
+
+		$kolom = 9;
+		$nomor = 1;
+		foreach ($data as $d) {
+			$total = (int) $d['subtotal'] - (int) $d['subdiskon'];
+			$spreadsheet->setActiveSheetIndex(0)
+				->setCellValue('A' . $kolom, date('d-m-Y', strtotime($d['created_at'])))
+				->setCellValue('B' . $kolom, $d['nama_toko'])
+				->setCellValue('C' . $kolom, $d['kuantitas'])
+				->setCellValue('D' . $kolom, $d['kuantitas_perbox'])
+				->setCellValue('E' . $kolom, $d['nama_barang'].' - '.$d['merek'])
+				// ->setCellValue('F' . $kolom, number_format($d['subtotal'], 0, '.', ','))
+				// ->setCellValue('G' . $kolom, number_format($d['subdiskon'], 0, '.', ','))
+				// ->setCellValue('H' . $kolom, number_format($total, 0, '.', ','))
+				// ->setCellValue('I' . $kolom, date('d-m-Y', strtotime($d['created_at'])))
+				// ->setCellValue('J' . $kolom, date('d-m-Y', strtotime($d['created_at'])))
+				// ->setCellValue('K' . $kolom, date('d-m-Y', strtotime($d['created_at'])))
+				// ->setCellValue('L' . $kolom, date('d-m-Y', strtotime($d['created_at'])))
+				->setCellValue('M' . $kolom, number_format($total, 0, '.', ','));
+
+			$kolom++;
+			$nomor++;
+		}
+		$spreadsheet->getActiveSheet()->getStyle("A9:O$kolom")->applyFromArray($styleTR);
+
+		$gtot = $this->item_transaksi_m->grand_total_where(array('date(item_transaksi.created_at) >=' => $post['awal'], 'date(item_transaksi.created_at) <=' => $post['akhir']))->row_array();
+		$grand_total = $gtot['subtotal'] - $gtot['subdiskon'];
+		$spreadsheet->setActiveSheetIndex(0)
+			->setCellValue('L' . $kolom, 'Grand Total')
+			->setCellValue('M' . $kolom, number_format($grand_total, 0, '.', ','));
+
+		$huruf = 'A';
+		while($huruf < 'P'){
+			$spreadsheet->getActiveSheet()->getColumnDimension($huruf)->setAutoSize(true);
+			$huruf++;
+		}
+
+		$writer = new Xlsx($spreadsheet);
+		header('Content-Type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment;filename="Rekap Data Penjualan ' . $post['awal'] . ' hingga ' . $post['akhir'] . ' .xlsx"');
+		header('Cache-Control: max-age=0');
+
+		$writer->save('php://output');
+	}
+
 	public function edit($id_transaksi_sales)
     {
         $this->load->model('barang_m');

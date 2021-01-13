@@ -28,7 +28,7 @@
                         <?php
                         }
                         ?>
-                        <form action="<?= base_url('admin/laporan_penjualan/export_where') ?>" method="post">
+                        <form action="<?= base_url('admin/laporan_penjualan/export_v2_where') ?>" method="post">
                             <input type="date" name="awal" required>
                             <input type="date" name="akhir" required>
                             

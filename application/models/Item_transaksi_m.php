@@ -50,6 +50,7 @@ class Item_transaksi_m extends Base_m {
 		$this->db->join('transaksi_sales','transaksi_sales.id_transaksi_sales = item_transaksi.id_transaksi_sales');
 		$this->db->join('sales','sales.id_sales = transaksi_sales.id_sales');
 		$this->db->join('barang','barang.id_barang = item_transaksi.id_barang');
+		$this->db->join('toko','toko.id_toko = transaksi_sales.id_toko');
 		$this->db->where($where);
 		return $this->db->get();
 	}
