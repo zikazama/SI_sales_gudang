@@ -117,7 +117,7 @@
         </tr>
         <tr>
             <td>Jl. Raya Eyang Soemohardjo.</td>
-            <td style="width: 70mm"></td>
+            <td style="width: 70mm;text-align:center;font-weight:bold">No:<?= $transaksi[0]['id_transaksi_sales'] ?></td>
             <td>Kepada Yth : Toko <?= $transaksi[0]['nama_toko'] ?></td>
 
         </tr>

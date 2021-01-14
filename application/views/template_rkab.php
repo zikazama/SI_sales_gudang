@@ -113,17 +113,20 @@
         <tr>
             <td>CV. Andika Emas Abadi</td>
             <td style="width: 70mm"></td>
+            <td>No Faktur: <?= $list_faktur ?></td>
             
         </tr>
         <tr>
             <td>Jl. Raya Eyang Soemohardjo.</td>
             <td style="width: 70mm"></td>
+            <td></td>
             
 
         </tr>
         <tr>
             <td>Desa Kediri Kecamatan Binong Subang</td>
             <td style="width: 70mm"></td>
+            <td></td>
            
         </tr>
     </table>

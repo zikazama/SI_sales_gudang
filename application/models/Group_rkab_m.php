@@ -30,4 +30,14 @@ class Group_rkab_m extends Base_m {
 		return $this->db->get();
 	}
 
+	public function read_list_no_faktur($where){
+		$this->db->distinct();
+		$this->db->select('transaksi_sales.id_transaksi_sales');
+		$this->db->from($this->table);
+		$this->db->join('rkab','rkab.id_group_rkab = group_rkab.id_group_rkab');
+		$this->db->join('transaksi_sales','transaksi_sales.id_transaksi_sales = rkab.id_transaksi_sales');
+		$this->db->where($where);
+		return $this->db->get();
+	}
+
 }

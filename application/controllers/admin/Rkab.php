@@ -291,7 +291,10 @@ class Rkab extends CI_Controller
         $jumlah_item = count($group_rkab);
 		$hasil_bagi = $jumlah_item / 10;
 		$hasil_bagi = floor($hasil_bagi);
-		$sisa_bagi = $jumlah_item % 10;
+        $sisa_bagi = $jumlah_item % 10;
+        $data['status_ttd'] = false;
+        $list_faktur = array_column($this->group_rkab_m->read_list_no_faktur(array('group_rkab.id_group_rkab' => $id_group_rkab))->result_array(),'id_transaksi_sales');
+        $data['list_faktur'] = implode(',',$list_faktur);
 		if ($jumlah_item < 10) {
 			$data['index_awal'] = 1;
 			$data['index_akhir'] = $sisa_bagi;
