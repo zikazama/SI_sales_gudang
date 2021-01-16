@@ -283,11 +283,13 @@ class Rkab extends CI_Controller
     {
         $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => [210, 148.5],  'orientation' => 'P', 'margin_top' => 0, 'margin_bottom' => 0]);
         $group_rkab = $this->group_rkab_m->read_print_where(array(
-            'id_group_rkab' => $id_group_rkab
+            'rkab.id_group_rkab' => $id_group_rkab
         ))->result_array();
         $data = array(
             'group_rkab' => $group_rkab
         );
+        // echo '<pre>' . var_export($group_rkab, true) . '</pre>';
+        // die();
         $jumlah_item = count($group_rkab);
 		$hasil_bagi = $jumlah_item / 10;
 		$hasil_bagi = floor($hasil_bagi);

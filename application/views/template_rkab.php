@@ -149,8 +149,8 @@
                 <tr class="">
                     <td class="no "><?= $no ?></td>
                     <td class="description "><?= $group_rkab[$i]['nama_barang'] . ' - ' . $group_rkab[$i]['merek'] ?></td>
-                    <td class="quantity "><?= $group_rkab[$i]['kuantitas'] ?></td>
-                    <td class="quantity "><?= $group_rkab[$i]['kuantitas_perbox'] ?></td>
+                    <td class="quantity "><?= $group_rkab[$i]['kuantitas_group'] ?></td>
+                    <td class="quantity "><?= $group_rkab[$i]['kuantitas_perbox_group'] ?></td>
                    
                 </tr>
             <?php $no++;
