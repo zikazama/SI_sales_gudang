@@ -57,15 +57,14 @@ class Rkab_m extends Base_m {
 
 	public function read_full_status_where_group($where)
 	{
-		$this->db->from($this->table);
-		$this->db->join('transaksi_sales','transaksi_sales.id_transaksi_sales = rkab.id_transaksi_sales');
+		$this->db->from('rkab_item');
+		$this->db->join('transaksi_sales','transaksi_sales.id_transaksi_sales = rkab_item.id_transaksi_sales');
 		$this->db->join('toko','toko.id_toko = transaksi_sales.id_toko');
-		$this->db->join('rkab_item','rkab_item.id_rkab = rkab.id_rkab');
-		$this->db->join('driver','rkab_item.id_driver = driver.id_driver');
-		$this->db->where_in(array('1','2'));
+		//$this->db->join('driver','rkab_item.id_driver = driver.id_driver');
+		//$this->db->where_in(array('1','2'));
 		$this->db->where($where);
-		$this->db->group_by('transaksi_sales.id_transaksi_sales');
-		$this->db->order_by('rkab.id_rkab','DESC');
+		//$this->db->group_by('transaksi_sales.id_transaksi_sales');
+		$this->db->order_by('rkab_item.id_rkab_item','DESC');
 		return $this->db->get();
 	}
 
@@ -76,6 +75,13 @@ class Rkab_m extends Base_m {
 		$this->db->join('toko','toko.id_toko = transaksi_sales.id_toko');
 		$this->db->join('rkab_item','rkab_item.id_rkab = rkab.id_rkab');
 		$this->db->join('driver','rkab_item.id_driver = driver.id_driver');
+		$this->db->where($where);
+		return $this->db->get();
+	}
+
+	public function read_no_group($where){
+		$this->db->from('rkab_item');
+		$this->db->join('group_rkab','group_rkab.id_group_rkab = rkab_item.id_group_rkab');
 		$this->db->where($where);
 		return $this->db->get();
 	}

@@ -19,14 +19,29 @@ class Group_rkab_m extends Base_m {
 	 * @see https://codeigniter.com/user_guide/general/urls.html
      */
 	public $table = 'group_rkab';
+
+	public function read_full()
+	{
+		$this->db->from($this->table);
+		$this->db->join('driver','driver.id_driver = group_rkab.id_driver');
+		return $this->db->get();
+	}
+
+	public function read_full_where($where)
+	{
+		$this->db->from($this->table);
+		$this->db->join('driver','driver.id_driver = group_rkab.id_driver');
+		$this->db->where($where);
+		return $this->db->get();
+	}
 	
 	public function read_print_where($where){
 		$this->db->select('*, sum(kuantitas) as kuantitas_group, sum(kuantitas_perbox) as kuantitas_perbox_group');
 		$this->db->from($this->table);
-		$this->db->join('rkab','rkab.id_group_rkab = group_rkab.id_group_rkab');
-		$this->db->join('rkab_item','rkab_item.id_rkab = rkab.id_rkab');
-		$this->db->join('item_transaksi','item_transaksi.id_item_transaksi = rkab_item.id_item_transaksi');
+		$this->db->join('rkab_item','rkab_item.id_group_rkab = group_rkab.id_group_rkab');
+		$this->db->join('item_transaksi','item_transaksi.id_transaksi_sales = rkab_item.id_transaksi_sales');
 		$this->db->join('barang','barang.id_barang = item_transaksi.id_barang');
+		$this->db->join('driver','driver.id_driver = group_rkab.id_driver');
 		$this->db->where($where);
 		//$this->db->group_by('item_transaksi.id_barang');
 		return $this->db->get();
@@ -36,8 +51,8 @@ class Group_rkab_m extends Base_m {
 		$this->db->distinct();
 		$this->db->select('transaksi_sales.id_transaksi_sales');
 		$this->db->from($this->table);
-		$this->db->join('rkab','rkab.id_group_rkab = group_rkab.id_group_rkab');
-		$this->db->join('transaksi_sales','transaksi_sales.id_transaksi_sales = rkab.id_transaksi_sales');
+		$this->db->join('rkab_item','rkab_item.id_group_rkab = group_rkab.id_group_rkab');
+		$this->db->join('transaksi_sales','transaksi_sales.id_transaksi_sales = rkab_item.id_transaksi_sales');
 		$this->db->where($where);
 		return $this->db->get();
 	}

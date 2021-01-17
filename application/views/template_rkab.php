@@ -168,12 +168,13 @@
         <div class="column signature">
             Driver
             <br><br><br>
+            <?= $driver ?>
             <hr>
             
         </div>
         <div class="column signature">
             B. Gudang
-            <br><br><br>
+            <br><br><br><br>
             <hr>
             
         </div>

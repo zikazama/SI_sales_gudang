@@ -35,6 +35,7 @@
 								<tr>
 									<th>No</th>
 									<th>Tanggal</th>
+									<th>Driver</th>
 									<th>Status</th>
 									<th>Aksi</th>
 								</tr>
@@ -49,6 +50,7 @@
 										<tr>
 											<td><?= $no ?></td>
 											<td><?= $data['tanggal'] ?></td>
+											<td><?= $data['nama_driver'] ?></td>
 											<td>
 												<?php if ($data['status_group'] == 0) { ?>
 													Belum Selesai

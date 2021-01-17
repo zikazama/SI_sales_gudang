@@ -18,7 +18,16 @@
                                 <label for="exampleInputPassword1">Tanggal</label>
                                 <input name="tanggal" type="date" class="form-control" id="exampleInputPassword1" placeholder="Tanggal" required>
                             </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Nama Driver</label>
+                                <select id="id_driver" name="id_driver" class="form-control" tabindex="-1" style="width: 100%">
+                                    <option value="0" disabled selected>Pilih Driver</option>
+                                    <?php foreach ($parsing['driver'] as $data) { ?>
+                                        <option value="<?= $data['id_driver'] ?>"><?= $data['nama_driver'] ?></option>
+                                    <?php } ?>
 
+                                </select>
+                            </div>
                             <button type="submit" class="btn btn-block btn-primary">Tambah</button>
 
                         </form>

@@ -45,7 +45,7 @@
                         <br>
                         <hr>
                         <br>
-                        <a href="<?= base_url("admin/rkab/id/$parsing[id_transaksi_sales]") ?>"><button class="btn btn-block btn-danger">Batalkan</button></a>
+                        <a href="#"><button onclick="history.back()" class="btn btn-block btn-danger">Batalkan</button></a>
                     </div>
                 </div>
             </div>

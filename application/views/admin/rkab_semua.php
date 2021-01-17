@@ -28,16 +28,18 @@
 						<?php
 									}
                                 ?>
+								<a href="<?= base_url("admin/rkab/tambah/").$this->uri->segment(4) ?>"><button type="button" class="btn btn-success btn-lg btn-block">Tambah</button></a>
+						<table id="zero-conf" class="display" style="width:100%">
 						<br>
 						<a href="<?= base_url("admin/rkab/print/$parsing[id_group_rkab]") ?>"><button type="button" class="btn btn-info btn-lg btn-block">Print</button></a>
 						<table id="zero-conf" class="display" style="width:100%">
 							<thead>
 								<tr>
 									<th>No</th>
+									<th>No Faktur</th>
 									<th>Nama Toko</th>
 									<th>Alamat</th>
-									<th>Driver</th>
-									<th>Status</th>
+									<!-- <th>Status</th> -->
 									<th>Aksi</th>
 								</tr>
 							</thead>
@@ -50,10 +52,10 @@
 
 								<tr>
 									<td><?= $no ?></td>
+									<td><?= $data['id_transaksi_sales'] ?></td>
 									<td><?= $data['nama_toko'] ?></td>
 									<td><?= $data['alamat'] ?></td>
-                                    <td><?= $data['nama_driver'] ?></td>
-                                    <td>
+                                    <!-- <td>
                                         <?php 
                                         switch($data['status_proses']) {
                                             case '1':
@@ -68,10 +70,15 @@
                                                 break;
                                         }
                                         ?>
-                                    </td>
+                                    </td> -->
 									<td>
-										<a href="<?= base_url("admin/rkab/id/$data[id_transaksi_sales]") ?>"><button
+										<a href="<?= base_url("admin/laporan_penjualan/detail/$data[id_transaksi_sales]") ?>"><button
 												type="submit" class="btn btn-warning">Detail</button></a>
+
+												<?php if($parsing['status_group'] == 0) { ?>
+												<a href="<?= base_url("admin/rkab/hapus/$data[id_transaksi_sales]") ?>"><button
+												type="submit" class="btn btn-danger">Hapus</button></a>
+												<?php } ?>
 										
 									</td>
 								</tr>
