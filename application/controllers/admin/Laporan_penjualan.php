@@ -618,12 +618,14 @@ class Laporan_penjualan extends CI_Controller
                 $this->transaksi_sales_m->update($data_input,array('id_transaksi_sales' => $id_transaksi_sales));
                 $item_hapus = $this->item_transaksi_m->read_where(array(
                     'id_transaksi_sales' => $id_transaksi_sales
-                ))->result_array();
+				))->result_array();
                 foreach($item_hapus as $item){
-                    $barang = $this->barang_m->read_where(array('id_barang' => $item['id_barang']))->row();
+					$barang = $this->barang_m->read_where(array('id_barang' => $item['id_barang']))->row();
+					//var_dump($barang->stok);
+					//die();
                     $this->barang_m->update(array(
-                        'stok' => $barang->stok + $item['stok'],
-                        'stok_perbox' => $barang->stok_perbox + $item['stok_perbox']
+                        'stok' => $barang->stok + $item['kuantitas'],
+                        'stok_perbox' => $barang->stok_perbox + $item['kuantitas_perbox']
                     ), array(
                         'id_barang' => $barang->id_barang
                     ));

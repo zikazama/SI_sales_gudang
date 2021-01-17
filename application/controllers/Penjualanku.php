@@ -352,8 +352,8 @@ class Penjualanku extends CI_Controller
                 foreach ($item_hapus as $item) {
                     $barang = $this->barang_m->read_where(array('id_barang' => $item['id_barang']))->row();
                     $this->barang_m->update(array(
-                        'stok' => $barang->stok + $item['stok'],
-                        'stok_perbox' => $barang->stok_perbox + $item['stok_perbox']
+                        'stok' => $barang->stok + $item['kuantitas'],
+                        'stok_perbox' => $barang->stok_perbox + $item['kuantitas_perbox']
                     ), array(
                         'id_barang' => $barang->id_barang
                     ));
