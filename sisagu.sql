@@ -11,7 +11,7 @@
  Target Server Version : 100417
  File Encoding         : 65001
 
- Date: 26/12/2020 00:45:10
+ Date: 17/01/2021 21:45:25
 */
 
 SET NAMES utf8mb4;
@@ -46,13 +46,13 @@ CREATE TABLE `akses_toko`  (
   `id_sales` int NOT NULL,
   `created_at` timestamp(0) NOT NULL DEFAULT current_timestamp(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id_akses_toko`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of akses_toko
 -- ----------------------------
 INSERT INTO `akses_toko` VALUES (2, 1, 1, '2020-12-19 21:19:19');
-INSERT INTO `akses_toko` VALUES (3, 2, 1, '2020-12-24 13:04:25');
+INSERT INTO `akses_toko` VALUES (4, 2, 1, '2021-01-16 09:13:04');
 
 -- ----------------------------
 -- Table structure for barang
@@ -80,7 +80,7 @@ CREATE TABLE `barang`  (
 -- Records of barang
 -- ----------------------------
 INSERT INTO `barang` VALUES (2, 'Tas', 'gucci', 300000, 600000, 86, 1, 10000, 5000, 5, 3, 0, 'fe390655d9710d87ecf83207e4d3c924.jpg', '2020-12-21 16:52:36');
-INSERT INTO `barang` VALUES (3, 'Bahan', 'LG', 40000, 150000, 172, 48, 20000, 10000, 50, 10, 0, '2f5b1b913b2f3a286062c24d838717fa.jpg', '2020-12-21 16:52:36');
+INSERT INTO `barang` VALUES (3, 'Bahan', 'LG', 40000, 150000, 162, 37, 20000, 10000, 50, 10, 0, '2f5b1b913b2f3a286062c24d838717fa.jpg', '2021-01-17 21:32:45');
 INSERT INTO `barang` VALUES (4, 'Ayam Goreng', 'geprek', 15000, 50000, 10, 15, 2000, 3000, 5, 5, 10, '3479a78a9bbc3f47aa57091affab097e.jpg', '2020-11-06 19:31:58');
 INSERT INTO `barang` VALUES (5, 'Cumi', 'Mantap', 20000, 70000, 2, 14, 1000, 2000, 5, 5, 0, 'de98593bf1a324c4406077308d43bb3a.jpg', '2020-12-19 00:31:48');
 INSERT INTO `barang` VALUES (6, 'Lele', 'Pecel', 10000, 50000, 5, 20, 5000, 3000, 5, 5, 0, '01d24f080df6a12e0d16dada29b346e7.jpg', '2020-11-02 13:14:18');
@@ -116,16 +116,19 @@ INSERT INTO `driver` VALUES (1, 19, 'zi@gmail.com', '010101', '4229831bdacdcc7dd
 DROP TABLE IF EXISTS `group_rkab`;
 CREATE TABLE `group_rkab`  (
   `id_group_rkab` int NOT NULL AUTO_INCREMENT,
+  `id_driver` int NOT NULL,
   `tanggal` date NULL DEFAULT NULL,
   `created_at` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0),
   `status_group` int NOT NULL,
   PRIMARY KEY (`id_group_rkab`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of group_rkab
 -- ----------------------------
-INSERT INTO `group_rkab` VALUES (1, '2020-12-25', NULL, 0);
+INSERT INTO `group_rkab` VALUES (1, 1, '2020-12-25', '2021-01-17 20:36:49', 1);
+INSERT INTO `group_rkab` VALUES (2, 0, '2021-01-17', NULL, 0);
+INSERT INTO `group_rkab` VALUES (3, 1, '2021-01-19', '2021-01-17 20:38:50', 0);
 
 -- ----------------------------
 -- Table structure for item_transaksi
@@ -143,7 +146,7 @@ CREATE TABLE `item_transaksi`  (
   `subdiskon` int NOT NULL,
   `created_at` timestamp(0) NOT NULL DEFAULT current_timestamp(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id_item_transaksi`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 67 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 75 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of item_transaksi
@@ -195,6 +198,9 @@ INSERT INTO `item_transaksi` VALUES (52, 34, 2, 2, 0, 300000, 600000, 600000, 0,
 INSERT INTO `item_transaksi` VALUES (53, 35, 2, 3, 0, 300000, 600000, 900000, 0, '2020-12-15 21:31:41');
 INSERT INTO `item_transaksi` VALUES (65, 36, 3, 1, 0, 40000, 150000, 40000, 0, '2020-12-21 16:52:36');
 INSERT INTO `item_transaksi` VALUES (66, 36, 2, 3, 0, 300000, 600000, 900000, 0, '2020-12-21 16:52:36');
+INSERT INTO `item_transaksi` VALUES (67, 37, 3, 3, 2, 40000, 150000, 420000, 0, '2021-01-16 09:12:48');
+INSERT INTO `item_transaksi` VALUES (68, 38, 3, 3, 1, 40000, 150000, 270000, 0, '2021-01-16 09:13:31');
+INSERT INTO `item_transaksi` VALUES (74, 39, 3, 0, 2, 40000, 150000, 60000, 0, '2021-01-17 21:32:45');
 
 -- ----------------------------
 -- Table structure for pembayaran
@@ -206,7 +212,7 @@ CREATE TABLE `pembayaran`  (
   `jumlah_pembayaran` int NOT NULL,
   `created_at` timestamp(0) NOT NULL DEFAULT current_timestamp(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id_pembayaran`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 41 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 44 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of pembayaran
@@ -242,6 +248,9 @@ INSERT INTO `pembayaran` VALUES (37, 33, 0, '2020-11-03 12:51:20');
 INSERT INTO `pembayaran` VALUES (38, 34, 300000, '2020-12-13 22:38:23');
 INSERT INTO `pembayaran` VALUES (39, 35, 200000, '2020-12-15 21:31:41');
 INSERT INTO `pembayaran` VALUES (40, 36, 20000, '2020-12-15 21:33:09');
+INSERT INTO `pembayaran` VALUES (41, 37, 0, '2021-01-16 09:12:48');
+INSERT INTO `pembayaran` VALUES (42, 38, 0, '2021-01-16 09:13:31');
+INSERT INTO `pembayaran` VALUES (43, 39, 20000, '2021-01-17 20:53:44');
 
 -- ----------------------------
 -- Table structure for rkab
@@ -254,7 +263,7 @@ CREATE TABLE `rkab`  (
   `created_at` timestamp(0) NOT NULL DEFAULT current_timestamp(0) ON UPDATE CURRENT_TIMESTAMP(0),
   `id_group_rkab` int NULL DEFAULT NULL,
   PRIMARY KEY (`id_rkab`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of rkab
@@ -262,6 +271,12 @@ CREATE TABLE `rkab`  (
 INSERT INTO `rkab` VALUES (1, 30, 1, '2020-12-25 23:54:10', 1);
 INSERT INTO `rkab` VALUES (2, 1, 0, '2020-12-25 22:15:10', NULL);
 INSERT INTO `rkab` VALUES (4, 35, 2, '2020-12-25 22:15:14', NULL);
+INSERT INTO `rkab` VALUES (5, 34, 1, '2020-12-26 09:39:44', 1);
+INSERT INTO `rkab` VALUES (6, 32, 0, '2020-12-26 09:49:41', NULL);
+INSERT INTO `rkab` VALUES (7, 31, 0, '2021-01-16 09:10:45', NULL);
+INSERT INTO `rkab` VALUES (9, 38, 1, '2021-01-16 09:15:28', 2);
+INSERT INTO `rkab` VALUES (10, 0, 0, '2021-01-17 19:31:03', NULL);
+INSERT INTO `rkab` VALUES (11, 37, 0, '2021-01-17 20:03:06', NULL);
 
 -- ----------------------------
 -- Table structure for rkab_item
@@ -271,16 +286,25 @@ CREATE TABLE `rkab_item`  (
   `id_rkab_item` int NOT NULL AUTO_INCREMENT,
   `id_rkab` int NOT NULL,
   `id_driver` int NOT NULL,
+  `id_transaksi_sales` int NOT NULL,
   `id_item_transaksi` int NOT NULL,
+  `id_group_rkab` int NOT NULL,
   `created_at` timestamp(0) NOT NULL DEFAULT current_timestamp(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id_rkab_item`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 23 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of rkab_item
 -- ----------------------------
-INSERT INTO `rkab_item` VALUES (5, 1, 1, 48, '2020-12-24 09:35:28');
-INSERT INTO `rkab_item` VALUES (6, 4, 1, 53, '2020-12-24 13:12:18');
+INSERT INTO `rkab_item` VALUES (5, 1, 1, 0, 48, 0, '2020-12-24 09:35:28');
+INSERT INTO `rkab_item` VALUES (6, 4, 1, 0, 53, 0, '2020-12-24 13:12:18');
+INSERT INTO `rkab_item` VALUES (7, 5, 1, 0, 52, 0, '2020-12-26 09:39:37');
+INSERT INTO `rkab_item` VALUES (8, 7, 1, 0, 49, 0, '2021-01-16 09:10:57');
+INSERT INTO `rkab_item` VALUES (9, 8, 1, 0, 67, 0, '2021-01-16 09:14:12');
+INSERT INTO `rkab_item` VALUES (10, 9, 1, 0, 68, 0, '2021-01-16 09:15:22');
+INSERT INTO `rkab_item` VALUES (12, 2, 0, 1, 0, 1, '2021-01-17 19:46:35');
+INSERT INTO `rkab_item` VALUES (13, 2, 0, 1, 0, 0, '2021-01-17 19:41:01');
+INSERT INTO `rkab_item` VALUES (20, 0, 0, 37, 0, 1, '2021-01-17 20:25:05');
 
 -- ----------------------------
 -- Table structure for sales
@@ -356,7 +380,7 @@ CREATE TABLE `transaksi_sales`  (
   `status` enum('diterima','pending','ditolak') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'diterima',
   `created_at` timestamp(0) NOT NULL DEFAULT current_timestamp(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id_transaksi_sales`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 37 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of transaksi_sales
@@ -388,5 +412,8 @@ INSERT INTO `transaksi_sales` VALUES (33, 1, 2, 20000, 0, 0, 'ditolak', '2020-11
 INSERT INTO `transaksi_sales` VALUES (34, 1, 1, 600000, 0, 0, 'diterima', '2020-12-13 22:38:23');
 INSERT INTO `transaksi_sales` VALUES (35, 1, 1, 900000, 0, 0, 'diterima', '2020-12-15 21:31:40');
 INSERT INTO `transaksi_sales` VALUES (36, 1, 1, 940000, 0, 0, 'pending', '2020-12-19 11:09:34');
+INSERT INTO `transaksi_sales` VALUES (37, 1, 1, 420000, 0, 0, 'diterima', '2021-01-16 09:12:48');
+INSERT INTO `transaksi_sales` VALUES (38, 1, 2, 270000, 0, 0, 'diterima', '2021-01-16 09:13:31');
+INSERT INTO `transaksi_sales` VALUES (39, 1, 1, 60000, 0, 0, 'pending', '2021-01-17 21:01:23');
 
 SET FOREIGN_KEY_CHECKS = 1;
