@@ -360,6 +360,7 @@ class Laporan_penjualan extends CI_Controller
 	public function export_v2_where(){
 		$this->load->model('item_transaksi_m');
 		$post = $this->input->post();
+		//var_dump($post);die();
 		$data = $this->item_transaksi_m->read_print_where(array('date(item_transaksi.created_at) >=' => $post['awal'], 'date(item_transaksi.created_at) <=' => $post['akhir']))->result_array();
 		$spreadsheet = new Spreadsheet;
 		$spreadsheet->setActiveSheetIndex(0)->mergeCells('A3:O4');
@@ -445,7 +446,7 @@ class Laporan_penjualan extends CI_Controller
 		foreach ($data as $d) {
 			$total = (int) $d['subtotal'] - (int) $d['subdiskon'];
 			$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A' . $kolom, date('d-m-Y', strtotime($d['created_at'])))
+				->setCellValue('A' . $kolom, date('d-m-Y', strtotime($d['tanggal_transaksi'])))
 				->setCellValue('B' . $kolom, $d['nama_toko'])
 				->setCellValue('C' . $kolom, $d['kuantitas'])
 				->setCellValue('D' . $kolom, $d['kuantitas_perbox'])

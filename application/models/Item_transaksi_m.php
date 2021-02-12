@@ -45,7 +45,7 @@ class Item_transaksi_m extends Base_m {
 	}
 
 	public function read_print_where($where){
-		$this->db->select('*');
+		$this->db->select('*, item_transaksi.created_at as tanggal_transaksi');
 		$this->db->from($this->table);
 		$this->db->join('transaksi_sales','transaksi_sales.id_transaksi_sales = item_transaksi.id_transaksi_sales');
 		$this->db->join('sales','sales.id_sales = transaksi_sales.id_sales');
