@@ -43,7 +43,7 @@ class Group_rkab_m extends Base_m {
 		$this->db->join('barang','barang.id_barang = item_transaksi.id_barang');
 		$this->db->join('driver','driver.id_driver = group_rkab.id_driver');
 		$this->db->where($where);
-		//$this->db->group_by('item_transaksi.id_barang');
+		$this->db->group_by('item_transaksi.id_barang');
 		return $this->db->get();
 	}
 

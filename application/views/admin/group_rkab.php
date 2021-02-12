@@ -61,7 +61,9 @@
 
 											<td>
 												<a href="<?= base_url("admin/rkab/item/$data[id_group_rkab]") ?>"><button type="submit" class="btn btn-warning">Detail</button></a>
-
+												<?php if ($data['status_group'] == 0) { ?>
+													<a href="<?= base_url("admin/rkab/hapus_group/$data[id_group_rkab]") ?>"><button type="submit" class="btn btn-danger">Hapus</button></a>
+												<?php } ?>
 											</td>
 										</tr>
 								<?php $no++;

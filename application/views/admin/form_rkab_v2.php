@@ -29,7 +29,7 @@
                         <br>
                         <hr>
                         <br>
-                        <a href="#"><button onclick="" class="btn btn-block btn-danger">Batalkan</button></a>
+                        <a href="#"><button onclick="history.back()" class="btn btn-block btn-danger">Batalkan</button></a>
                     </div>
                 </div>
             </div>

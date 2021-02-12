@@ -191,7 +191,10 @@ class Rkab extends CI_Controller
             'id_group_rkab' => $id_group_rkab,
             'id_transaksi_sales' => $input['id_transaksi_sales']
         ))->num_rows();
-        if ($cek == 0) {
+        $cek2 = $this->transaksi_sales_m->read_where(array(
+            'id_transaksi_sales' => $input['id_transaksi_sales']
+        ))->num_rows();
+        if ($cek == 0 && $cek2 > 0) {
             $this->rkab_item_m->create(array(
                 'id_group_rkab' => $id_group_rkab,
                 'id_transaksi_sales' => $input['id_transaksi_sales']
@@ -332,6 +335,24 @@ class Rkab extends CI_Controller
             $this->session->set_flashdata(array(
                 'status' => 0,
                 'message' => 'Group RKAB Gagal Ditambahkan'
+            ));
+        }
+        redirect(base_url("admin/rkab"));
+    }
+
+    public function hapus_group($id_group_rkab)
+    {
+        if ($this->group_rkab_m->delete(array(
+            'id_group_rkab' => $id_group_rkab
+        ))) {
+            $this->session->set_flashdata(array(
+                'status' => 1,
+                'message' => 'Group RKAB Berhasil Dihapus'
+            ));
+        } else {
+            $this->session->set_flashdata(array(
+                'status' => 0,
+                'message' => 'Group RKAB Gagal Dihapus'
             ));
         }
         redirect(base_url("admin/rkab"));
