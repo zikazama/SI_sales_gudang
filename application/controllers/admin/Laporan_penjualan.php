@@ -62,6 +62,18 @@ class Laporan_penjualan extends CI_Controller
 		$this->load->view('_partials/template', $data);
 	}
 
+	public function pertransaksi()
+	{
+		$this->load->model('transaksi_sales_m');
+		$laporan_penjualan = $this->transaksi_sales_m->read_full()->result_array();
+		$data = array(
+			'js' => 'admin/js_laporan_penjualan',
+			'konten' => 'admin/laporan_pertransaksi',
+			'parsing' => array('laporan_penjualan' => $laporan_penjualan)
+		);
+		$this->load->view('_partials/template', $data);
+	}
+
 	public function semua()
 	{
 		$this->load->model('transaksi_sales_m');

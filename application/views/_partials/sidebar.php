@@ -41,8 +41,11 @@
                         <li class="<?= $this->uri->segment(1) == 'admin' && $this->uri->segment(2) == 'kelola_driver'  ? 'active-page' : '' ?>">
                             <a href="<?= base_url('admin/kelola_driver') ?>" class="active"><i class="material-icons-outlined">account_circle</i>Kelola Driver</a>
                         </li>
-                        <li class="<?= $this->uri->segment(1) == 'admin' && $this->uri->segment(2) == 'laporan_penjualan'  ? 'active-page' : '' ?>">
-                            <a href="<?= base_url('admin/laporan_penjualan') ?>" class="active"><i class="material-icons">bar_chart</i>Laporan Penjualan</a>
+                        <li class="<?= $this->uri->segment(1) == 'admin' && $this->uri->segment(2) == 'laporan_penjualan' && ($this->uri->segment(3) == null || $this->uri->segment(3) == 'toko')  ? 'active-page' : '' ?>">
+                            <a href="<?= base_url('admin/laporan_penjualan') ?>" class="active"><i class="material-icons">bar_chart</i>Laporan Pertoko</a>
+                        </li>
+                        <li class="<?= $this->uri->segment(1) == 'admin' && $this->uri->segment(2) == 'laporan_penjualan' && $this->uri->segment(3) == 'pertransaksi'  ? 'active-page' : '' ?>">
+                            <a href="<?= base_url('admin/laporan_penjualan/pertransaksi') ?>" class="active"><i class="material-icons">bar_chart</i>Laporan Pertransaksi</a>
                         </li>
                         <li class="<?= $this->uri->segment(1) == 'admin' && $this->uri->segment(2) == 'rkab'  ? 'active-page' : '' ?>">
                             <a href="<?= base_url('admin/rkab') ?>" class="active"><i class="material-icons">bar_chart</i>RKAB</a>
