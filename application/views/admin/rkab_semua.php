@@ -33,7 +33,7 @@
 						<?php } ?>
 						<table id="zero-conf" class="display" style="width:100%">
 							<br>
-							<a href="<?= base_url("admin/rkab/print/$parsing[id_group_rkab]") ?>"><button type="button" class="btn btn-info btn-lg btn-block">Print</button></a>
+							<a href="<?= base_url("admin/rkab/print_simpler/$parsing[id_group_rkab]") ?>"><button type="button" class="btn btn-info btn-lg btn-block">Print</button></a>
 							<table id="zero-conf" class="display" style="width:100%">
 								<thead>
 									<tr>

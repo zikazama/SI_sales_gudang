@@ -325,7 +325,7 @@ class Rkab extends CI_Controller
         if ($this->group_rkab_m->create(array(
             'tanggal' => $data_input['tanggal'],
             'id_driver' => $data_input['id_driver']
-            
+
         ))) {
             $this->session->set_flashdata(array(
                 'status' => 1,
@@ -445,6 +445,117 @@ class Rkab extends CI_Controller
                 $hasil_bagi--;
                 $data['index_awal'] += 10;
             }
+            //die();
+        }
+        $mpdf->Output();
+    }
+
+    public function print_simpler($id_group_rkab)
+    {
+        $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => [210, 148.5],  'orientation' => 'P', 'margin_top' => 0, 'margin_bottom' => 0]);
+        $group_rkab = $this->group_rkab_m->read_print_where(array(
+            'rkab_item.id_group_rkab' => $id_group_rkab
+        ))->result_array();
+        $data = array(
+            'group_rkab' => $group_rkab,
+            'driver' => $group_rkab[0]['nama_driver']
+        );
+        // echo '<pre>' . var_export($group_rkab, true) . '</pre>';
+        // die();
+        $jumlah_item = count($group_rkab);
+        $hasil_bagi = $jumlah_item / 20;
+        $hasil_bagi = floor($hasil_bagi);
+        $sisa_bagi = $jumlah_item % 20;
+        $data['status_ttd'] = false;
+        $data['table_a'] = false;
+        $data['table_b'] = false;
+
+        $list_faktur = array_column($this->group_rkab_m->read_list_no_faktur(array('group_rkab.id_group_rkab' => $id_group_rkab))->result_array(), 'id_transaksi_sales');
+        $data['list_faktur'] = implode(',', $list_faktur);
+        if ($jumlah_item < 20) {
+            $data['index_awal_a'] = 1;
+            $data['index_akhir_a'] = $sisa_bagi;
+            if ($sisa_bagi > 10) {
+                $data['table_a'] = true;
+                $data['table_b'] = true;
+                $data['index_awal_b'] = 1 + 10;
+                $data['index_akhir_b'] = $sisa_bagi;
+                $data['index_akhir_a'] = 10;
+            } else {
+                $data['table_a'] = true;
+            }
+            $data['status_ttd'] = true;
+            $tampilan = $this->load->view('rkab_minimalis', $data, TRUE);
+            $mpdf->WriteHTML($tampilan);
+        } else if ($jumlah_item == 20) {
+            $data['index_awal_a'] = 1;
+            $data['index_akhir_a'] = 10;
+            $data['index_awal_b'] = 11;
+            $data['index_akhir_b'] = 20;
+            $data['table_a'] = true;
+            $data['table_b'] = true;
+            $data['status_ttd'] = true;
+            $tampilan = $this->load->view('rkab_minimalis', $data, TRUE);
+            $mpdf->WriteHTML($tampilan);
+        } else if ($jumlah_item > 20 && $sisa_bagi == 0) {
+            $data['index_awal_a'] = 1;
+            $data['index_akhir_a'] = 10;
+            $data['index_awal_b'] = 11;
+            $data['index_akhir_b'] = 20;
+            while ($hasil_bagi > 0) {
+                if ($hasil_bagi == 1) {
+                    $data['status_ttd'] = true;
+                }
+                $data['table_a'] = true;
+                $data['table_b'] = true;
+                $tampilan = $this->load->view('rkab_minimalis', $data, TRUE);
+                $mpdf->WriteHTML($tampilan);
+                if ($hasil_bagi > 1) {
+                    $mpdf->AddPage();
+                    $data['index_akhir_a'] += 20;
+                    $data['index_akhir_b'] += 20;
+                }
+                $hasil_bagi--;
+                $data['index_awal_a'] += 20;
+                $data['index_awal_b'] += 20;
+            }
+        } else if ($jumlah_item > 20 && $sisa_bagi != 0) {
+            $hasil_bagi += 1;
+            $data['index_awal_a'] = 1;
+            $data['index_akhir_a'] = 10;
+            $data['index_awal_b'] = 11;
+            $data['index_akhir_b'] = 20;
+            $jumlah_terakhir = $jumlah_item - (20 * ($hasil_bagi - 1));
+            //echo $jumlah_terakhir;die();
+            while ($hasil_bagi > 0) {
+                $data['table_a'] = true;
+                $data['table_b'] = true;
+                if ($hasil_bagi == 1) {
+                    $data['status_ttd'] = true;
+                    if ($jumlah_terakhir < 10) {
+                        $data['index_akhir_a'] = $data['index_akhir_a'] - 20 + $sisa_bagi;
+                        $data['table_b'] = false;
+                    } else {
+                        $data['index_akhir_a'] = $data['index_akhir_a'];
+                        $data['index_akhir_b'] = $data['index_akhir_b'] - 20 + $sisa_bagi;
+                    }
+                }
+                $tampilan = $this->load->view('rkab_minimalis', $data, TRUE);
+                $mpdf->WriteHTML($tampilan);
+                if ($hasil_bagi > 1) {
+                    $mpdf->AddPage();
+                    $data['index_akhir_a'] += 20;
+                    $data['index_akhir_b'] += 20;
+                }
+
+                $data['index_awal_a'] += 20;
+                $data['index_awal_b'] += 20;
+                $hasil_bagi--;
+            }
+            // echo '<pre>';
+            // print_r($data);
+            // echo $tampilan;
+            // die();
             //die();
         }
         $mpdf->Output();

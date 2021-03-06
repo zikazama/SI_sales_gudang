@@ -47,6 +47,9 @@
                         <li class="<?= $this->uri->segment(1) == 'admin' && $this->uri->segment(2) == 'laporan_penjualan' && $this->uri->segment(3) == 'pertransaksi'  ? 'active-page' : '' ?>">
                             <a href="<?= base_url('admin/laporan_penjualan/pertransaksi') ?>" class="active"><i class="material-icons">bar_chart</i>Laporan Pertransaksi</a>
                         </li>
+                        <li class="<?= $this->uri->segment(1) == 'admin' && $this->uri->segment(2) == 'laporan_penjualan' && $this->uri->segment(3) == 'pertanggal'  ? 'active-page' : '' ?>">
+                            <a href="<?= base_url('admin/laporan_penjualan/pertanggal') ?>" class="active"><i class="material-icons">bar_chart</i>Laporan Pertanggal</a>
+                        </li>
                         <li class="<?= $this->uri->segment(1) == 'admin' && $this->uri->segment(2) == 'rkab'  ? 'active-page' : '' ?>">
                             <a href="<?= base_url('admin/rkab') ?>" class="active"><i class="material-icons">bar_chart</i>RKAB</a>
                         </li>

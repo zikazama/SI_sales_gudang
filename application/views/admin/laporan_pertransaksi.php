@@ -68,7 +68,7 @@
 
                         </table>
                         <br>
-                        <a href="<?= base_url('admin/laporan_penjualan/') ?>"><button type="button" class="btn btn-danger btn-lg btn-block">Kembali</button></a>
+                        <button type="button" class="btn btn-danger btn-lg btn-block" onclick="window.history.back()">Kembali</button>
                     </div>
                 </div>
             </div>

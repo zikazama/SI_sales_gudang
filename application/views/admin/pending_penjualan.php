@@ -100,6 +100,8 @@
                                 </table>
                                 <a href="<?= base_url('admin/laporan_penjualan/edit/') . $parsing['transaksi'][0]['id_transaksi_sales'] ?>"><button type="button" class="btn btn-info btn-lg btn-block">Edit</button></a>
                                 <br>
+                                <a href="<?= base_url('admin/laporan_penjualan/edit_tts/') . $parsing['transaksi'][0]['id_transaksi_sales'] ?>"><button type="button" class="btn btn-info btn-lg btn-block">Edit TTS</button></a>
+                                <br>
                                 <a href="<?= base_url('admin/laporan_penjualan/terima/') . $parsing['transaksi'][0]['id_transaksi_sales'] ?>"><button type="button" class="btn btn-success btn-lg btn-block">Terima</button></a>
                                 <br>
                                 <a href="<?= base_url('admin/laporan_penjualan/tolak/') . $parsing['transaksi'][0]['id_transaksi_sales'] ?>"><button type="button" class="btn btn-danger btn-lg btn-block">Tolak</button></a>

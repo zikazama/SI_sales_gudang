@@ -84,9 +84,27 @@ class Transaksi_sales_m extends Base_m
 		$this->db->select('*, transaksi_sales.created_at as waktu');
 		$this->db->from($this->table);
 		$this->db->join('sales', 'sales.id_sales = transaksi_sales.id_sales');
-		$this->db->join('toko', 'toko.id_toko = transaksi_sales.id_toko','RIGHT');
+		$this->db->join('toko', 'toko.id_toko = transaksi_sales.id_toko', 'RIGHT');
 		$this->db->where($where);
 		return $this->db->get();
+	}
+
+	public function read_pertanggal()
+	{
+		return $this->db->query("SELECT
+		DATE( ts1.created_at ) AS tanggal,
+		(
+		SELECT
+			count(*) 
+		FROM
+			transaksi_sales ts2 
+		WHERE
+		DATE( ts2.created_at ) = date( ts1.created_at ) and `status` = 'pending') jumlah 
+	FROM
+		transaksi_sales ts1 
+	GROUP BY
+		DATE(
+		ts1.created_at) ORDER BY ts1.created_at DESC");
 	}
 
 	public function read_bulan_ini()
