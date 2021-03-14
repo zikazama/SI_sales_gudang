@@ -28,6 +28,8 @@
 								<?php
 									}
                                 ?>
+								<a href="<?= base_url('admin/kelola_barang/export') ?>"><button type="button" class="btn btn-primary btn-lg btn-block">Export Excell</button></a>
+                                        <br>
 						<a href="<?= base_url('admin/kelola_barang/tambah') ?>"><button type="button" class="btn btn-primary btn-lg btn-block">Tambah Barang</button></a>
                                         <br>
 						<table id="zero-conf" class="display" style="width:100%">

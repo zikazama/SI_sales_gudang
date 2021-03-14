@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+
 class Kelola_barang extends CI_Controller {
 
 	/**
@@ -156,6 +159,97 @@ class Kelola_barang extends CI_Controller {
 	
 		// return float
 		return (float) $s;
+	}
+
+	public function export(){
+		$this->load->model('barang_m');
+		$barang = $this->barang_m->read()->result_array();
+		$spreadsheet = new Spreadsheet;
+		$spreadsheet->setActiveSheetIndex(0)->mergeCells('A3:G4');
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('A3', "Rekap Data Barang");
+		$styleJudul = [
+			'font' => [
+				'bold' => true,
+				'size' => 18
+			],
+			'alignment' => [
+				'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+				'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+
+			],
+		];
+		$styleTH = [
+			'font' => [
+				'bold' => true,
+			],
+			'alignment' => [
+				'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+				'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+			],
+			'borders' => [
+				'allBorders' => [
+					'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+				],
+			],
+			'fill' => [
+				'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+				'startColor' => [
+					'argb' => 'FF00B0F0',
+				],
+			],
+		];
+		$styleTR = [
+			'alignment' => [
+				'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+				'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+			],
+			'borders' => [
+				'allBorders' => [
+					'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+				],
+			],
+		];
+
+		$spreadsheet->getActiveSheet()->getStyle('A3')->applyFromArray($styleJudul);
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('A7', "TANGGAL DIBUAT");
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('B7', "NAMA BARANG");
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('C7', "MEREK");
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('D7', "HARGA PCS");
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('E7', "HARGA BOX");
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('F7', "STOK PCS");
+		$spreadsheet->setActiveSheetIndex(0)->setCellValue('G7', "STOK BOX");
+		$spreadsheet->getActiveSheet()->getStyle('A7:G7')->applyFromArray($styleTH);
+
+		$kolom = 8;
+		$nomor = 1;
+		foreach ($barang as $d) {
+			$spreadsheet->setActiveSheetIndex(0)
+				->setCellValue('A' . $kolom, date('d-m-Y', strtotime($d['created_at'])))
+				->setCellValue('B' . $kolom, $d['nama_barang'])
+				->setCellValue('C' . $kolom, $d['merek'])
+				->setCellValue('D' . $kolom, $d['harga'])
+				->setCellValue('E' . $kolom, $d['harga_perbox'])
+				->setCellValue('F' . $kolom, $d['stok'])
+				->setCellValue('G' . $kolom, $d['stok_perbox']);
+
+			$kolom++;
+			$nomor++;
+		}
+		$spreadsheet->getActiveSheet()->getStyle("A8:G$kolom")->applyFromArray($styleTR);
+
+
+		$huruf = 'A';
+		while ($huruf < 'H') {
+			$spreadsheet->getActiveSheet()->getColumnDimension($huruf)->setAutoSize(true);
+			$huruf++;
+		}
+
+		$writer = new Xlsx($spreadsheet);
+		header('Content-Type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment;filename="Rekap Data Barang .xlsx"');
+		header('Cache-Control: max-age=0');
+
+		$writer->save('php://output');
 	}
 
 }

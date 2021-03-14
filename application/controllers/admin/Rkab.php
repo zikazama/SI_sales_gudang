@@ -526,18 +526,18 @@ class Rkab extends CI_Controller
             $data['index_awal_b'] = 11;
             $data['index_akhir_b'] = 20;
             $jumlah_terakhir = $jumlah_item - (20 * ($hasil_bagi - 1));
-            //echo $jumlah_terakhir;die();
+            $data['jumlah_terakhir'] = $jumlah_terakhir;
             while ($hasil_bagi > 0) {
                 $data['table_a'] = true;
                 $data['table_b'] = true;
                 if ($hasil_bagi == 1) {
                     $data['status_ttd'] = true;
-                    if ($jumlah_terakhir < 10) {
-                        $data['index_akhir_a'] = $data['index_akhir_a'] - 20 + $sisa_bagi;
+                    if ($jumlah_terakhir <= 10) {
+                        $data['index_akhir_a'] = $data['index_akhir_a'] - 10 + $sisa_bagi;
                         $data['table_b'] = false;
                     } else {
                         $data['index_akhir_a'] = $data['index_akhir_a'];
-                        $data['index_akhir_b'] = $data['index_akhir_b'] - 20 + $sisa_bagi;
+                        $data['index_akhir_b'] = $data['index_akhir_b'] + $sisa_bagi;
                     }
                 }
                 $tampilan = $this->load->view('rkab_minimalis', $data, TRUE);
@@ -552,12 +552,12 @@ class Rkab extends CI_Controller
                 $data['index_awal_b'] += 20;
                 $hasil_bagi--;
             }
-            // echo '<pre>';
-            // print_r($data);
-            // echo $tampilan;
-            // die();
             //die();
         }
+        // echo $tampilan;
+        // die();
+        // echo '<pre>';
+        // print_r($data);
         $mpdf->Output();
     }
 }

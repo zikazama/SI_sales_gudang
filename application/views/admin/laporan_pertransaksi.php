@@ -27,6 +27,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Sales</th>
+                                    <th>Nama Toko</th>
                                     <th>Subtotal</th>
                                     <th>Diskon</th>
                                     <th>Total</th>
@@ -44,6 +45,7 @@
                                         <tr>
                                             <td><?= $no ?></td>
                                             <td><?= $data['nama_sales'] ?></td>
+                                            <td><?= $data['nama_toko'] ?></td>
                                             <td>Rp<?= number_format($data['total'] + $data['diskon'], 0, ',', '.') ?></td>
                                             <td>Rp<?= number_format($data['diskon'], 0, ',', '.') ?></td>
                                             <td>Rp<?= number_format($data['total'] , 0, ',', '.') ?></td>

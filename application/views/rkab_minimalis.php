@@ -107,6 +107,9 @@
             display: table-cell;
             float: left;
         }
+        .list_faktur {
+            width: 400px;
+        }
     </style>
 </head>
 
@@ -115,22 +118,25 @@
 
     <table class="beda">
         <tr>
-            <td>CV. Andika Emas Abadi</td>
-            <td style="width: 70mm"></td>
-            <td>No Faktur: <?= $list_faktur ?></td>
+            <td style="width:130mm">CV. Andika Emas Abadi</td>
+            <!-- <td style="width: 70mm"></td> -->
+            <td rowspan="3" class="list_faktur" style="width:130mm">No Faktur:
+            <?= $list_faktur ?> <br>
+            Tanggal: <?= $group_rkab[0]['created_at'] ?>
+            </td>
 
         </tr>
         <tr>
             <td>Jl. Raya Eyang Soemohardjo.</td>
-            <td style="width: 70mm"></td>
-            <td></td>
+            <!-- <td style="width: 70mm"></td> -->
+            <!-- <td></td> -->
 
 
         </tr>
         <tr>
             <td>Desa Kediri Kecamatan Binong Subang</td>
-            <td style="width: 70mm"></td>
-            <td></td>
+            <!-- <td style="width: 70mm"></td> -->
+            <!-- <td></td> -->
 
         </tr>
     </table>

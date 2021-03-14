@@ -157,6 +157,7 @@ class Penjualanku extends CI_Controller
                     'id_toko' => $data_transaksi['id_toko'],
                     'total' => $sebelum_total - $jumlah_diskon,
                     'diskon' => $jumlah_diskon,
+                    'status' => 'pending'
                 );
                 if ($this->priceToFloat($data_transaksi['pembayaran']) == $data_input['total']) {
                     $data_input['is_lunas'] = 1;
@@ -338,6 +339,7 @@ class Penjualanku extends CI_Controller
                     'id_toko' => $data_transaksi['id_toko'],
                     'total' => $sebelum_total - $jumlah_diskon,
                     'diskon' => $jumlah_diskon,
+                    'status' => 'pending'
                 );
                 if ($this->priceToFloat($data_transaksi['pembayaran']) == $data_input['total']) {
                     $data_input['is_lunas'] = 1;
