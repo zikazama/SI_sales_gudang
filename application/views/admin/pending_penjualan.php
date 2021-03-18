@@ -70,9 +70,11 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nama</th>
+                                            <th>Harga PCS</th>
+                                            <th>Harga BOX</th>
                                             <th>Kuantitas/pcs</th>
                                             <th>Kuantitas/box</th>
-                                            <th>Subtotal</th>
+                                            <th>Harga Diajukan</th>
                                             <th>Subtotal yang diajukan</th>
                                         </tr>
                                     </thead>
@@ -86,6 +88,8 @@
                                                 <tr>
                                                     <td><?= $no ?></td>
                                                     <td><?= $data['nama_barang'] ?></td>
+                                                    <td>Rp<?= number_format($data['harga'], 0, ',', '.') ?></td>
+                                                    <td>Rp<?= number_format($data['harga_perbox'], 0, ',', '.') ?></td>
                                                     <td><?= $data['kuantitas'] ?></td>
                                                     <td><?= $data['kuantitas_perbox'] ?></td>
                                                     <td>Rp<?= number_format(($data['harga'] * $data['kuantitas'])+($data['harga_perbox'] * $data['kuantitas_perbox']), 0, ',', '.') ?></td>
@@ -99,8 +103,8 @@
 
                                 </table>
                                 <a href="<?= base_url('admin/laporan_penjualan/edit/') . $parsing['transaksi'][0]['id_transaksi_sales'] ?>"><button type="button" class="btn btn-info btn-lg btn-block">Edit</button></a>
-                                <br>
-                                <a href="<?= base_url('admin/laporan_penjualan/edit_tts/') . $parsing['transaksi'][0]['id_transaksi_sales'] ?>"><button type="button" class="btn btn-info btn-lg btn-block">Edit TTS</button></a>
+                                <!-- <br>
+                                <a href="<?= base_url('admin/laporan_penjualan/edit_tts/') . $parsing['transaksi'][0]['id_transaksi_sales'] ?>"><button type="button" class="btn btn-info btn-lg btn-block">Edit TTS</button></a> -->
                                 <br>
                                 <a href="<?= base_url('admin/laporan_penjualan/terima/') . $parsing['transaksi'][0]['id_transaksi_sales'] ?>"><button type="button" class="btn btn-success btn-lg btn-block">Terima</button></a>
                                 <br>

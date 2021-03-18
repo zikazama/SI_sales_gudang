@@ -43,7 +43,9 @@
                                                 <td><?= $data['tanggal'] ?></td>
                                                 <td><?= $data['jumlah'] == 0 ? "<span class='text text-success'>Selesai</span>" : "<span class='text text-danger'>Belum Selesai</span>" ?></td>
                                                 <td>
-                                                <a href="<?= base_url('admin/laporan_penjualan/pertanggal/') . $data['tanggal'] ?>"><button type="submit" class="btn btn-info">Detail</button></a>
+                                                <?php if ($data['jumlah'] != 0 ) { ?>
+                                                <a href="<?= base_url('admin/laporan_penjualan/pertanggal/') . $data['tanggal'] ?>"><button type="submit" class="btn btn-info">Masuk</button></a>
+                                                <?php } ?>
                                                 </td>
                                             </tr>
                                 <?php $no++;

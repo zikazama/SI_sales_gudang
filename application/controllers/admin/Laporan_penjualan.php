@@ -172,6 +172,9 @@ class Laporan_penjualan extends CI_Controller
 		$data_item = $this->item_transaksi_m->read_full_where(array('transaksi_sales.id_transaksi_sales' => $id_transaksi))->result_array();
 		$data_pembayaran = $this->pembayaran_m->read_where(array('id_transaksi_sales' => $id_transaksi))->result_array();
 		$data_pembayaran_masuk = $this->pembayaran_m->pembayaran_masuk(array('id_transaksi_sales' => $id_transaksi))->row_array();
+		// echo '<pre>';
+		// print_r($data_item);
+		// die();
 		$data = array(
 			'konten' => 'admin/pending_penjualan',
 			'parsing' => array(
@@ -197,15 +200,15 @@ class Laporan_penjualan extends CI_Controller
 		$this->load->model('transaksi_sales_m');
 		$this->load->model('item_transaksi_m');
 		$this->load->model('barang_m');
-		$transaksi = $this->transaksi_sales_m->read_where(array('id_transaksi_sales' => $id_transaksi))->row_array();
-		$tiap_transaksi = $this->item_transaksi_m->read_full_where(array('id_transaksi_sales' => $id_transaksi))->result_array();
+		$transaksi = $this->transaksi_sales_m->read_where(array('transaksi_sales.id_transaksi_sales' => $id_transaksi))->row_array();
+		$tiap_transaksi = $this->item_transaksi_m->read_full_where(array('transaksi_sales.id_transaksi_sales' => $id_transaksi))->result_array();
 		foreach ($tiap_transaksi as $data) {
 			$barang = $this->barang_m->read_where(array('id_barang' => $data['id_barang']))->row_array();
 			$pcs_sekarang = $barang['stok'] + $data['kuantitas'];
 			$box_sekarang = $barang['stok_perbox'] + $data['kuantitas_perbox'];
 			$this->barang_m->update(array('stok' => $pcs_sekarang, 'stok_perbox' => $box_sekarang), array('id_barang' => $data['id_barang']));
 		}
-		$this->transaksi_sales_m->update(array('status' => 'ditolak'), array('id_transaksi_sales' => $id_transaksi));
+		$this->transaksi_sales_m->update(array('status' => 'ditolak'), array('transaksi_sales.id_transaksi_sales' => $id_transaksi));
 		redirect(base_url('admin/laporan_penjualan/toko/' . $transaksi['id_toko']));
 	}
 
