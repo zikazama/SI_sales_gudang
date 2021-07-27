@@ -36,7 +36,7 @@
 							</tr>
 							<tr>
 								<td>Nama Sales</td>
-								<td>: <?= $parsing['transaksi'][0]['nama_sales'].' - '.$parsing['transaksi'][0]['nik'] ?></td>
+								<td>: <?= $parsing['transaksi'][0]['nama_sales'] . ' - ' . $parsing['transaksi'][0]['nik'] ?></td>
 							</tr>
 							<tr>
 								<td>Subtotal</td>
@@ -48,7 +48,7 @@
 							</tr>
 							<tr>
 								<td>Total</td>
-								<td>: Rp<?= number_format($parsing['transaksi'][0]['total'] , 0, ',', '.') ?></td>
+								<td>: Rp<?= number_format($parsing['transaksi'][0]['total'], 0, ',', '.') ?></td>
 							</tr>
 							<tr>
 								<td>Waktu</td>
@@ -90,7 +90,20 @@
 												<tr>
 													<td><?= $no ?></td>
 													<td><?= $data['nama_barang'] ?></td>
-													<td>Rp<?= number_format($data['harga'], 0, ',', '.') ?></td>
+													<!-- <td>Rp<?= number_format($data['harga'], 0, ',', '.') ?></td> -->
+													<?php if (($data['harga_fix_pcs'] != 0) || ($data['harga_fix_box'] != 0)) {
+														if ($data['harga_fix_pcs'] != 0) { ?>
+															<td>Rp<?= number_format($data['harga_fix_pcs'], 0, ',', '.') ?></td>
+														<?php } else { ?>
+															<td>Rp<?= number_format($data['harga_fix_box'], 0, ',', '.') ?></td>
+														<?php }
+													} else {
+														if ($data['harga'] != 0) { ?>
+															<td>Rp<?= number_format($data['harga'], 0, ',', '.') ?></td>
+														<?php } else { ?>
+															<td>Rp<?= number_format($data['harga_perbox'], 0, ',', '.') ?></td>
+													<?php }
+													} ?>
 													<td><?= $data['kuantitas'] ?></td>
 													<td><?= $data['kuantitas_perbox'] ?></td>
 													<td>Rp<?= number_format($data['subtotal'], 0, ',', '.') ?></td>
@@ -108,7 +121,7 @@
 								<br>
 								<a href="<?= base_url('admin/laporan_penjualan/print/') . $parsing['transaksi'][0]['id_transaksi_sales'] ?>"><button type="button" class="btn btn-info btn-lg btn-block">Print</button></a>
 								<br>
-		
+
 								<a href="#"><button type="button" onclick="history.back()" class="btn btn-danger btn-lg btn-block">Kembali</button></a>
 							</div>
 							<div class="tab-pane fade" id="pills-pembayaran" role="tabpanel" aria-labelledby="pills-profile-tab">
@@ -149,7 +162,7 @@
 								<br>
 								<a href="<?= base_url('admin/laporan_penjualan/print/') . $parsing['transaksi'][0]['id_transaksi_sales'] ?>"><button type="button" class="btn btn-info btn-lg btn-block">Print</button></a>
 								<br>
-							
+
 								<a href="#"><button type="button" onclick="history.back()" class="btn btn-danger btn-lg btn-block">Kembali</button></a>
 							</div>
 						</div>

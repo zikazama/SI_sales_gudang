@@ -160,6 +160,9 @@ class Laporan_penjualan extends CI_Controller
 				'pembayaran_masuk' => $data_pembayaran_masuk
 			),
 		);
+		// echo '<pre>';
+		// print_r($data);
+		// die();
 		$this->load->view('_partials/template', $data);
 	}
 
